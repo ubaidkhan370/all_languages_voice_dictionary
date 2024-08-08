@@ -196,15 +196,12 @@ class HomeScreenController extends GetxController {
       dictionaryModel = await ApiServices.getData(word);
 
       if (dictionaryModel != null) {
-        // Translate definitions in parallel
         await Future.wait(dictionaryModel!.meanings!.expand((meaning) {
           return meaning.definitions.map((definition) async {
             definition.definition =
             await translateText(definition.definition, targetLanguage);
           });
         }).toList());
-
-        // Translate synonyms and antonyms in parallel
         await Future.wait(dictionaryModel!.meanings!.expand((meaning) {
           return [
             translateList(meaning.synonyms ?? [], targetLanguage).then((translatedList) {

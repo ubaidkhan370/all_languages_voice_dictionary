@@ -211,7 +211,6 @@ class HistoryScreen extends StatelessWidget {
                             ),
                             child: ListTile(
                               title:
-
                               Text(
                                "${historyTable.text} --- ${historyTable.id} ",
                                 style: const TextStyle(
