@@ -36,6 +36,8 @@ class HomeScreenController extends GetxController {
   AdsHelper adsHelper = AdsHelper();
   FocusNode focusNode = FocusNode();
 
+  //final ScrollController scrollController = ScrollController();
+
   @override
   void onReady(){
     loadAds();
@@ -45,9 +47,10 @@ class HomeScreenController extends GetxController {
 
 
   void loadAds(){
-//  adsHelper.loadBannerAd();
+   adsHelper.loadBannerAd();
   adsHelper.loadAppOpenAd();
   adsHelper?.loadInterstitialAd();
+ // adsHelper.loadNativeAd();
 }
 
 
@@ -126,24 +129,9 @@ class HomeScreenController extends GetxController {
     //adsHelper.nativeAd?.dispose();
     focusNode.dispose();
     textEditingController.dispose();
+    //scrollController.dispose();
+    adsHelper.nativeAd?.dispose();
   }
-
-  // Future<void> fetchSuggestions(String query) async {
-  //   if (query.isEmpty) {
-  //     suggestions.clear();
-  //     return;
-  //   }
-  //   suggestions.value = await ApiServices.getSuggestions(query);
-  // }
-
-
-  // searchContain(String word) async {
-  //   try {
-  //     dictionaryModel = await ApiServices.getData(word);
-  //   } catch (e) {
-  //     dictionaryModel = null;
-  //   }
-  //
   ///searchContain
   // Future<void> searchContain(String word, String targetLanguage) async {
   //   try {
@@ -203,6 +191,20 @@ class HomeScreenController extends GetxController {
           });
         }).toList());
         await Future.wait(dictionaryModel!.meanings!.expand((meaning) {
+          return meaning.definitions.map((definition) async {
+            definition.example =
+            await translateText(definition.definition, targetLanguage);
+          });
+        }).toList());
+        await Future.wait(
+            dictionaryModel!.phonetics!.map((phonetic) async {
+              if (phonetic.text != null) {
+                phonetic.text = await translateText(phonetic.text!, targetLanguage);
+              }
+            })
+        );
+        dictionaryModel?.word = await translateText(dictionaryModel!.word, targetLanguage);
+        await Future.wait(dictionaryModel!.meanings!.expand((meaning) {
           return [
             translateList(meaning.synonyms ?? [], targetLanguage).then((translatedList) {
               meaning.synonyms = translatedList;
@@ -259,73 +261,11 @@ class HomeScreenController extends GetxController {
       wordDefinition += "\n${index + 1}. ${element.definition}\n";
     }
     return
-    //   Padding(
-    //   padding: const EdgeInsets.symmetric(
-    //     vertical: 10,
-    //   ),
-    //   child: Container(
-    //     decoration: BoxDecoration(
-    //       borderRadius: BorderRadius.circular(20.r),
-    //       color: Colors.white.withOpacity(0.55),
-    //       boxShadow: [
-    //         BoxShadow(
-    //           color: Colors.grey.withOpacity(0.2),
-    //           spreadRadius: 5,
-    //           blurRadius: 7,
-    //           offset: Offset(0, 3), // changes position of shadow
-    //         ),
-    //       ],
-    //     ),
-    //     padding: EdgeInsets.symmetric(horizontal: 10.0.w, vertical: 10.h),
-    //     margin: EdgeInsets.symmetric(
-    //       horizontal: 15.w,
-    //     ),
-    //     child: Material(
-    //       elevation: 2,
-    //       color: Color(0xFFEFEFEF),
-    //       borderRadius: BorderRadius.circular(20),
-    //       child: Padding(
-    //         padding: const EdgeInsets.all(10.0),
-    //         child: Column(
-    //           crossAxisAlignment: CrossAxisAlignment.start,
-    //           children: [
-    //             Text(
-    //               meaning.partOfSpeech,
-    //               style: TextStyle(
-    //                 fontWeight: FontWeight.bold,
-    //                 fontSize: 22,
-    //                 color: Colors.grey,
-    //               ),
-    //             ),
-    //             SizedBox(height: 10),
-    //             Text(
-    //               "Definations : ",
-    //               style: TextStyle(
-    //                 fontWeight: FontWeight.bold,
-    //                 fontSize: 18,
-    //                 color: Colors.black,
-    //               ),
-    //             ),
-    //             Text(
-    //               wordDefinition,
-    //               style: const TextStyle(
-    //                 fontSize: 16,
-    //                 height: 1,
-    //               ),
-    //             ),
-    //             wordRelation("Synonyms", meaning.synonyms),
-    //             wordRelation("Antonyms", meaning.antonyms),
-    //           ],
-    //         ),
-    //       ),
-    //     ),
-    //   ),
-    // );
       Column(
         children: [
           Divider(height: 40.h,),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 10.0.w,),
+            padding: EdgeInsets.symmetric(horizontal: Get.width * 0.028),
                 margin: EdgeInsets.symmetric(
                   horizontal: 10.w,
                 ),
@@ -342,7 +282,7 @@ class HomeScreenController extends GetxController {
                     style:  TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 22.sp,
-                      color: Colors.grey,
+                      color: Colors.black,
                         fontFamily: 'arial'
                     ),
                   ),
@@ -352,7 +292,7 @@ class HomeScreenController extends GetxController {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18.sp,
-                      color: Colors.black,
+                      color: Colors.grey,
                         fontFamily: 'arial'
                     ),
                   ),

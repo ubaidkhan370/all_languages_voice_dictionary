@@ -68,7 +68,7 @@ Widget reusableStack1({
       children: [
         Container(
           height: Get.height * 0.17.h,
-          width: Get.width * 0.29.w,
+          width: Get.width * 0.27.w,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(10),

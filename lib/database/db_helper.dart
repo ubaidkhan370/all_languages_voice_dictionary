@@ -52,7 +52,7 @@ class DbHelper{
     try {
       final id = await db.insert('history_table', item.toMap());
       print('Inserted item with ID: $id');
-      return HistoryModel(text: item.text);
+      return HistoryModel(text: item.text,id: id);
     } catch (e) {
       print('Error inserting history: $e');
       rethrow;
@@ -78,8 +78,8 @@ class DbHelper{
 
   Future<FavoritesModel> insertFavorites(FavoritesModel item)async{
     Database db = await dbInstance.database;
-    await db.insert('favorites_table', item.toMap());
-    return item;
+    final id = await db.insert('favorites_table', item.toMap());
+    return FavoritesModel(text: item.text,id: id);
 
   }
 

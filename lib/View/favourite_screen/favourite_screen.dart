@@ -5,6 +5,8 @@ import 'package:all_languages_voice_dictionary/View/translation_screen/translati
 import 'package:all_languages_voice_dictionary/View/translation_screen/translationscreen_controller.dart';
 import 'package:all_languages_voice_dictionary/controller/dropdownbutton_controller.dart';
 import 'package:all_languages_voice_dictionary/View/meaning_screen/meaning.dart';
+import 'package:all_languages_voice_dictionary/widgets/bottom_navigation_bar.dart';
+import 'package:all_languages_voice_dictionary/widgets/dialog_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -20,10 +22,12 @@ class FavouriteScreen extends StatelessWidget {
       Get.put(TranslationScreenController());
   DropDownButtonController dropDownButtonController =
       Get.put(DropDownButtonController());
+  RxInt currentIndex = 0.obs;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: bottomNavigationBar(currentIndex),
       body: SafeArea(
         child: Column(
           children: [
@@ -108,9 +112,18 @@ class FavouriteScreen extends StatelessWidget {
                                   ),
                                   trailing: IconButton(
                                       onPressed: () {
-                                        favouriteController.deleteFromFavourite(
-                                            //favouriteController.favouritesList[index]
-                                            favoriteTable.text);
+                                        customDialogBox(title: 'delete'
+                                            , content: 'Are you sure you want to delete?',
+                                            context: context,
+                                            voidCallBack: () async {
+                                              if(favoriteTable.id != null){
+                                                await favouriteController.deleteFromFavourite(favoriteTable.text);
+                                                Get.back();
+                                              }
+                                            },
+                                            voidCallBack2: (){
+                                          Get.back();
+                                        });
                                       },
                                       icon: Icon(
                                         Icons.delete,

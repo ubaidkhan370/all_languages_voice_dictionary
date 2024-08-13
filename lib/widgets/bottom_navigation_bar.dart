@@ -10,7 +10,7 @@ Widget bottomNavigationBar(RxInt currentIndex){
         canvasColor: Colors.grey.shade200
     ),
     child: SizedBox(
-      height: Get.height * 0.085,
+      height: Get.height * 0.09,
       child: BottomNavigationBar(
           onTap: (index){
             currentIndex.value = index;
@@ -24,21 +24,21 @@ Widget bottomNavigationBar(RxInt currentIndex){
           items: [
             BottomNavigationBarItem(
                 icon: SizedBox(
-                  height: Get.height * 0.04,
+                  height: Get.height * 0.03,
                   child: Image.asset('assets/home.png',),
                 ),
-                label: ''),
+                label: 'Home'),
             BottomNavigationBarItem(
               icon: SizedBox(
-                  height: Get.height * 0.04,
+                  height: Get.height * 0.03,
                   child: Image.asset('assets/history.png'),),
-              label: '',  // Provide a non-empty label for better accessibility
+              label: 'History',  // Provide a non-empty label for better accessibility
             ),
             BottomNavigationBarItem(
               icon: SizedBox(
-                  height: Get.height * 0.04,
+                  height: Get.height * 0.03,
                   child:Image.asset('assets/setting.png'),),
-              label: '',  // Provide a non-empty label for better accessibility
+              label: 'Setting',  // Provide a non-empty label for better accessibility
             ),
           ],
       ),

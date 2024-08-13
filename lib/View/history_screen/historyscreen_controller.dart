@@ -48,15 +48,16 @@ class HistoryScreenController extends GetxController{
 
 
   void addToHistory(String word) async {
+
     // if(!historyList.contains(word)){
     //   historyList.add(word);
     // }
 
     HistoryModel newItem = HistoryModel(text: word,);
     //await DbHelper.dbInstance.insertHistory(newItem);
-    await historyRepository.insertData(newItem);
+    HistoryModel insertedItem = await historyRepository.insertData(newItem);
     if (!historyList.any((item) => item.text == word)) {
-      historyList.add(newItem);
+      historyList.add(insertedItem);
     }
     update();
   }
