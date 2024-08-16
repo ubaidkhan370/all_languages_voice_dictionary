@@ -20,18 +20,21 @@ class HistoryScreen extends StatefulWidget {
 
   @override
   State<HistoryScreen> createState() => _HistoryScreenState();
+
 }
 
 class _HistoryScreenState extends State<HistoryScreen> {
   HistoryScreenController historyScreenController =
       Get.put(HistoryScreenController());
 
-  HomeScreenController homeScreenController = Get.put(HomeScreenController());
 
-  FavouriteController favouriteController = Get.put(FavouriteController());
+
+  //HomeScreenController homeScreenController = Get.put(HomeScreenController());
+
+  FavouriteController favouriteController = Get.find<FavouriteController>();
 
   DropDownButtonController dropDownButtonController =
-      Get.put(DropDownButtonController());
+      Get.find<DropDownButtonController>();
 
   RxInt currentIndex = 0.obs;
 
@@ -42,30 +45,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
       bottomNavigationBar: bottomNavigationBar(currentIndex),
       backgroundColor: Color(0xFFEFEFEF),
       body:
-          // SafeArea(
-          //   child: ListView.separated(
-          //     padding: EdgeInsets.fromLTRB(12, 0, 12, 30),
-          //     itemCount: historyScreenController.historyList.length,
-          //     itemBuilder: (context, index) {
-          //       final historyTable = historyScreenController.historyList[index];
-          //       return  Padding(
-          //         padding: const EdgeInsets.all(2.0),
-          //         child: Card(
-          //           child: Column(
-          //             mainAxisAlignment: MainAxisAlignment.start,
-          //             crossAxisAlignment: CrossAxisAlignment.start,
-          //             children: [
-          //               Text("${historyTable.id} + ${historyTable.text}"),
-          //             ],
-          //           ),
-          //         ),
-          //       );
-          //     },
-          //     separatorBuilder: (context, index) {
-          //       return SizedBox(height: 10);
-          //     },
-          //   ),
-          // ),
           SafeArea(
         child: Column(
           children: [
@@ -97,7 +76,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
             ),
             Obx(() {
               if (Get.find<HistoryScreenController>().historyList.isEmpty) {
-                return Center(child: Text("No history available"));
+                return Padding(
+                  padding:  EdgeInsets.symmetric(vertical: Get.height * 0.3),
+                  child: Center(child: Text("No history available",style: TextStyle(
+                      fontFamily: 'Arial', color: Colors.grey.shade700,fontSize: 16,fontWeight: FontWeight.w700
+                  ),)),
+                );
               }
               return Expanded(
                 child: ListView.builder(
@@ -118,7 +102,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            homeScreenController.searchContain(
+                            Get.find<HomeScreenController>().searchContain(
                                 historyTable.text, 'en');
                             Get.to(() => Meaning());
                           },
@@ -233,27 +217,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 ),
               );
             }),
-            // Obx(() {
-            //   return Get.find<HistoryScreenController>()
-            //       .adsHelper
-            //       .isNativeAdLoaded
-            //       .value
-            //       ? ConstrainedBox(
-            //     constraints: const BoxConstraints(
-            //       minWidth: 320,
-            //       minHeight: 120,
-            //       maxWidth: 400,
-            //       maxHeight: 350,
-            //     ),
-            //     child: AdWidget(
-            //         ad: Get.find<HistoryScreenController>()
-            //             .adsHelper
-            //             .nativeAd!),
-            //   )
-            //       : SizedBox(
-            //     height: 60,
-            //   );
-            // }),
+
           ],
         ),
       ),

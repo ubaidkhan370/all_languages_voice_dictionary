@@ -1,10 +1,13 @@
 import 'package:all_languages_voice_dictionary/View/history_screen/history_screen.dart';
 import 'package:all_languages_voice_dictionary/View/home_screen/home_screen.dart';
+import 'package:all_languages_voice_dictionary/View/home_screen/homescreen_controller.dart';
+import 'package:all_languages_voice_dictionary/View/setting_screen/setting_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 Widget bottomNavigationBar(RxInt currentIndex){
+  //HomeScreenController homeScreenController = Get.find();
   return Theme(
     data: ThemeData(
         canvasColor: Colors.grey.shade200
@@ -15,19 +18,38 @@ Widget bottomNavigationBar(RxInt currentIndex){
           onTap: (index){
             currentIndex.value = index;
             if(currentIndex.value==0){
-              Get.to(HomeScreen());
-            }else if(currentIndex.value==1){Get.to(HistoryScreen());}else if(currentIndex.value ==2){
-              Get.to(HomeScreen());
+             // Get.to(HomeScreen());
+              if (Get.find<HomeScreenController>().adsHelper.interstitialAd !=
+                  null) {
+                Get.find<HomeScreenController>().adsHelper.showInterstitialAd(nextScreen: '/home');
+                print('interstitial ad load successfuly');
+              } else {
+                print('interstitial ad not loaded');
+              }
+
+            }
+            else if(currentIndex.value==1){
+              //Get.to(HistoryScreen());
+              if (Get.find<HomeScreenController>().adsHelper.interstitialAd !=
+                  null) {
+                Get.find<HomeScreenController>().adsHelper.showInterstitialAd(nextScreen: '/history');
+                print('interstitial ad load successfuly');
+              } else {
+                print('interstitial ad not loaded');
+              }
+            }
+            else if(currentIndex.value ==2){
+              Get.to(SettingScreen());
             }
           },
-          showSelectedLabels: false,
-          items: [
+          showSelectedLabels: true,
+        items: [
             BottomNavigationBarItem(
                 icon: SizedBox(
                   height: Get.height * 0.03,
                   child: Image.asset('assets/home.png',),
                 ),
-                label: 'Home'),
+                label: 'Home',),
             BottomNavigationBarItem(
               icon: SizedBox(
                   height: Get.height * 0.03,

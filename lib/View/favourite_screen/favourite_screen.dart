@@ -16,12 +16,12 @@ import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 class FavouriteScreen extends StatelessWidget {
   FavouriteScreen({super.key});
 
-  HomeScreenController homeScreenController = Get.put(HomeScreenController());
+  //HomeScreenController homeScreenController = Get.put(HomeScreenController());
   FavouriteController favouriteController = Get.put(FavouriteController());
   TranslationScreenController translationScreenController =
       Get.put(TranslationScreenController());
   DropDownButtonController dropDownButtonController =
-      Get.put(DropDownButtonController());
+      Get.find<DropDownButtonController>();
   RxInt currentIndex = 0.obs;
 
   @override
@@ -75,10 +75,19 @@ class FavouriteScreen extends StatelessWidget {
                                 favoriteTable.text.split(RegExp(r'\s+'));
 
                             if (words.length == 1) {
-                              homeScreenController.searchContain(
-                                  //favouriteController.favouritesList[index],
+                              // await dropDownButtonController
+                              //     .languageCode(
+                              //     homeScreenController
+                              //         .dropDownValue2
+                              //         .value);
+                              // dropDownButtonController
+                              //     .getLangCode(
+                              //     homeScreenController
+                              //         .dropDownValue2
+                              //         .value);
+                              Get.find<HomeScreenController>().searchContain(
                                   favoriteTable.text,
-                                  'en');
+                                  Get.find<HomeScreenController>().dropDownValue2.value);
                               Get.to(() => Meaning());
                             } else {
                               String translatedText =

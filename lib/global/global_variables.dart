@@ -55,7 +55,9 @@ class GlobalVariable {
       : // real
   'ca-app-pub-3940256099942544/3986624511'; //test
 
-  static const openAppAndroid = 'ca-app-pub-3940256099942544/3419835294';
+
+  static const openAppAndroid = 'ca-app-pub-3940256099942544/9257395921';
+      //'ca-app-pub-3940256099942544/3419835294';
   static const openAppAdIOS = !kDebugMode
       ? 'ca-app-pub-2874777513435684/5730710659'
       : //real

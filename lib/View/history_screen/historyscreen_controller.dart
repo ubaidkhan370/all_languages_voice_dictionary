@@ -39,6 +39,7 @@ class HistoryScreenController extends GetxController{
     super.onClose();
   }
 
+
   // @override
   // void onReady() {
   //  adsHelper.loadNativeAd();

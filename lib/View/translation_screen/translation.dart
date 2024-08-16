@@ -27,7 +27,7 @@ class TranslationScreen extends StatelessWidget {
   TranslationScreenController translationScreenController =
       Get.put(TranslationScreenController());
   DropDownButtonController dropDownButtonController =
-      Get.put(DropDownButtonController());
+      Get.find<DropDownButtonController>();
   FocusNode? focusNode;
   RxInt currentIndex = 0.obs;
 
@@ -184,7 +184,7 @@ class TranslationScreen extends StatelessWidget {
                             controller:
                                 //homeScreenController.speechToText.isListening ? '${homeScreenController.lastWords}':
                                 //homeScreenController.textEditingController,
-                                translationScreenController
+                                translationScreenController         
                                     .textEditingController,
                             focusNode: focusNode,
                             maxLines: 3,
@@ -211,8 +211,8 @@ class TranslationScreen extends StatelessWidget {
                                 ),
                               ),
                               Obx(() {
-                                String currentText =
-                                    Get.find<HomeScreenController>().currentText.value;
+                                 String currentText =
+                                     translationScreenController.textEditingController.text;
                                 bool isFavourite =
                                     Get.find<FavouriteController>()
                                         .favouritesList

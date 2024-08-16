@@ -83,7 +83,7 @@ class Splash3 extends StatelessWidget {
           ),
           customTextButton(
             voidCallBack: () {
-              Get.to(HomeScreen());
+              Get.to(()=>HomeScreen());
             },
             title: 'Next',
             color: Color(0xFFE64D3D),

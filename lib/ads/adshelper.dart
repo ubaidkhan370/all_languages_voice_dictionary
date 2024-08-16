@@ -328,7 +328,7 @@ class AdsHelper {
       ),
       request: const AdRequest(),
       nativeTemplateStyle: NativeTemplateStyle(
-        templateType: TemplateType.medium,
+        templateType: TemplateType.small,
         // mainBackgroundColor: ThemeHelper.primaryColor,
         // cornerRadius: 10.0,
         callToActionTextStyle: NativeTemplateTextStyle(

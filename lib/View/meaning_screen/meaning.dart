@@ -23,9 +23,9 @@ class Meaning extends StatefulWidget {
 }
 
 class _MeaningState extends State<Meaning> {
-  HomeScreenController homeScreenController = Get.put(HomeScreenController());
+  HomeScreenController homeScreenController =  Get.find<HomeScreenController>();
 
-  DropDownButtonController dropDownButtonController = Get.put(DropDownButtonController());
+  DropDownButtonController dropDownButtonController = Get.find<DropDownButtonController>();
 
   HistoryScreenController historyScreenController = Get.find();
 
@@ -387,14 +387,57 @@ class _MeaningState extends State<Meaning> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           SizedBox(height: Get.height * 0.08,),
-                          Obx(()=>Text(
-                            dropDownButtonController.translatedText.value,
-                            style: const TextStyle(
-                                fontSize: 18,
-                                color: Colors.black,
-                                fontFamily: 'arial'
+                          RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: 'Word:  ',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 18,
+                                    color: Colors.black,
+                                    fontFamily: 'arial',
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: Get.find<HomeScreenController>().currentText.value,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 18,
+                                    color: Colors.grey,
+                                    fontFamily: 'arial',
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),),
+                          ),
+                          Obx(()=>
+                          RichText(
+                            text: TextSpan(
+                              children: [
+                                const TextSpan(
+                                  text: 'Meaning:  ',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 18,
+                                    color: Colors.black,
+                                    fontFamily: 'arial',
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: dropDownButtonController.translatedText.value,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 18,
+                                    color: Colors.grey,
+                                    fontFamily: 'arial',
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          ),
                             SizedBox(height:30.h),
                             Center(
                             child: CircularProgressIndicator(),
@@ -418,56 +461,91 @@ class _MeaningState extends State<Meaning> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Text(Get.find<HomeScreenController>()
-                                      .textEditingController
-                                      .text,style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 22,
-                                      color: Colors.grey,
-                                      fontFamily: 'arial'
-                                  ),),
-                                  Obx(()=>Text(
-                                    dropDownButtonController.translatedText.value,
-                                    style: const TextStyle(
-                                        fontSize: 18,
-                                        color: Colors.black,
-                                        fontFamily: 'arial'
+                                  RichText(
+                                    text: TextSpan(
+                                      children: [
+                                        TextSpan(
+                                          text: 'Word:  ',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 18,
+                                            color: Colors.black,
+                                            fontFamily: 'arial',
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: Get.find<HomeScreenController>().currentText.value,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 18,
+                                            color: Colors.grey,
+                                            fontFamily: 'arial',
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ),),
+                                  ),
+                                  Obx(()=>
+
+                                  RichText(
+                                    text: TextSpan(
+                                      children: [
+                                        TextSpan(
+                                          text: 'Meaning:  ',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 18,
+                                            color: Colors.black,
+                                            fontFamily: 'arial',
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: dropDownButtonController.translatedText.value,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 18,
+                                            color: Colors.grey,
+                                            fontFamily: 'arial',
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  ),
                                 ],
                               ),
-                              Obx((){
-                                String currentText = homeScreenController
-                                    .currentText.value;
-                                bool isFavourite = Get.find<FavouriteController>()
-                                    .favouritesList.contains(currentText);
-                                bool isTextEmpty = currentText.isEmpty;
-                                return IconButton(
-                                  onPressed: () {
-                                    if (currentText.isNotEmpty) {
-                                      if (isFavourite) {
-                                        Get.find<FavouriteController>()
-                                            .deleteFromFavourite(
-                                            currentText
-                                        );
-                                      } else {
-                                        Get.find<FavouriteController>().addToFavourites(
-                                            currentText);
-                                      }
-                                    } else {
-                                      return;
-                                    }
-                                  },
-                                  icon: Icon(
-                                    isFavourite ? Icons.favorite : Icons
-                                        .favorite_border,
-                                    color: isFavourite ? Colors.red : Color(
-                                        0xFFE64D3D),
-                                  ),
-                                  color: isTextEmpty ? Colors.grey : null,
-                                );
-
-                              }),
+                              // Obx((){
+                              //   String currentText = homeScreenController
+                              //       .currentText.value;
+                              //   bool isFavourite = Get.find<FavouriteController>()
+                              //       .favouritesList.contains(currentText);
+                              //   bool isTextEmpty = currentText.isEmpty;
+                              //   return IconButton(
+                              //     onPressed: () async {
+                              //       if (currentText.isNotEmpty) {
+                              //         if (isFavourite) {
+                              //           await Get.find<FavouriteController>()
+                              //               .deleteFromFavourite(
+                              //               currentText
+                              //           );
+                              //         } else {
+                              //           await Get.find<FavouriteController>().addToFavourites(
+                              //               currentText);
+                              //         }
+                              //       } else {
+                              //         return;
+                              //       }
+                              //     },
+                              //     icon: Icon(
+                              //       isFavourite ? Icons.favorite : Icons
+                              //           .favorite_border,
+                              //       color: isFavourite ? Colors.red : Color(
+                              //           0xFFE64D3D),
+                              //     ),
+                              //     color: isTextEmpty ? Colors.grey : null,
+                              //   );
+                              //
+                              // }),
                             ],
                           ),
                         ),
@@ -476,7 +554,7 @@ class _MeaningState extends State<Meaning> {
                   }
                   else {
                     return SizedBox(
-                      height: Get.height * 0.622,
+                      height: Get.height * 0.6,
                       child: Column(
                         children: [
                           // Divider(height: 0.h,),
@@ -488,14 +566,31 @@ class _MeaningState extends State<Meaning> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(Get.find<HomeScreenController>()
-                                        .textEditingController
-                                        .text,style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 18,
-                                      color: Colors.grey,
-                                        fontFamily: 'arial'
-                                    ),),
+                                    RichText(
+                                      text: TextSpan(
+                                        children: [
+                                          TextSpan(
+                                            text: 'Word:  ',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 18,
+                                              color: Colors.black,
+                                              fontFamily: 'arial',
+                                            ),
+                                          ),
+                                          TextSpan(
+                                            text: Get.find<HomeScreenController>().currentText.value,
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 18,
+                                              color: Colors.grey,
+                                              fontFamily: 'arial',
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+
                                     if (homeScreenController.dictionaryModel!.phonetics != null)
                                       ...homeScreenController.dictionaryModel!.phonetics!.map((phonetic) {
                                         return Text(
@@ -507,54 +602,71 @@ class _MeaningState extends State<Meaning> {
                                           ),
                                         );
                                       }).toList(),
-                                    Text(homeScreenController.dictionaryModel!.word,style:TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.grey,
-                                        fontFamily: 'arial'
-                                    )),
+                                    RichText(
+                                      text: TextSpan(
+                                        children: [
+                                          const TextSpan(
+                                            text: ' Meaning:  ',
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                              color: Colors.black,
+                                              fontFamily: 'arial',
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                          TextSpan(
+                                            text: homeScreenController.dictionaryModel!.word,
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.grey,
+                                              fontFamily: 'arial',
+                                            ),
+                                          ),
+
+                                        ],
+                                      ),
+                                    )
+
                                   ],
                                 ),
-                                Obx((){
-                                  String currentText = homeScreenController
-                                      .currentText.value;
-                                  bool isFavourite = Get.find<FavouriteController>()
-                                      .favouritesList.contains(currentText);
-                                  bool isTextEmpty = currentText.isEmpty;
-                                  return IconButton(
-                                    onPressed: () async {
-                                      if (currentText.isNotEmpty) {
-                                        if (isFavourite) {
-                                          await Get.find<FavouriteController>()
-                                              .deleteFromFavourite(
-                                              currentText
-                                          );
-                                          setState(() {
-
-                                          });
-                                          Get.find<FavouriteController>().update();
-                                        } else {
-                                         await Get.find<FavouriteController>().addToFavourites(
-                                              currentText);
-                                         setState(() {
-
-                                         });
-                                         Get.find<FavouriteController>().update();
-                                        }
-                                      } else {
-                                        return;
-                                      }
-
-                                    },
-                                    icon: Icon(
-                                      isFavourite ? Icons.favorite : Icons
-                                          .favorite_border,
-                                      color: isFavourite ? Colors.red : Color(
-                                          0xFFE64D3D),
-                                    ),
-                                    color: isTextEmpty ? Colors.grey : null,
-                                  );
-
-                                }),
+                                // Obx((){
+                                //   String currentText = homeScreenController
+                                //       .currentText.value;
+                                //   bool isFavourite = Get.find<FavouriteController>()
+                                //       .favouritesList.contains(currentText);
+                                //   bool isTextEmpty = currentText.isEmpty;
+                                //   return IconButton(
+                                //     onPressed: () async {
+                                //       if (currentText.isNotEmpty) {
+                                //         if (isFavourite) {
+                                //           await Get.find<FavouriteController>()
+                                //               .deleteFromFavourite(
+                                //               currentText
+                                //           );
+                                //           // setState(() {
+                                //           //
+                                //           // });
+                                //           //Get.find<FavouriteController>().update();
+                                //         } else {
+                                //          await Get.find<FavouriteController>().addToFavourites(
+                                //               currentText);
+                                //          // setState(() {
+                                //          //
+                                //          // });
+                                //          //Get.find<FavouriteController>().update();
+                                //         }
+                                //       }
+                                //     },
+                                //     icon: Icon(
+                                //       isFavourite ? Icons.favorite : Icons
+                                //           .favorite_border,
+                                //       color: isFavourite ? Colors.red : Color(
+                                //           0xFFE64D3D),
+                                //     ),
+                                //     color: isTextEmpty ? Colors.grey : null,
+                                //   );
+                                //
+                                // }),
                               ],
                             ),
                           ),
@@ -606,58 +718,6 @@ class _MeaningState extends State<Meaning> {
                               },
                             ),
                           ),
-                          // Expanded(child: ListView.builder(
-                          //   itemCount: homeScreenController.dictionaryModel!.meanings!.length,
-                          //   itemBuilder: (context, index) {
-                          //     return Container(
-                          //       margin: EdgeInsets.only(right: 20, top: 10, bottom: 10, left: 40),
-                          //       child: Row(
-                          //         children: [
-                          //           Expanded(
-                          //             child: Column(
-                          //               crossAxisAlignment: CrossAxisAlignment.start,
-                          //               children: [
-                          //                 Text(
-                          //                   homeScreenController.dictionaryModel!.meanings![index].partOfSpeech!,
-                          //                   style: TextStyle(
-                          //                       fontWeight: FontWeight.bold,
-                          //                       fontSize: 18,
-                          //                       color: Colors.grey,
-                          //                       fontFamily: 'arial'
-                          //                   ),
-                          //                 ),
-                          //                 SizedBox(
-                          //                   height: Get.height * 0.01,
-                          //                 ),
-                          //                 Text(
-                          //                   homeScreenController.dictionaryModel!.meanings![index].definitions![0].definition!,
-                          //                   style: TextStyle(
-                          //                       fontSize: 16,
-                          //                       color: Colors.black,
-                          //                       fontFamily: 'arial'
-                          //                   ),
-                          //                 ),
-                          //                 SizedBox(
-                          //                   height: Get.height * 0.01,
-                          //                 ),
-                          //                 if (homeScreenController.dictionaryModel!.meanings![index].definitions![0].example != null)
-                          //                   Text(
-                          //                     'Example: ${homeScreenController.dictionaryModel!.meanings![index].definitions![0].example!}',
-                          //                     style: TextStyle(
-                          //                         fontSize: 14,
-                          //                         color: Colors.grey,
-                          //                         fontFamily: 'arial'
-                          //                     ),
-                          //                   ),
-                          //               ],
-                          //             ),
-                          //           ),
-                          //         ],
-                          //       ),
-                          //     );
-                          //   },
-                          // ),)
-
 
                         ],
                       ),

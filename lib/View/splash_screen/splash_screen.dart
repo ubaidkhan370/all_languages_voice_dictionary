@@ -202,6 +202,7 @@
 ///new splashscreen
 
 import 'package:all_languages_voice_dictionary/View/splash_screen/splash2.dart';
+import 'package:all_languages_voice_dictionary/View/splash_screen/splashscreen_controller.dart';
 import 'package:all_languages_voice_dictionary/widgets/textbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -212,6 +213,7 @@ class SplashScreen extends StatelessWidget {
   SplashScreen({Key? key}) : super(key: key);
 
   //final LocalizationController localizationController = Get.put(LocalizationController());
+  SplashController splashController = Get.put(SplashController());
 
   @override
   Widget build(BuildContext context) {
@@ -287,7 +289,7 @@ class SplashScreen extends StatelessWidget {
 
             customTextButton(
                 voidCallBack: () {
-                  Get.to(Splash2());
+                  Get.to(()=>Splash2());
                 },
                 title: 'Next',
                 color: Color(0xFFE64D3D),

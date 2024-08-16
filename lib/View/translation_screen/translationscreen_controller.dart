@@ -12,7 +12,7 @@ import '../../utils/get_language_code.dart';
 
 class TranslationScreenController extends GetxController{
   TextEditingController textEditingController = TextEditingController();
-  HomeScreenController homeScreenController = Get.put(HomeScreenController());
+  HomeScreenController homeScreenController = Get.find<HomeScreenController>();
   DropDownButtonController dropDownButtonController = Get.find();
   AdsHelper adsHelper = AdsHelper();
   FocusNode focusNode = FocusNode();
