@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 import '../../widgets/textbutton.dart';
+import '../home_screen/home_screen.dart';
 
 class Splash2 extends StatelessWidget {
   const Splash2({super.key});
@@ -14,8 +15,11 @@ class Splash2 extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          SizedBox(height: Get.height* 0.17,),
-          Text(
+          Padding(
+            padding: EdgeInsets.only(top:Get.width* 0.14,left: Get.width * 0.6 ),
+            child: TextButton(onPressed: (){Get.to(()=>HomeScreen());}, child: Text('Skip',style: TextStyle(color: Colors.grey),)),
+          ),
+          SizedBox(height: Get.height* 0.14,),          Text(
             'Instant Translation',
             style: TextStyle(
                 fontSize: 18,

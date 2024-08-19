@@ -15,8 +15,11 @@ class Splash3 extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
 
         children: [
-          SizedBox(height: Get.height* 0.17,),
-          Text(
+          Padding(
+            padding: EdgeInsets.only(top:Get.width* 0.15,left: Get.width * 0.6 ),
+            child: TextButton(onPressed: (){Get.to(()=>HomeScreen());}, child: Text('Skip',style: TextStyle(color: Colors.grey),)),
+          ),
+          SizedBox(height: Get.height* 0.1,),          Text(
             'Save The Words',
             style: TextStyle(
                 fontSize: 18,

@@ -43,6 +43,8 @@ Widget bottomNavigationBar(RxInt currentIndex){
             }
           },
           showSelectedLabels: true,
+        selectedItemColor: Colors.blue,
+        unselectedItemColor: Colors.black,
         items: [
             BottomNavigationBarItem(
                 icon: SizedBox(

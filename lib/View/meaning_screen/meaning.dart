@@ -78,21 +78,23 @@ class _MeaningState extends State<Meaning> {
                         padding:
                         EdgeInsets.only(left: 12.0, top: Get.height * 0.03),
                         child: IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.back();
+                          },
                           icon:
-                          // Icon(
-                          //   Icons.drag_handle,
-                          //   color: Colors.white,
-                          //   size: 30,
-                          // )
-                          Image.asset(
-                            'assets/drawer.png',
-                            // height: Get.height * 0.014.h,
-                            // width: Get.width * 0.07.w,
-                            height: Get.height * 0.016,
-                            width: Get.width * 0.08,
-                            //fit: BoxFit.fill,
-                          ),
+                          Icon(
+                            Icons.arrow_back_ios,
+                            color: Colors.white,
+                            size: 30,
+                          )
+                          // Image.asset(
+                          //   'assets/drawer.png',
+                          //   // height: Get.height * 0.014.h,
+                          //   // width: Get.width * 0.07.w,
+                          //   height: Get.height * 0.016,
+                          //   width: Get.width * 0.08,
+                          //   //fit: BoxFit.fill,
+                          // ),
                         ),
                       ),
                       Padding(
@@ -324,406 +326,356 @@ class _MeaningState extends State<Meaning> {
                       // ),
                     ],
                   ),),
-
-                ///Row
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                //   children: [
-                //     Container(
-                //       padding: EdgeInsets.only(
-                //         left: 30.w,
-                //         right: 30.w,
-                //       ),
-                //       margin: EdgeInsets.only(left: 10).r,
-                //       decoration: BoxDecoration(
-                //         borderRadius: BorderRadius.circular(10.r),
-                //         color: Color(0xFFE64D3D),
-                //       ),
-                //       child: customDropDownButton(homeScreenController.dropDownValue1,
-                //               (String? newValue) {
-                //             if (newValue != null) {
-                //               homeScreenController.dropDownValue1.value = newValue;
-                //               //dropDownButtonController.getLangCode(newValue);
-                //               //String? languageCode = getLanguageCode(newValue);
-                //               // if (languageCode != null) {
-                //               //   homeScreenController.searchContain(
-                //               //       homeScreenController.textEditingController
-                //               //           .text, languageCode);
-                //               // }
-                //             }
-                //           },Color(0xFFEFEFEF),),
-                //     ),
-                //     customIconButton(() {
-                //       String temp = homeScreenController.dropDownValue1.value;
-                //       homeScreenController.dropDownValue1.value = homeScreenController.dropDownValue2.value;
-                //       homeScreenController.dropDownValue2.value = temp;
-                //     }, 'assets/swap_arrows.png'),
-                //     Container(
-                //       padding: EdgeInsets.only(
-                //         left: 30,
-                //         right: 30,
-                //       ).r,
-                //       margin: EdgeInsets.only(right: 10.w),
-                //       decoration: BoxDecoration(
-                //         borderRadius: BorderRadius.circular(10.r),
-                //         color: Color(0xFFE64D3D),
-                //       ),
-                //       child: customDropDownButton(homeScreenController.dropDownValue2,
-                //               (String? newValue) {
-                //             if (newValue != null) {
-                //               homeScreenController.dropDownValue2.value = newValue;
-                //               dropDownButtonController.languageCode(newValue);
-                //                dropDownButtonController.getLangCode(newValue);
-                //             }
-                //           },Color(0xFFEFEFEF)),
-                //     )
-                //   ],
-                // ),
-
-                Obx(() {
-                  if (homeScreenController.isLoading.value) {
-                    return
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(height: Get.height * 0.08,),
-                          RichText(
-                            text: TextSpan(
+                SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Obx(() {
+                        if (homeScreenController.isLoading.value) {
+                          return
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                TextSpan(
-                                  text: 'Word:  ',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 18,
-                                    color: Colors.black,
-                                    fontFamily: 'arial',
+                                SizedBox(height: Get.height * 0.08,),
+                                RichText(
+                                  text: TextSpan(
+                                    children: [
+                                      TextSpan(
+                                        text: 'Word:  ',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 18,
+                                          color: Colors.black,
+                                          fontFamily: 'arial',
+                                        ),
+                                      ),
+                                      TextSpan(
+                                        text: Get.find<HomeScreenController>().currentText.value,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 18,
+                                          color: Colors.grey,
+                                          fontFamily: 'arial',
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                                TextSpan(
-                                  text: Get.find<HomeScreenController>().currentText.value,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 18,
-                                    color: Colors.grey,
-                                    fontFamily: 'arial',
+                                Obx(()=>
+                                RichText(
+                                  text: TextSpan(
+                                    children: [
+                                      const TextSpan(
+                                        text: 'Meaning:  ',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 18,
+                                          color: Colors.black,
+                                          fontFamily: 'arial',
+                                        ),
+                                      ),
+                                      TextSpan(
+                                        text: dropDownButtonController.translatedText.value,
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 18,
+                                          color: Colors.grey,
+                                          fontFamily: 'arial',
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
+
+                                ),
+                                  SizedBox(height:30.h),
+                                  Center(
+                                  child: CircularProgressIndicator(),
+                                )
                               ],
-                            ),
-                          ),
-                          Obx(()=>
-                          RichText(
-                            text: TextSpan(
-                              children: [
-                                const TextSpan(
-                                  text: 'Meaning:  ',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 18,
-                                    color: Colors.black,
-                                    fontFamily: 'arial',
-                                  ),
-                                ),
-                                TextSpan(
-                                  text: dropDownButtonController.translatedText.value,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 18,
-                                    color: Colors.grey,
-                                    fontFamily: 'arial',
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-
-                          ),
-                            SizedBox(height:30.h),
-                            Center(
-                            child: CircularProgressIndicator(),
-                          )
-                        ],
-                      );
-                  }
-                  else if (homeScreenController.dictionaryModel == null) {
-                    return Center(
-                      child: Container(
-                        color: Colors.white,
-                        margin:  EdgeInsets.symmetric(vertical:Get.width*0.05 ),
-                        padding:  EdgeInsets.symmetric(horizontal:Get.width*0.1),
-                        width: Get.width,
-                        child: Padding(
-                          padding: EdgeInsets.only(top: Get.width*0.03,bottom: Get.width*0.03),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  RichText(
-                                    text: TextSpan(
-                                      children: [
-                                        TextSpan(
-                                          text: 'Word:  ',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 18,
-                                            color: Colors.black,
-                                            fontFamily: 'arial',
-                                          ),
-                                        ),
-                                        TextSpan(
-                                          text: Get.find<HomeScreenController>().currentText.value,
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 18,
-                                            color: Colors.grey,
-                                            fontFamily: 'arial',
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Obx(()=>
-
-                                  RichText(
-                                    text: TextSpan(
-                                      children: [
-                                        TextSpan(
-                                          text: 'Meaning:  ',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 18,
-                                            color: Colors.black,
-                                            fontFamily: 'arial',
-                                          ),
-                                        ),
-                                        TextSpan(
-                                          text: dropDownButtonController.translatedText.value,
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 18,
-                                            color: Colors.grey,
-                                            fontFamily: 'arial',
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  ),
-                                ],
-                              ),
-                              // Obx((){
-                              //   String currentText = homeScreenController
-                              //       .currentText.value;
-                              //   bool isFavourite = Get.find<FavouriteController>()
-                              //       .favouritesList.contains(currentText);
-                              //   bool isTextEmpty = currentText.isEmpty;
-                              //   return IconButton(
-                              //     onPressed: () async {
-                              //       if (currentText.isNotEmpty) {
-                              //         if (isFavourite) {
-                              //           await Get.find<FavouriteController>()
-                              //               .deleteFromFavourite(
-                              //               currentText
-                              //           );
-                              //         } else {
-                              //           await Get.find<FavouriteController>().addToFavourites(
-                              //               currentText);
-                              //         }
-                              //       } else {
-                              //         return;
-                              //       }
-                              //     },
-                              //     icon: Icon(
-                              //       isFavourite ? Icons.favorite : Icons
-                              //           .favorite_border,
-                              //       color: isFavourite ? Colors.red : Color(
-                              //           0xFFE64D3D),
-                              //     ),
-                              //     color: isTextEmpty ? Colors.grey : null,
-                              //   );
-                              //
-                              // }),
-                            ],
-                          ),
-                        ),
-                      ),
-                    );
-                  }
-                  else {
-                    return SizedBox(
-                      height: Get.height * 0.6,
-                      child: Column(
-                        children: [
-                          // Divider(height: 0.h,),
-                          Container(
-                            margin: EdgeInsets.only(right: 20,top: 10,bottom: 0,left: 40),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                            );
+                        }
+                        else if (homeScreenController.dictionaryModel == null) {
+                          return Center(
+                            child: Container(
+                              color: Colors.white,
+                              margin:  EdgeInsets.symmetric(vertical:Get.width*0.05 ),
+                              padding:  EdgeInsets.symmetric(horizontal:Get.width*0.1),
+                              width: Get.width,
+                              child: Padding(
+                                padding: EdgeInsets.only(top: Get.width*0.03,bottom: Get.width*0.03),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    RichText(
-                                      text: TextSpan(
-                                        children: [
-                                          TextSpan(
-                                            text: 'Word:  ',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 18,
-                                              color: Colors.black,
-                                              fontFamily: 'arial',
-                                            ),
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        RichText(
+                                          text: TextSpan(
+                                            children: [
+                                              TextSpan(
+                                                text: 'Word:  ',
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 18,
+                                                  color: Colors.black,
+                                                  fontFamily: 'arial',
+                                                ),
+                                              ),
+                                              TextSpan(
+                                                text: Get.find<HomeScreenController>().currentText.value,
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 18,
+                                                  color: Colors.grey,
+                                                  fontFamily: 'arial',
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                          TextSpan(
-                                            text: Get.find<HomeScreenController>().currentText.value,
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 18,
-                                              color: Colors.grey,
-                                              fontFamily: 'arial',
-                                            ),
+                                        ),
+                                        Obx(()=>
+
+                                        RichText(
+                                          text: TextSpan(
+                                            children: [
+                                              TextSpan(
+                                                text: 'Meaning:  ',
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 18,
+                                                  color: Colors.black,
+                                                  fontFamily: 'arial',
+                                                ),
+                                              ),
+                                              TextSpan(
+                                                text: dropDownButtonController.translatedText.value,
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 18,
+                                                  color: Colors.grey,
+                                                  fontFamily: 'arial',
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                        ),
+                                      ],
                                     ),
-
-                                    if (homeScreenController.dictionaryModel!.phonetics != null)
-                                      ...homeScreenController.dictionaryModel!.phonetics!.map((phonetic) {
-                                        return Text(
-                                          phonetic.text ?? '',
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.grey,
-                                              fontFamily: 'arial'
-                                          ),
-                                        );
-                                      }).toList(),
-                                    RichText(
-                                      text: TextSpan(
-                                        children: [
-                                          const TextSpan(
-                                            text: ' Meaning:  ',
-                                            style: TextStyle(
-                                              fontSize: 18,
-                                              color: Colors.black,
-                                              fontFamily: 'arial',
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                          ),
-                                          TextSpan(
-                                            text: homeScreenController.dictionaryModel!.word,
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.grey,
-                                              fontFamily: 'arial',
-                                            ),
-                                          ),
-
-                                        ],
-                                      ),
-                                    )
-
+                                    // Obx((){
+                                    //   String currentText = homeScreenController
+                                    //       .currentText.value;
+                                    //   bool isFavourite = Get.find<FavouriteController>()
+                                    //       .favouritesList.contains(currentText);
+                                    //   bool isTextEmpty = currentText.isEmpty;
+                                    //   return IconButton(
+                                    //     onPressed: () async {
+                                    //       if (currentText.isNotEmpty) {
+                                    //         if (isFavourite) {
+                                    //           await Get.find<FavouriteController>()
+                                    //               .deleteFromFavourite(
+                                    //               currentText
+                                    //           );
+                                    //         } else {
+                                    //           await Get.find<FavouriteController>().addToFavourites(
+                                    //               currentText);
+                                    //         }
+                                    //       } else {
+                                    //         return;
+                                    //       }
+                                    //     },
+                                    //     icon: Icon(
+                                    //       isFavourite ? Icons.favorite : Icons
+                                    //           .favorite_border,
+                                    //       color: isFavourite ? Colors.red : Color(
+                                    //           0xFFE64D3D),
+                                    //     ),
+                                    //     color: isTextEmpty ? Colors.grey : null,
+                                    //   );
+                                    //
+                                    // }),
                                   ],
                                 ),
-                                // Obx((){
-                                //   String currentText = homeScreenController
-                                //       .currentText.value;
-                                //   bool isFavourite = Get.find<FavouriteController>()
-                                //       .favouritesList.contains(currentText);
-                                //   bool isTextEmpty = currentText.isEmpty;
-                                //   return IconButton(
-                                //     onPressed: () async {
-                                //       if (currentText.isNotEmpty) {
-                                //         if (isFavourite) {
-                                //           await Get.find<FavouriteController>()
-                                //               .deleteFromFavourite(
-                                //               currentText
-                                //           );
-                                //           // setState(() {
-                                //           //
-                                //           // });
-                                //           //Get.find<FavouriteController>().update();
-                                //         } else {
-                                //          await Get.find<FavouriteController>().addToFavourites(
-                                //               currentText);
-                                //          // setState(() {
-                                //          //
-                                //          // });
-                                //          //Get.find<FavouriteController>().update();
-                                //         }
-                                //       }
-                                //     },
-                                //     icon: Icon(
-                                //       isFavourite ? Icons.favorite : Icons
-                                //           .favorite_border,
-                                //       color: isFavourite ? Colors.red : Color(
-                                //           0xFFE64D3D),
-                                //     ),
-                                //     color: isTextEmpty ? Colors.grey : null,
-                                //   );
-                                //
-                                // }),
+                              ),
+                            ),
+                          );
+                        }
+                        else {
+                          return SizedBox(
+                            height: Get.height * 0.6,
+                            child: Column(
+                              children: [
+                                // Divider(height: 0.h,),
+                                Container(
+                                  margin: EdgeInsets.only(right: 20,top: 10,bottom: 0,left: 40),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          RichText(
+                                            text: TextSpan(
+                                              children: [
+                                                TextSpan(
+                                                  text: 'Word:  ',
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 18,
+                                                    color: Colors.black,
+                                                    fontFamily: 'arial',
+                                                  ),
+                                                ),
+                                                TextSpan(
+                                                  text: Get.find<HomeScreenController>().currentText.value,
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 18,
+                                                    color: Colors.grey,
+                                                    fontFamily: 'arial',
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+
+                                          if (homeScreenController.dictionaryModel!.phonetics != null)
+                                            ...homeScreenController.dictionaryModel!.phonetics!.map((phonetic) {
+                                              return Text(
+                                                phonetic.text ?? '',
+                                                style: TextStyle(
+                                                    fontSize: 16,
+                                                    color: Colors.grey,
+                                                    fontFamily: 'arial'
+                                                ),
+                                              );
+                                            }).toList(),
+                                          RichText(
+                                            text: TextSpan(
+                                              children: [
+                                                const TextSpan(
+                                                  text: ' Meaning:  ',
+                                                  style: TextStyle(
+                                                    fontSize: 18,
+                                                    color: Colors.black,
+                                                    fontFamily: 'arial',
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                ),
+                                                TextSpan(
+                                                  text: homeScreenController.dictionaryModel!.word,
+                                                  style: TextStyle(
+                                                    fontSize: 16,
+                                                    color: Colors.grey,
+                                                    fontFamily: 'arial',
+                                                  ),
+                                                ),
+
+                                              ],
+                                            ),
+                                          )
+
+                                        ],
+                                      ),
+                                      // Obx((){
+                                      //   String currentText = homeScreenController
+                                      //       .currentText.value;
+                                      //   bool isFavourite = Get.find<FavouriteController>()
+                                      //       .favouritesList.contains(currentText);
+                                      //   bool isTextEmpty = currentText.isEmpty;
+                                      //   return IconButton(
+                                      //     onPressed: () async {
+                                      //       if (currentText.isNotEmpty) {
+                                      //         if (isFavourite) {
+                                      //           await Get.find<FavouriteController>()
+                                      //               .deleteFromFavourite(
+                                      //               currentText
+                                      //           );
+                                      //           // setState(() {
+                                      //           //
+                                      //           // });
+                                      //           //Get.find<FavouriteController>().update();
+                                      //         } else {
+                                      //          await Get.find<FavouriteController>().addToFavourites(
+                                      //               currentText);
+                                      //          // setState(() {
+                                      //          //
+                                      //          // });
+                                      //          //Get.find<FavouriteController>().update();
+                                      //         }
+                                      //       }
+                                      //     },
+                                      //     icon: Icon(
+                                      //       isFavourite ? Icons.favorite : Icons
+                                      //           .favorite_border,
+                                      //       color: isFavourite ? Colors.red : Color(
+                                      //           0xFFE64D3D),
+                                      //     ),
+                                      //     color: isTextEmpty ? Colors.grey : null,
+                                      //   );
+                                      //
+                                      // }),
+                                    ],
+                                  ),
+                                ),
+                                // Divider(height: 0.h,),
+
+                                ///Expanded
+                                Expanded(
+                                  child: ListView.builder(
+                                    itemCount:
+                                    homeScreenController.dictionaryModel!.meanings.length,
+                                    itemBuilder: (context, index) {
+                                      return Column(children: [
+                                      homeScreenController.showMeaning(
+                                      homeScreenController
+                                          .dictionaryModel!.meanings[index],),
+                                        if (homeScreenController.dictionaryModel!.meanings![index].definitions![0].example != null)
+                                          Padding(
+                                            padding: EdgeInsets.symmetric(horizontal: Get.width * 0.1),
+                                            child: RichText(
+                                              text: TextSpan(
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: Colors.black,
+                                                  fontFamily: 'arial',
+                                                ),
+                                                children: <TextSpan>[
+                                                  TextSpan(
+                                                    text: 'Example:   ',
+                                                    style: TextStyle(
+                                                      fontWeight: FontWeight.bold,
+                                                      color: Colors.black,
+                                                      fontSize: 14// Custom style for the label
+                                                    ),
+                                                  ),
+                                                  TextSpan(
+                                                    text: homeScreenController.dictionaryModel!.meanings![index].definitions![0].example!,
+                                                    style: TextStyle(
+                                                      fontFamily: 'Arial',
+                                                      color: Colors.black,
+                                                      fontSize: 14,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          )
+
+                                      ],);
+                                    },
+                                  ),
+                                ),
+
                               ],
                             ),
-                          ),
-                          // Divider(height: 0.h,),
-
-                          ///Expanded
-                          Expanded(
-                            child: ListView.builder(
-                              itemCount:
-                              homeScreenController.dictionaryModel!.meanings.length,
-                              itemBuilder: (context, index) {
-                                return Column(children: [
-                                homeScreenController.showMeaning(
-                                homeScreenController
-                                    .dictionaryModel!.meanings[index],),
-                                  if (homeScreenController.dictionaryModel!.meanings![index].definitions![0].example != null)
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(horizontal: Get.width * 0.1),
-                                      child: RichText(
-                                        text: TextSpan(
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            color: Colors.black,
-                                            fontFamily: 'arial',
-                                          ),
-                                          children: <TextSpan>[
-                                            TextSpan(
-                                              text: 'Example:   ',
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.black,
-                                                fontSize: 14// Custom style for the label
-                                              ),
-                                            ),
-                                            TextSpan(
-                                              text: homeScreenController.dictionaryModel!.meanings![index].definitions![0].example!,
-                                              style: TextStyle(
-                                                fontFamily: 'Arial',
-                                                color: Colors.black,
-                                                fontSize: 14,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    )
-
-                                ],);
-                              },
-                            ),
-                          ),
-
-                        ],
-                      ),
-                    );
-                  }
-                }),
+                          );
+                        }
+                      }),
+                    ],
+                  ),
+                ),
               ],
             ),
 

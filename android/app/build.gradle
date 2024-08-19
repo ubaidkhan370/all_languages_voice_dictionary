@@ -23,7 +23,7 @@ if (flutterVersionName == null) {
 }
 
 android {
-    namespace "com.example.all_languages_voice_dictionary"
+    namespace "com.pzapps.alllanguagesdictionary"
     compileSdkVersion 34
     ndkVersion flutter.ndkVersion
 

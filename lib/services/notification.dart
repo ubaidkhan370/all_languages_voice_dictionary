@@ -9,7 +9,7 @@ final localNotifications = FlutterLocalNotificationsPlugin();
 class LocalNotification {
   Future<void> initializeLocalNotifications() async {
     const AndroidInitializationSettings initializationSettingsAndroid =
-    AndroidInitializationSettings('@mipmap/ic_stat_notifications_active');
+    AndroidInitializationSettings('@mipmap/ic_launcher');
 
     await localNotifications
         .resolvePlatformSpecificImplementation<
@@ -82,7 +82,7 @@ Future<void> showLocalNotificationPeriodically() async {
     1,
     'All languages Voice Dictionary',
     'Expand your dictionary with our voice dictionary.',
-    RepeatInterval.everyMinute,
+    RepeatInterval.daily,
     platformChannelSpecifics,
     payload: 'Test',
   );
@@ -98,7 +98,7 @@ Future<NotificationDetails> _notificationDetails() async {
     groupKey: 'com.example.flutter_push_notifications',
     channelDescription: 'channel description',
     priority: Priority.max,
-    icon: 'app_icon',
+    icon: 'dictionary',
     ticker: 'ticker',
     channelShowBadge: true,
     colorized: true,

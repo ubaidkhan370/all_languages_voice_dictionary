@@ -19,7 +19,7 @@ class HistoryScreenController extends GetxController{
 
   @override
   void onReady(){
-    adsHelper.loadNativeAd();
+    //adsHelper.loadNativeAd();
     loadHistory();
     print('Native Add loaded');
     super.onReady();

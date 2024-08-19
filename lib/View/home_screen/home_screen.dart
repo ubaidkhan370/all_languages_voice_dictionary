@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:all_languages_voice_dictionary/View/favourite_screen/favourite_controller.dart';
 import 'package:all_languages_voice_dictionary/View/history_screen/history_screen.dart';
 import 'package:all_languages_voice_dictionary/View/history_screen/historyscreen_controller.dart';
+import 'package:all_languages_voice_dictionary/View/setting_screen/setting_screen.dart';
 import 'package:all_languages_voice_dictionary/View/translation_screen/translation.dart';
 import 'package:all_languages_voice_dictionary/View/meaning_screen/meaning.dart';
 import 'package:all_languages_voice_dictionary/ads/adshelper.dart';
@@ -16,6 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../global/global_variables.dart';
 import '../../model/history_model.dart';
@@ -25,24 +27,89 @@ import '../../widgets/reusable_stack.dart';
 import '../../widgets/speaker_animation.dart';
 import '../favourite_screen/favourite_screen.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   HomeScreenController homeScreenController = Get.put(
     HomeScreenController(),
   );
+  AdsHelper adsHelper = AdsHelper();
+  NativeAd? nativeAd;
+  RxBool isNativeAdLoaded = false.obs;
+  void loadNativeAd() {
+    NativeAd(
+      adUnitId: adsHelper.nativeAdUnitId,
+      listener: NativeAdListener(
+        onAdLoaded: (ad) {
+          debugPrint('$NativeAd loaded.');
+          nativeAd = null;
+          nativeAd = ad as NativeAd;
+          isNativeAdLoaded.value = true;
+          print(ad.nativeAdOptions?.mediaAspectRatio);
+        },
+        onAdFailedToLoad: (ad, error) {
+          // Dispose the ad here to free resources.
+          debugPrint('$NativeAd failed to load: $error');
+          ad.dispose();
+        },
+      ),
+      request: const AdRequest(),
+      nativeTemplateStyle: NativeTemplateStyle(
+        templateType: TemplateType.small,
+        // mainBackgroundColor: ThemeHelper.primaryColor,
+        // cornerRadius: 10.0,
+        callToActionTextStyle: NativeTemplateTextStyle(
+            textColor: Colors.white,
+            // backgroundColor: ThemeHelper.secondaryColor,
+            style: NativeTemplateFontStyle.bold,
+            size: 13.5),
+        primaryTextStyle: NativeTemplateTextStyle(
+          // textColor: ThemeHelper.s,
+          // backgroundColor: ThemeColors.bgColor.withOpacity(0.7),
+            style: NativeTemplateFontStyle.italic,
+            size: 13.5),
+        secondaryTextStyle: NativeTemplateTextStyle(
+          // textColor: ThemeColors.secondary,
+          // backgroundColor: ThemeColors.bgColor.withOpacity(0.7),
+            style: NativeTemplateFontStyle.bold,
+            size: 13),
+        tertiaryTextStyle: NativeTemplateTextStyle(
+          // textColor: ThemeColors.secondary,
+          // backgroundColor: ThemeColors.bgColor.withOpacity(0.7),
+            style: NativeTemplateFontStyle.normal,
+            size: 13),
+      ),
+    ).load();
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    loadNativeAd();
+
+  }
+
   FavouriteController favouriteController = Get.put(FavouriteController());
+
   final ScrollController scrollController = ScrollController();
 
   HistoryScreenController historyScreenController =
       Get.put(HistoryScreenController());
+
   DropDownButtonController dropDownButtonController =
       Get.put(DropDownButtonController());
 
   HistoryModel? historyModel;
 
   BannerAd? bannerAd;
+
   bool _isLoaded = false;
+
   RxInt currentIndex = 0.obs;
 
   List<String> suggestions = [
@@ -61,6 +128,7 @@ class HomeScreen extends StatelessWidget {
   ];
 
   RxInt _page = 0.obs;
+
   @override
   void dispose(){
     homeScreenController.adsHelper.disposeAds();
@@ -148,7 +216,7 @@ class HomeScreen extends StatelessWidget {
                     text: 'Favourites'),
                 drawerCard(
                     onTap: () {
-                      Get.back();
+                      Get.to(()=>SettingScreen());
                     },
                     icon: Icons.settings,
                     text: 'Setting'),
@@ -581,7 +649,14 @@ class HomeScreen extends StatelessWidget {
                     reusableStack1(
                       image: 'assets/share.png',
                       title: 'Share',
-                      onTap: () {},
+                      onTap: () {
+                          String content = Platform.isAndroid
+                              ? 'Hey check out my app at: https://play.google.com/store/apps/details?id=com.pzapps.alllanguagesdictionary'
+                              : 'Hey check out my app at: https://apps.apple.com/us/developer/zia-ur-rahman/id1529429081';
+                          Share.share(content);
+                          print('clicked');
+
+                      },
                     ),
                   ],
                 ),
@@ -590,9 +665,8 @@ class HomeScreen extends StatelessWidget {
                 height: Get.height * 0.03,
               ),
               Obx(
-                () => (homeScreenController.adsHelper.isNativeAdLoaded.value &&
-                        !GlobalVariable.isAppOpenAdShowing.value &&
-                        !GlobalVariable.isInterstitialAdShowing.value)
+                () => (isNativeAdLoaded.value &&
+                        !GlobalVariable.isAppOpenAdShowing.value )
                     ? Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 3, vertical: 2),
@@ -603,7 +677,7 @@ class HomeScreen extends StatelessWidget {
                           //     .toDouble(),
 
                           child: AdWidget(
-                              ad: homeScreenController.adsHelper.nativeAd!),
+                              ad: nativeAd!),
                         ))
                     : (!GlobalVariable.isPurchasedMonthly.value &&
                             !GlobalVariable.isPurchasedYearly.value &&

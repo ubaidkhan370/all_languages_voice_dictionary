@@ -1,9 +1,14 @@
+import 'dart:ui';
+
 import 'package:all_languages_voice_dictionary/View/favourite_screen/favourite_screen.dart';
 import 'package:all_languages_voice_dictionary/View/history_screen/history_screen.dart';
 import 'package:all_languages_voice_dictionary/View/meaning_screen/meaning.dart';
 import 'package:all_languages_voice_dictionary/View/splash_screen/splash3.dart';
 import 'package:all_languages_voice_dictionary/View/splash_screen/splash_screen.dart';
 import 'package:all_languages_voice_dictionary/services/notification.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
@@ -16,9 +21,27 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'View/home_screen/home_screen.dart';
 import 'View/splash_screen/splash2.dart';
 import 'View/translation_screen/translation.dart';
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  ///crashlytics
+  FlutterError.onError = (errorDetails) {
+    FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+  };
+  // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;
+  };
+
+  ///Analytics
+  FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+
   // await LocalNotification.init();
   await Permission.notification.isDenied.then((value) {
     if (value) {
@@ -34,15 +57,6 @@ void main() async {
 
   LocalNotification service = LocalNotification();
   service.initializeLocalNotifications();
-
-  // var delegate = await LocalizationDelegate.create(
-  //   fallbackLocale: 'en_US', // Fallback locale if translation is not available
-  //   supportedLocales: ['en_US', 'es_ES'], // Add more locales as needed
-  //   // preferences: TranslatePreferences(),
-  //   // baseUrl: 'https://your-translation-service.com/',  // URL to Google Translate or custom service
-  //   // //apiKey: 'YOUR_GOOGLE_TRANSLATE_API_KEY',  // API key for Google Translate (optional)
-  // );
-
   runApp( MyApp());
 }
 
@@ -92,21 +106,3 @@ class MyApp extends StatelessWidget {
 }
 //////////third comit
 
-///
-// class AppTranslations extends Translations {
-//   @override
-//   Map<String, Map<String, String>> get keys => {
-//     'en': {
-//       'title': 'Hello',
-//     },
-//     'fr': {
-//       'title': 'Bonjour',
-//     },
-//     'de': {
-//       'title': 'Hallo',
-//     },
-//     'es': {
-//       'title': 'Hola',
-//     },
-//   };
-// }
