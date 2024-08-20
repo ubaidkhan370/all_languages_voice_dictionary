@@ -35,9 +35,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  HomeScreenController homeScreenController = Get.put(
-    HomeScreenController(),
-  );
+  HomeScreenController homeScreenController = Get.find();
   AdsHelper adsHelper = AdsHelper();
   NativeAd? nativeAd;
   RxBool isNativeAdLoaded = false.obs;
@@ -164,21 +162,24 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
+                        height:Get.height*0.1,
                         margin: EdgeInsets.only(top: 30, left: 15),
                         decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: Theme.of(context).colorScheme.primary),
+                            //color: Theme.of(context).colorScheme.primary
+                        ),
                         child: Padding(
                           padding: const EdgeInsets.all(10.0),
-                          child: Icon(
-                            Icons.translate,
-                            size: 40,
-                            color: Colors.white,
-                          ),
+                           child: Image.asset('assets/dictionary.png',fit: BoxFit.cover,),
+                          // Icon(
+                          //   Icons.translate,
+                          //   size: 40,
+                          //   color: Colors.white,
+                          // ),
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 40, left: 15),
+                        padding: const EdgeInsets.only(top: 30, left: 15),
                         child: Text(
                           'All Languages Voice Dictionary',
                           style: TextStyle(
@@ -256,34 +257,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       //color: Colors.blue,
                     ),
-                    // Padding(
-                    //   padding:
-                    //       EdgeInsets.only(left: 12.0, top: Get.height * 0.03),
-                    //   child: IconButton(
-                    //     onPressed: () {
-                    //
-                    //     },
-                    //     icon: Image.asset(
-                    //       'assets/drawer.png',
-                    //       // height: Get.height * 0.014.h,
-                    //       // width: Get.width * 0.07.w,
-                    //       height: Get.height * 0.016,
-                    //       width: Get.width * 0.08,
-                    //       //fit: BoxFit.fill,
-                    //     ),
-                    //   ),
-                    // ),
-                    // Padding(
-                    //   padding: EdgeInsets.symmetric(
-                    //       vertical: Get.height * 0.09,
-                    //       horizontal: Get.width * 0.2),
-                    //   child: Text('ALL LANGUAGES DICTIONARY',
-                    //       style: TextStyle(
-                    //           fontFamily: 'Arial',
-                    //           fontSize: 14,
-                    //           fontWeight: FontWeight.w600,
-                    //           color: Colors.white)),
-                    // ),
                     Padding(
                       padding: EdgeInsets.only(top: Get.height * 0.04),
                       child: Row(
@@ -404,42 +377,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                     contentPadding: EdgeInsets.only(top: 20),
                                     suffixIcon: Wrap(
                                       children: [
-                                        // Padding(
-                                        //   padding: EdgeInsets
-                                        //       .only(bottom: 50)
-                                        //       .r,
-                                        //   child: Padding(
-                                        //     padding: EdgeInsets
-                                        //         .only(top: 8.0, right: 10)
-                                        //         .r,
-                                        //     child:
-                                        //     ///favourite-button
-                                        //     IconButton(
-                                        //       onPressed: () {
-                                        //         if (currentText.isNotEmpty) {
-                                        //           if (isFavourite) {
-                                        //             favouriteController
-                                        //                 .deleteFromFavourite(
-                                        //                 currentText
-                                        //             );
-                                        //           } else {
-                                        //             favouriteController.addToFavourites(
-                                        //                 currentText);
-                                        //           }
-                                        //         } else {
-                                        //           return;
-                                        //         }
-                                        //       },
-                                        //       icon: Icon(
-                                        //         isFavourite ? Icons.favorite : Icons
-                                        //             .favorite_border,
-                                        //         color: isFavourite ? Colors.red : Color(
-                                        //             0xFFE64D3D),
-                                        //       ),
-                                        //       color: isTextEmpty ? Colors.grey : null,
-                                        //     ),
-                                        //   ),
-                                        // ),
                                         IconButton(
                                           onPressed: () {
                                             if (homeScreenController
@@ -602,7 +539,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             //     ?.show();
                             homeScreenController.adsHelper
                                 .showInterstitialAd(nextScreen: '/translation');
-                            print('interstitial ad load successfuly');
+                            print('interstitial ad load successfully');
                           } else {
                             print('interstitial ad not loaded');
                           }

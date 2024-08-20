@@ -21,16 +21,23 @@ import '../../widgets/speaker_animation.dart';
 import '../history_screen/historyscreen_controller.dart';
 import '../home_screen/home_screen.dart';
 
-class TranslationScreen extends StatelessWidget {
+class TranslationScreen extends StatefulWidget {
   TranslationScreen({super.key});
 
+  @override
+  State<TranslationScreen> createState() => _TranslationScreenState();
+}
+
+class _TranslationScreenState extends State<TranslationScreen> {
   //HomeScreenController homeScreenController = Get.put(HomeScreenController());
-  //FavouriteController favouriteController = Get.put(FavouriteController());
   TranslationScreenController translationScreenController =
       Get.put(TranslationScreenController());
+
   DropDownButtonController dropDownButtonController =
       Get.find<DropDownButtonController>();
+
   FocusNode? focusNode;
+
   RxInt currentIndex = 0.obs;
 
   @override
@@ -222,20 +229,29 @@ class TranslationScreen extends StatelessWidget {
                                   Obx(() {
                                     String currentText =
                                         translationScreenController.textEditingController.text;
-                                    bool isFavourite =
-                                    Get.find<FavouriteController>()
-                                        .favouritesList
-                                        .contains(currentText);
+                                    // bool isFavourite =
+                                    // Get.find<FavouriteController>()
+                                    //     .favouritesList
+                                    //     .contains(currentText);
+                                    final bool isFavourite =
+                                    Get.find<FavouriteController>().isFavourite(currentText);
                                     bool isTextEmpty = currentText.isEmpty;
                                     return IconButton(
-                                      onPressed: () {
+                                      onPressed: () async {
                                         if (currentText.isNotEmpty) {
                                           if (isFavourite) {
-                                            Get.find<FavouriteController>()
+                                            await Get.find<FavouriteController>()
                                                 .deleteFromFavourite(currentText);
+                                            setState(() {
+
+                                            });
                                           } else {
-                                            Get.find<FavouriteController>()
+                                            await Get.find<FavouriteController>()
                                                 .addToFavourites(currentText);
+                                            setState(() {
+
+                                            });
+                                            Get.find<FavouriteController>().update();
                                           }
                                         } else {
                                           return;
@@ -321,10 +337,12 @@ class TranslationScreen extends StatelessWidget {
                               Obx(() {
                                 String currentText =
                                     translationScreenController.translatedText.value;
-                                bool isFavourite =
-                                Get.find<FavouriteController>()
-                                    .favouritesList
-                                    .contains(currentText);
+                                // bool isFavourite =
+                                // Get.find<FavouriteController>()
+                                //     .favouritesList
+                                //     .contains(currentText);
+                                final bool isFavourite =
+                                Get.find<FavouriteController>().isFavourite(currentText);
                                 bool isTextEmpty = currentText.isEmpty;
                                 return IconButton(
                                   onPressed: () {

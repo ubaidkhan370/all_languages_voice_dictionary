@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 Widget bottomNavigationBar(RxInt currentIndex){
-  //HomeScreenController homeScreenController = Get.find();
+  HomeScreenController homeScreenController = Get.find();
   return Theme(
     data: ThemeData(
         canvasColor: Colors.grey.shade200
@@ -19,9 +19,9 @@ Widget bottomNavigationBar(RxInt currentIndex){
             currentIndex.value = index;
             if(currentIndex.value==0){
              // Get.to(HomeScreen());
-              if (Get.find<HomeScreenController>().adsHelper.interstitialAd !=
+              if (homeScreenController.adsHelper.interstitialAd !=
                   null) {
-                Get.find<HomeScreenController>().adsHelper.showInterstitialAd(nextScreen: '/home');
+                homeScreenController.adsHelper.showInterstitialAd(nextScreen: '/home');
                 print('interstitial ad load successfuly');
               } else {
                 print('interstitial ad not loaded');
@@ -30,9 +30,9 @@ Widget bottomNavigationBar(RxInt currentIndex){
             }
             else if(currentIndex.value==1){
               //Get.to(HistoryScreen());
-              if (Get.find<HomeScreenController>().adsHelper.interstitialAd !=
+              if (homeScreenController.adsHelper.interstitialAd !=
                   null) {
-                Get.find<HomeScreenController>().adsHelper.showInterstitialAd(nextScreen: '/history');
+                homeScreenController.adsHelper.showInterstitialAd(nextScreen: '/history');
                 print('interstitial ad load successfuly');
               } else {
                 print('interstitial ad not loaded');

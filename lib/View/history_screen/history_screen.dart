@@ -77,10 +77,16 @@ class _HistoryScreenState extends State<HistoryScreen> {
             Obx(() {
               if (Get.find<HistoryScreenController>().historyList.isEmpty) {
                 return Padding(
-                  padding:  EdgeInsets.symmetric(vertical: Get.height * 0.3),
-                  child: Center(child: Text("No history available",style: TextStyle(
-                      fontFamily: 'Arial', color: Colors.grey.shade700,fontSize: 16,fontWeight: FontWeight.w700
-                  ),)),
+                  padding:  EdgeInsets.symmetric(vertical: Get.height * 0.2),
+                  child: Column(
+                    crossAxisAlignment:CrossAxisAlignment.center,
+                    children: [
+                      Image.asset('assets/nodata.gif'),
+                      Center(child: Text("No history available",style: TextStyle(
+                          fontFamily: 'Arial', color: Colors.grey.shade700,fontSize: 16,fontWeight: FontWeight.w700
+                      ),)),
+                    ],
+                  ),
                 );
               }
               return Expanded(

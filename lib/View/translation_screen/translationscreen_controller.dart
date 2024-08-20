@@ -80,7 +80,7 @@ class TranslationScreenController extends GetxController{
     textEditingController.clear();
     textEditingController.dispose();
     focusNode.dispose();
-    translatedText.close();
+    translatedText.value= '';
     super.onClose();
   }
 

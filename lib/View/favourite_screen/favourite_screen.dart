@@ -61,8 +61,22 @@ class FavouriteScreen extends StatelessWidget {
               height: Get.height * 0.04,
             ),
             Obx(() {
+              if (Get.find<FavouriteController>().favouritesList.isEmpty) {
+                return Padding(
+                  padding:  EdgeInsets.symmetric(vertical: Get.height * 0.2),
+                  child: Column(
+                    crossAxisAlignment:CrossAxisAlignment.center,
+                    children: [
+                      Image.asset('assets/nodata.gif'),
+                      Center(child: Text("No Favorites available",style: TextStyle(
+                          fontFamily: 'Arial', color: Colors.grey.shade700,fontSize: 16,fontWeight: FontWeight.w700
+                      ),)),
+                    ],
+                  ),
+                );
+              }else
               return Expanded(
-                child: ListView.builder(
+                child: ListView.builder(reverse: true,
                   itemCount: favouriteController.favouritesList.length,
                   itemBuilder: (context, index) {
                     final favoriteTable =

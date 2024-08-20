@@ -23,7 +23,7 @@ class Splash4 extends StatelessWidget {
             padding: EdgeInsets.only(top:Get.width* 0.14,left: Get.width * 0.6 ),
             child: TextButton(onPressed: (){Get.to(()=>HomeScreen());}, child: Text('Skip',style: TextStyle(color: Colors.grey),)),
           ),
-          SizedBox(height: Get.height* 0.14,),
+          SizedBox(height: Get.height* 0.08,),
           Text(
             'Set Your Primary Language',
             style: TextStyle(
@@ -38,8 +38,8 @@ class Splash4 extends StatelessWidget {
               bottom: Get.height * 0.03,
             ),
             child: Text(
-                'Our Translation feature makes it simple to understand and language.\n'
-                    '        Just enter your text and get a clear translation in seconds',
+                'Selective your native language from here.\n'
+                    'You can change it anytime inside the app',
                 style: TextStyle(
                     fontSize: 11,
                     fontFamily: 'Arial',
@@ -49,8 +49,8 @@ class Splash4 extends StatelessWidget {
           Stack(
             children: [
               Container(
-                margin: EdgeInsets.only(left: 15,right: 15),
-                height: Get.height * 0.28,
+                margin: EdgeInsets.only(left: 30,right: 30,),
+                height: Get.height * 0.25,
                 width: Get.width,
                 decoration: BoxDecoration(
                   color: Color(0xFFE64D3D),
@@ -66,10 +66,10 @@ class Splash4 extends StatelessWidget {
                   children: [
                     Container(
                       padding: EdgeInsets.only(
-                        left: 30,
-                        right: 30
+                        left: 15,
+                        right: 15,
                       ),
-                      margin: EdgeInsets.only(left: 20),
+                      margin: EdgeInsets.only(left: 40),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: Color(0xFFEFEFEF),
@@ -95,10 +95,10 @@ class Splash4 extends StatelessWidget {
                     ),
                     Container(
                       padding: EdgeInsets.only(
-                        left: 30,
-                        right: 30,
+                        left: 15,
+                        right: 15,
                       ),
-                      margin: EdgeInsets.only(right: 20),
+                      margin: EdgeInsets.only(right: 40),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: Color(0xFFEFEFEF),
