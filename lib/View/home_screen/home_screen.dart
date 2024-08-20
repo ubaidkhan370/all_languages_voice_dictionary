@@ -313,7 +313,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 //           .text, languageCode);
                                 // }
                               }
-                            }, Color(0xFFEFEFEF)),
+                            }, Color(0xFFEFEFEF),Color(0xFFE64D3D)),
                           ),
                           customIconButton(
                             () {
@@ -343,7 +343,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       newValue;
                                 }
                               },
-                              Color(0xFFFFFFFF),
+                              Color(0xFFFFFFFF),Color(0xFFE64D3D)
                             ),
                           )
                         ],

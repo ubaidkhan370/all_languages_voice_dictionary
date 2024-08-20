@@ -115,7 +115,7 @@ class TranslationScreen extends StatelessWidget {
                                 Get.find<HomeScreenController>().dropDownValue1.value =
                                     newValue;
                               }
-                            }, Color(0xFFEFEFEF)),
+                            }, Color(0xFFEFEFEF),Color(0xFFE64D3D)),
                           ),
                           customIconButton(
                             () {
@@ -153,7 +153,7 @@ class TranslationScreen extends StatelessWidget {
                                       .value = translatedText;
                                 }
                               },
-                              Color(0xFFFFFFFF),
+                              Color(0xFFFFFFFF),Color(0xFFE64D3D)
                             ),
                           )
                         ],

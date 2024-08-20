@@ -4,6 +4,7 @@ import 'package:all_languages_voice_dictionary/View/favourite_screen/favourite_s
 import 'package:all_languages_voice_dictionary/View/history_screen/history_screen.dart';
 import 'package:all_languages_voice_dictionary/View/meaning_screen/meaning.dart';
 import 'package:all_languages_voice_dictionary/View/splash_screen/splash3.dart';
+import 'package:all_languages_voice_dictionary/View/splash_screen/splash4.dart';
 import 'package:all_languages_voice_dictionary/View/splash_screen/splash_screen.dart';
 import 'package:all_languages_voice_dictionary/services/notification.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';

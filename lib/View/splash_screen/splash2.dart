@@ -1,4 +1,5 @@
 import 'package:all_languages_voice_dictionary/View/splash_screen/splash3.dart';
+import 'package:all_languages_voice_dictionary/View/splash_screen/splash4.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -17,7 +18,7 @@ class Splash2 extends StatelessWidget {
         children: [
           Padding(
             padding: EdgeInsets.only(top:Get.width* 0.14,left: Get.width * 0.6 ),
-            child: TextButton(onPressed: (){Get.to(()=>HomeScreen());}, child: Text('Skip',style: TextStyle(color: Colors.grey),)),
+            child: TextButton(onPressed: (){Get.to(()=>Splash4());}, child: Text('Skip',style: TextStyle(color: Colors.grey),)),
           ),
           SizedBox(height: Get.height* 0.14,),          Text(
             'Instant Translation',

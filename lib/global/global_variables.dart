@@ -43,20 +43,20 @@ class GlobalVariable {
       : //real
   'ca-app-pub-3940256099942544/2934735716'; // testing
 
-  static const interAdAndroid = 'ca-app-pub-6941637095433882/4308144009';
+  static const interAdAndroid = 'ca-app-pub-3940256099942544/1033173712';
   static const interAdIOS = !kDebugMode
       ? 'ca-app-pub-6941637095433882/4308144009'
       : // real
   'ca-app-pub-3940256099942544/4411468910'; // test
 
-  static const nativeAdAndroid = 'ca-app-pub-6941637095433882/8720541042';
+  static const nativeAdAndroid = 'ca-app-pub-3940256099942544/2247696110';
   static const nativeAdIOS = !kDebugMode
       ? 'ca-app-pub-6941637095433882/8720541042'
       : // real
   'ca-app-pub-3940256099942544/3986624511'; //test
 
 
-  static const openAppAndroid = 'ca-app-pub-6941637095433882/1712035591';
+  static const openAppAndroid = 'ca-app-pub-3940256099942544/9257395921';
       //'ca-app-pub-3940256099942544/3419835294';
   static const openAppAdIOS = !kDebugMode
       ? 'ca-app-pub-6941637095433882/1712035591'

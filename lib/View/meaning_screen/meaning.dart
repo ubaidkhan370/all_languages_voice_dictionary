@@ -134,7 +134,7 @@ class _MeaningState extends State<Meaning> {
                                       //           .text, languageCode);
                                       // }
                                     }
-                                  }, Color(0xFFEFEFEF)),
+                                  }, Color(0xFFEFEFEF),Color(0xFFE64D3D)),
                             ),
                             customIconButton(
                                   () {
@@ -165,7 +165,7 @@ class _MeaningState extends State<Meaning> {
                                       dropDownButtonController.getLangCode(newValue);
                                     }
                                   },
-                                Color(0xFFFFFFFF),
+                                Color(0xFFFFFFFF),Color(0xFFE64D3D)
                               ),
                             )
                           ],

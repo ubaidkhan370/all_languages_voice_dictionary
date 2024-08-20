@@ -1,4 +1,5 @@
 import 'package:all_languages_voice_dictionary/View/home_screen/home_screen.dart';
+import 'package:all_languages_voice_dictionary/View/splash_screen/splash4.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -17,7 +18,7 @@ class Splash3 extends StatelessWidget {
         children: [
           Padding(
             padding: EdgeInsets.only(top:Get.width* 0.15,left: Get.width * 0.6 ),
-            child: TextButton(onPressed: (){Get.to(()=>HomeScreen());}, child: Text('Skip',style: TextStyle(color: Colors.grey),)),
+            child: TextButton(onPressed: (){Get.to(()=>Splash4());}, child: Text('Skip',style: TextStyle(color: Colors.grey),)),
           ),
           SizedBox(height: Get.height* 0.1,),          Text(
             'Save The Words',
@@ -86,7 +87,7 @@ class Splash3 extends StatelessWidget {
           ),
           customTextButton(
             voidCallBack: () {
-              Get.to(()=>HomeScreen());
+              Get.to(()=>Splash4());
             },
             title: 'Next',
             color: Color(0xFFE64D3D),

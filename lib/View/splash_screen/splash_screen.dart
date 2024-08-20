@@ -202,6 +202,7 @@
 ///new splashscreen
 
 import 'package:all_languages_voice_dictionary/View/splash_screen/splash2.dart';
+import 'package:all_languages_voice_dictionary/View/splash_screen/splash4.dart';
 import 'package:all_languages_voice_dictionary/View/splash_screen/splashscreen_controller.dart';
 import 'package:all_languages_voice_dictionary/widgets/textbutton.dart';
 import 'package:flutter/material.dart';
@@ -224,7 +225,7 @@ class SplashScreen extends StatelessWidget {
           children: [
             Padding(
               padding: EdgeInsets.only(top:Get.width* 0.05,left: Get.width * 0.6 ),
-              child: TextButton(onPressed: (){Get.to(()=>HomeScreen());}, child: Text('Skip',style: TextStyle(color: Colors.grey),)),
+              child: TextButton(onPressed: (){Get.to(()=>Splash4());}, child: Text('Skip',style: TextStyle(color: Colors.grey),)),
             ),
             SizedBox(height: Get.height* 0.1,),
             Column(
