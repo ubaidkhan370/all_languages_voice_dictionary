@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // class SplashController extends GetxController{
 //
@@ -27,7 +28,9 @@ class SplashController extends GetxController {
   void onReady() {
     super.onReady();
     checkNotificationSetting();
+    //_checkLanguageSelectionStatus();
   }
+
 
   void checkNotificationSetting() async {
     bool res = await DbHelper.dbInstance.getNotificationSetting();
@@ -41,4 +44,24 @@ class SplashController extends GetxController {
     }
     /// If the value is false, do nothing (notifications are disabled)
   }
+
+  // void _checkLanguageSelectionStatus() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   bool? seenLanguageSelection =
+  //       prefs.getBool('seenLanguageSelection') ?? false;
+  //   bool? seenOnboarding = prefs.getBool('seenOnboarding') ?? false;
+  //
+  //   if (seenLanguageSelection) {
+  //     if (seenOnboarding) {
+  //       Get.offNamed('/dash');
+  //       print(seenOnboarding);
+  //     } else {
+  //       Get.offNamed('/onBoardingScreen');
+  //       print(seenOnboarding);
+  //     }
+  //   } else {
+  //     Get.offNamed('/languageLocalizationScreen');
+  //     print(seenOnboarding);
+  //   }
+  // }
 }

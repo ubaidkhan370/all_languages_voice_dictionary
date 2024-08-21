@@ -335,7 +335,7 @@ class _MeaningState extends State<Meaning> {
                             Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                SizedBox(height: Get.height * 0.08,),
+                                SizedBox(height: Get.height * 0.07,),
                                 RichText(
                                   text: TextSpan(
                                     children: [

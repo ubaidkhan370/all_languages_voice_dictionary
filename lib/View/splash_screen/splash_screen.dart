@@ -299,12 +299,13 @@ class SplashScreen extends StatelessWidget {
               ),
               customTextButton(
                   voidCallBack: () {
-                    Get.to(()=>Splash2());
+                    //Get.to(()=>Splash2());
                   },
                   title: 'Next',
                   color: Color(0xFFE64D3D),
 
               ),
+
             ],
           ),
         ),

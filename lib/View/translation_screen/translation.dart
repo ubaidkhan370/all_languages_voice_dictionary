@@ -237,16 +237,13 @@ class _TranslationScreenState extends State<TranslationScreen> {
                                     Get.find<FavouriteController>().isFavourite(currentText);
                                     bool isTextEmpty = currentText.isEmpty;
                                     return IconButton(
-                                      onPressed: () async {
+                                      onPressed: ()  {
                                         if (currentText.isNotEmpty) {
                                           if (isFavourite) {
-                                            await Get.find<FavouriteController>()
+                                             Get.find<FavouriteController>()
                                                 .deleteFromFavourite(currentText);
-                                            setState(() {
-
-                                            });
                                           } else {
-                                            await Get.find<FavouriteController>()
+                                             Get.find<FavouriteController>()
                                                 .addToFavourites(currentText);
                                             setState(() {
 

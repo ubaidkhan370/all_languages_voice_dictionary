@@ -76,7 +76,7 @@ class FavouriteScreen extends StatelessWidget {
                 );
               }else
               return Expanded(
-                child: ListView.builder(reverse: true,
+                child: ListView.builder(
                   itemCount: favouriteController.favouritesList.length,
                   itemBuilder: (context, index) {
                     final favoriteTable =

@@ -6,6 +6,7 @@ import 'package:all_languages_voice_dictionary/View/meaning_screen/meaning.dart'
 import 'package:all_languages_voice_dictionary/View/splash_screen/splash3.dart';
 import 'package:all_languages_voice_dictionary/View/splash_screen/splash4.dart';
 import 'package:all_languages_voice_dictionary/View/splash_screen/splash_screen.dart';
+import 'package:all_languages_voice_dictionary/onboarding/onboading_screen.dart';
 import 'package:all_languages_voice_dictionary/services/notification.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -16,6 +17,7 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:translator/translator.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -58,11 +60,15 @@ void main() async {
 
   LocalNotification service = LocalNotification();
   service.initializeLocalNotifications();
-  runApp( MyApp());
+
+  final prefs = await SharedPreferences.getInstance();
+  final onboarding = prefs.getBool('onboarding')??false;
+  runApp( MyApp(onboarding: onboarding,));
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
+  final bool onboarding;
+  MyApp({super.key, this.onboarding=false});
 
   // This widget is the root of your application.
   @override
@@ -86,10 +92,10 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: SplashScreen(),
+        home: OnboardingScreen(),
         initialRoute: '/',
         getPages:[
-          GetPage(name: '/',page: ()=>SplashScreen()),
+          GetPage(name: '/',page: ()=>onboarding?HomeScreen():OnboardingScreen()),
           GetPage(name: '/splash2',page: ()=>Splash2()),
           GetPage(name: '/splash3',page: ()=>Splash3()),
           GetPage(name: '/home',page: ()=>HomeScreen()),
@@ -97,7 +103,7 @@ class MyApp extends StatelessWidget {
           GetPage(name: '/favourite',page: ()=>FavouriteScreen()),
           GetPage(name: '/history',page: ()=>HistoryScreen()),
           GetPage(name: '/meaning',page: ()=>Meaning()),
-          GetPage(name: '/history',page: ()=>HistoryScreen()),
+          //GetPage(name: '/history',page: ()=>HistoryScreen()),
         ],
         debugShowCheckedModeBanner: false,
       ),
