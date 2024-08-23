@@ -26,6 +26,7 @@ import '../../widgets/iconbutton.dart';
 import '../../widgets/reusable_stack.dart';
 import '../../widgets/speaker_animation.dart';
 import '../favourite_screen/favourite_screen.dart';
+import '../language/LanguageSelectionScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
@@ -35,7 +36,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  HomeScreenController homeScreenController = Get.find();
+  HomeScreenController homeScreenController = Get.put(HomeScreenController());
   AdsHelper adsHelper = AdsHelper();
   NativeAd? nativeAd;
   RxBool isNativeAdLoaded = false.obs;
@@ -111,18 +112,18 @@ class _HomeScreenState extends State<HomeScreen> {
   RxInt currentIndex = 0.obs;
 
   List<String> suggestions = [
-    'apple',
-    'banana',
-    'cherry',
-    'date',
-    'elderberry',
-    'fig',
-    'grape',
-    'honeydew',
-    'orange'
-        'queen',
-    'kingdom',
-    'viking',
+    'apple'.tr,
+    'banana'.tr,
+    'cherry'.tr,
+    'date'.tr,
+    'elderberry'.tr,
+    'fig'.tr,
+    'grape'.tr,
+    'honeydew'.tr,
+    'orange'.tr,
+        'queen'.tr,
+    'kingdom'.tr,
+    'viking'.tr,
   ];
 
   RxInt _page = 0.obs;
@@ -137,12 +138,12 @@ class _HomeScreenState extends State<HomeScreen> {
     return WillPopScope(
       onWillPop: () async {
         final result = await customDialogBox(
-            title: 'Exit App',
+            title: 'Exit App'.tr,
             voidCallBack: () {
               exit(0);
             },
             voidCallBack2: Get.back,
-            content: 'Are you sure to exit from App?',
+            content: 'Are you sure to exit from App?'.tr,
             context: context);
         return result;
       },
@@ -181,7 +182,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Padding(
                         padding: const EdgeInsets.only(top: 30, left: 15),
                         child: Text(
-                          'All Languages Voice Dictionary',
+                          'All Languages Voice Dictionary'.tr,
                           style: TextStyle(
                               fontSize: 22,
                               color: Colors.white,
@@ -196,36 +197,42 @@ class _HomeScreenState extends State<HomeScreen> {
                       Get.back();
                     },
                     icon: Icons.home,
-                    text: 'Home'),
+                    text: 'Home'.tr),
+                drawerCard(
+                    onTap: () {
+                      Get.to(()=>LanguageSelectionScreen());
+                    },
+                    icon: Icons.home,
+                    text: 'Select Languages'.tr),
                 drawerCard(
                     onTap: () {
                       Get.to(TranslationScreen());
                     },
                     icon: Icons.translate,
-                    text: 'Translation'),
+                    text: 'Translation'.tr),
                 drawerCard(
                     onTap: () {
                       Get.to(HistoryScreen());
                     },
                     icon: Icons.history,
-                    text: 'History'),
+                    text: 'History'.tr),
                 drawerCard(
                     onTap: () {
                       Get.to(FavouriteScreen());
                     },
                     icon: Icons.favorite,
-                    text: 'Favourites'),
+                    text: 'Favourites'.tr),
                 drawerCard(
                     onTap: () {
                       Get.to(()=>SettingScreen());
                     },
                     icon: Icons.settings,
-                    text: 'Setting'),
+                    text: 'Setting'.tr),
               ],
             )),
         appBar: AppBar(
-          title: const Text(
-            'ALL LANGUAGES DICTIONARY',
+          title:  Text(
+            'ALL LANGUAGES DICTIONARY'.tr,
             style: TextStyle(
                 fontFamily: 'Arial',
                 fontSize: 15,
@@ -372,9 +379,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                     border: InputBorder.none,
                                     hintText: focusNode.hasFocus
                                         ? ''
-                                        : 'Write Something...',
+                                        : 'Write Something...'.tr,
                                     alignLabelWithHint: true,
-                                    contentPadding: EdgeInsets.only(top: 20),
+                                    contentPadding: EdgeInsets.only(top: 20,left: 15,right: 15),
                                     suffixIcon: Wrap(
                                       children: [
                                         IconButton(
@@ -389,7 +396,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   .stopListening();
                                             }
                                           },
-                                          tooltip: 'Listen',
+                                          tooltip: 'Listen'.tr,
                                           icon: Image.asset(
                                             'assets/speaker.png',
                                             height: Get.height * 0.035.h,
@@ -494,7 +501,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Features',
+                      'Features'.tr,
                       style: TextStyle(
                         fontFamily: 'Arial',
                         fontSize: 16,
@@ -511,7 +518,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 curve: Curves.fastLinearToSlowEaseIn);
                           }
                         },
-                        child: Text('View all',
+                        child: Text('View all'.tr,
                             style: TextStyle(
                               fontFamily: 'Arial',
                               fontSize: 14,
@@ -531,7 +538,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     reusableStack1(
                         image: 'assets/translations.png',
-                        title: 'Translations',
+                        title: 'Translations'.tr,
                         onTap: () {
                           if (homeScreenController.adsHelper.interstitialAd !=
                               null) {
@@ -550,7 +557,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     reusableStack1(
                       image: 'assets/favourite.png',
-                      title: 'Save Words',
+                      title: 'Save Words'.tr,
                       onTap: () {
                         //Get.to(() => FavouriteScreen());
                         if (homeScreenController.adsHelper.interstitialAd !=
@@ -568,7 +575,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     reusableStack1(
                         image: 'assets/history.png',
-                        title: 'History',
+                        title: 'History'.tr,
                         onTap: () {
                           //Get.to(() => HistoryScreen());
                           if (homeScreenController.adsHelper.interstitialAd !=
@@ -585,7 +592,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     reusableStack1(
                       image: 'assets/share.png',
-                      title: 'Share',
+                      title: 'Share'.tr,
                       onTap: () {
                           String content = Platform.isAndroid
                               ? 'Hey check out my app at: https://play.google.com/store/apps/details?id=com.pzapps.alllanguagesdictionary'

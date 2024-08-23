@@ -51,18 +51,18 @@ Widget bottomNavigationBar(RxInt currentIndex){
                   height: Get.height * 0.03,
                   child: Image.asset('assets/home.png',),
                 ),
-                label: 'Home',),
+                label: 'Home'.tr,),
             BottomNavigationBarItem(
               icon: SizedBox(
                   height: Get.height * 0.03,
                   child: Image.asset('assets/history.png'),),
-              label: 'History',  // Provide a non-empty label for better accessibility
+              label: 'History'.tr,  // Provide a non-empty label for better accessibility
             ),
             BottomNavigationBarItem(
               icon: SizedBox(
                   height: Get.height * 0.03,
                   child:Image.asset('assets/setting.png'),),
-              label: 'Setting',  // Provide a non-empty label for better accessibility
+              label: 'Setting'.tr,  // Provide a non-empty label for better accessibility
             ),
           ],
       ),

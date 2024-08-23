@@ -68,7 +68,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 90.0).r,
-                          child: const Text('History',
+                          child:  Text('History'.tr,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 28,
@@ -90,7 +90,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                               Image.asset('assets/nodata.gif'),
                               Center(
                                   child: Text(
-                                "No history available",
+                                "No history available".tr,
                                 style: TextStyle(
                                     fontFamily: 'Arial',
                                     color: Colors.grey.shade700,
@@ -149,9 +149,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                           IconButton(
                                             onPressed: () async {
                                               customDialogBox(
-                                                  title: 'delete',
+                                                  title: 'delete'.tr,
                                                   content:
-                                                      'Are you sure you want to delete?',
+                                                      'Are you sure you want to delete?'.tr,
                                                   context: context,
                                                   voidCallBack: () async {
                                                     if (historyTable.id != null) {

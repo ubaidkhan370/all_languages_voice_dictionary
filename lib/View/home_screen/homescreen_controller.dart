@@ -1,12 +1,17 @@
+import 'dart:async';
+
 import 'package:all_languages_voice_dictionary/View/favourite_screen/favourite_controller.dart';
 import 'package:all_languages_voice_dictionary/ads/adshelper.dart';
 import 'package:all_languages_voice_dictionary/model/dictionary_model.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:sqflite/sqflite.dart';
@@ -35,7 +40,54 @@ class HomeScreenController extends GetxController {
   AdsHelper adsHelper = AdsHelper();
   FocusNode focusNode = FocusNode();
 
-  //final ScrollController scrollController = ScrollController();
+  // Future connectionStatus()async{
+  //   final connectivityResult = await Connectivity().checkConnectivity();
+  //   if(connectivityResult==ConnectivityResult.none){
+  //       Get.dialog(
+  //         AlertDialog(
+  //           title: Text("No Internet Connection"),
+  //           content: Text("Please enable internet to continue."),
+  //           actions: [
+  //             TextButton(
+  //               onPressed: () async {
+  //                 await openAppSettings();
+  //                 Get.back(); // Close the dialog
+  //               },
+  //               child: Text("Open Settings"),
+  //             ),
+  //           ],
+  //         ),
+  //         barrierDismissible: false,
+  //       );
+  //   }
+  //
+  // }
+
+  Future<void> checkConnectionAndShowDialog() async {
+    final connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.none) {
+      showNoConnectionDialog();
+    }
+  }
+
+  void showNoConnectionDialog() {
+    Get.dialog(
+      AlertDialog(
+        title: Text("No Internet Connection"),
+        content: Text("Please enable internet to continue."),
+        actions: [
+          TextButton(
+            onPressed: () async {
+              await openAppSettings(); // Opens the app settings screen
+              Get.back(); // Close the dialog
+            },
+            child: Text("Open Settings"),
+          ),
+        ],
+      ),
+      barrierDismissible: false,
+    );
+  }
 
   @override
   void onReady() {
@@ -84,6 +136,7 @@ class HomeScreenController extends GetxController {
     focusNode.addListener(() {
       update();
     });
+    checkConnectionAndShowDialog();
     super.onInit();
   }
 

@@ -48,7 +48,7 @@ class FavouriteScreen extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 90.0).r,
-                  child: const Text('Favourites',
+                  child:  Text('Favourites'.tr,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 28,
@@ -68,7 +68,7 @@ class FavouriteScreen extends StatelessWidget {
                     crossAxisAlignment:CrossAxisAlignment.center,
                     children: [
                       Image.asset('assets/nodata.gif'),
-                      Center(child: Text("No Favorites available",style: TextStyle(
+                      Center(child: Text("No Favorites available".tr,style: TextStyle(
                           fontFamily: 'Arial', color: Colors.grey.shade700,fontSize: 16,fontWeight: FontWeight.w700
                       ),)),
                     ],
@@ -135,8 +135,8 @@ class FavouriteScreen extends StatelessWidget {
                                   ),
                                   trailing: IconButton(
                                       onPressed: () {
-                                        customDialogBox(title: 'delete'
-                                            , content: 'Are you sure you want to delete?',
+                                        customDialogBox(title: 'delete'.tr
+                                            , content: 'Are you sure you want to delete?'.tr,
                                             context: context,
                                             voidCallBack: () async {
                                               if(favoriteTable.id != null){

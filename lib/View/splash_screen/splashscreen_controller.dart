@@ -1,3 +1,4 @@
+import 'package:all_languages_voice_dictionary/View/home_screen/homescreen_controller.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -23,12 +24,19 @@ import '../../database/db_helper.dart';
 import '../../services/notification.dart'; // Update this import to your DbHelper class
 
 class SplashController extends GetxController {
+  //HomeScreenController homeScreenController = Get.put(HomeScreenController());
 
   @override
   void onReady() {
     super.onReady();
     checkNotificationSetting();
-    //_checkLanguageSelectionStatus();
+
+  }
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    _checkLanguageSelectionStatus();
   }
 
 
@@ -45,23 +53,23 @@ class SplashController extends GetxController {
     /// If the value is false, do nothing (notifications are disabled)
   }
 
-  // void _checkLanguageSelectionStatus() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   bool? seenLanguageSelection =
-  //       prefs.getBool('seenLanguageSelection') ?? false;
-  //   bool? seenOnboarding = prefs.getBool('seenOnboarding') ?? false;
-  //
-  //   if (seenLanguageSelection) {
-  //     if (seenOnboarding) {
-  //       Get.offNamed('/dash');
-  //       print(seenOnboarding);
-  //     } else {
-  //       Get.offNamed('/onBoardingScreen');
-  //       print(seenOnboarding);
-  //     }
-  //   } else {
-  //     Get.offNamed('/languageLocalizationScreen');
-  //     print(seenOnboarding);
-  //   }
-  // }
+  void _checkLanguageSelectionStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool? seenLanguageSelection =
+        prefs.getBool('seenLanguageSelection') ?? false;
+    bool? seenOnboarding = prefs.getBool('seenOnboarding') ?? false;
+
+    if (seenLanguageSelection) {
+      if (seenOnboarding) {
+        Get.offNamed('/home');
+        print(seenOnboarding);
+      } else {
+        Get.offNamed('/onBoardingScreen');
+        print(seenOnboarding);
+      }
+    } else {
+      Get.offNamed('/languageLocalizationScreen');
+      print(seenOnboarding);
+    }
+  }
 }
