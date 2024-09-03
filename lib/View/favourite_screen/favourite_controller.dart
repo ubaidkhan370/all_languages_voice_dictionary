@@ -1,13 +1,16 @@
+import 'package:all_languages_voice_dictionary/ads/adshelper.dart';
 import 'package:all_languages_voice_dictionary/database/favorites_repository.dart';
 import 'package:all_languages_voice_dictionary/model/favorites_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import '../../database/db_helper.dart';
 import '../home_screen/homescreen_controller.dart';
 
 class FavouriteController extends GetxController {
   //HomeScreenController homeScreenController = Get.put(HomeScreenController());
+  AdsHelper adsHelper = AdsHelper();
   var favouritesList = <FavoritesModel>[].obs;
   var historyList = [].obs;
   bool isFavourite(String text){
@@ -19,7 +22,12 @@ class FavouriteController extends GetxController {
   @override
   void onInit() {
     loadFavorites();
+    loadAd();
     super.onInit();
+  }
+
+  void loadAd(){
+    adsHelper.loadBannerAd();
   }
 
   Future<void> addToFavourites(String word) async {

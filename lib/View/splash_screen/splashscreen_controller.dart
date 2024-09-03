@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:all_languages_voice_dictionary/View/home_screen/homescreen_controller.dart';
+import 'package:all_languages_voice_dictionary/ads/adshelper.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -25,18 +28,21 @@ import '../../services/notification.dart'; // Update this import to your DbHelpe
 
 class SplashController extends GetxController {
   //HomeScreenController homeScreenController = Get.put(HomeScreenController());
-
+  AdsHelper adsHelper = AdsHelper();
+  var loadingProgress = 0.obs;
   @override
   void onReady() {
     super.onReady();
     checkNotificationSetting();
+    startLoading();
+    _checkLanguageSelectionStatus();
 
   }
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    _checkLanguageSelectionStatus();
+
   }
 
 
@@ -71,5 +77,19 @@ class SplashController extends GetxController {
       Get.offNamed('/languageLocalizationScreen');
       print(seenOnboarding);
     }
+  }
+
+  void startLoading(){
+    Timer.periodic(Duration(milliseconds:600 ),(timer){
+      if(loadingProgress.value<100){
+        loadingProgress.value+=10;
+
+      }else{
+        timer.cancel();
+        print("Progress complete, showing ad...");
+        adsHelper.showAppOpenAd();
+      }
+    });
+
   }
 }

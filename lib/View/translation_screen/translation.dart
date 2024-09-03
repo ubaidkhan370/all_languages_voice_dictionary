@@ -226,6 +226,45 @@ class _TranslationScreenState extends State<TranslationScreen> {
                                       fit: BoxFit.cover,
                                     ),
                                   ),
+                                  // Obx(() {
+                                  //   String currentText =
+                                  //       translationScreenController.textEditingController.text;
+                                  //   // bool isFavourite =
+                                  //   // Get.find<FavouriteController>()
+                                  //   //     .favouritesList
+                                  //   //     .contains(currentText);
+                                  //   final bool isFavourite =
+                                  //   Get.find<FavouriteController>().isFavourite(currentText);
+                                  //   bool isTextEmpty = currentText.isEmpty;
+                                  //   return IconButton(
+                                  //     onPressed: ()  {
+                                  //       if (currentText.isNotEmpty) {
+                                  //         if (isFavourite) {
+                                  //            Get.find<FavouriteController>()
+                                  //               .deleteFromFavourite(currentText);
+                                  //         } else {
+                                  //            Get.find<FavouriteController>()
+                                  //               .addToFavourites(currentText);
+                                  //           setState(() {
+                                  //
+                                  //           });
+                                  //           Get.find<FavouriteController>().update();
+                                  //         }
+                                  //       } else {
+                                  //         return;
+                                  //       }
+                                  //     },
+                                  //     icon: Icon(
+                                  //       isFavourite
+                                  //           ? Icons.favorite
+                                  //           : Icons.favorite_border,
+                                  //       color: isFavourite
+                                  //           ? Color(0xFFE64D3D)
+                                  //           : Color(0xFFE64D3D).withOpacity(0.8),
+                                  //     ),
+                                  //     color: isTextEmpty ? Colors.grey : null,
+                                  //   );
+                                  // }),
                                   Obx(() {
                                     String currentText =
                                         translationScreenController.textEditingController.text;
@@ -237,18 +276,14 @@ class _TranslationScreenState extends State<TranslationScreen> {
                                     Get.find<FavouriteController>().isFavourite(currentText);
                                     bool isTextEmpty = currentText.isEmpty;
                                     return IconButton(
-                                      onPressed: ()  {
+                                      onPressed: () {
                                         if (currentText.isNotEmpty) {
                                           if (isFavourite) {
-                                             Get.find<FavouriteController>()
+                                            Get.find<FavouriteController>()
                                                 .deleteFromFavourite(currentText);
                                           } else {
-                                             Get.find<FavouriteController>()
+                                            Get.find<FavouriteController>()
                                                 .addToFavourites(currentText);
-                                            setState(() {
-
-                                            });
-                                            Get.find<FavouriteController>().update();
                                           }
                                         } else {
                                           return;

@@ -297,12 +297,16 @@
 ///
 ///
 import 'package:all_languages_voice_dictionary/View/home_screen/homescreen_controller.dart';
+import 'package:all_languages_voice_dictionary/View/onboarding/onboarding_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../../global/global_variables.dart';
 import '../home_screen/home_screen.dart';
 import 'onboarding_items.dart';
 
@@ -316,8 +320,26 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final controller = OnBoardingItems();
   final pageController = PageController();
+  OnBoardingController onBoardingController = Get.put(OnBoardingController());
 
   bool isLastPage = false;
+  bool showSecondAd = false;
+  bool showThirdAd = false;
+
+  @override
+  void dispose() {
+    onBoardingController.adsHelper.nativeAd?.dispose();
+    onBoardingController.adsHelper.nativeAd = null;
+
+    onBoardingController.adsHelper.nativeAd2?.dispose();
+    onBoardingController.adsHelper.nativeAd2 = null;
+
+    onBoardingController.adsHelper.nativeAd3?.dispose();
+    onBoardingController.adsHelper.nativeAd3 = null;
+    pageController.dispose();
+    super.dispose();
+    print('Screen Dispose Called');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -351,7 +373,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             TextButton(
                 onPressed: ()=>pageController.nextPage(
                     duration: const Duration(milliseconds: 600), curve: Curves.easeIn),
-                child:  Text("Next".tr)),
+                child:  Text("Next".tr),
+            ),
 
 
           ],
@@ -360,29 +383,218 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       body: Container(
         margin: const EdgeInsets.symmetric(horizontal: 15),
         child: PageView.builder(
-            onPageChanged: (index)=> setState(()=> isLastPage = controller.items.length-1 == index),
+            onPageChanged: (index){
+              setState((){
+                isLastPage = controller.items.length-1 == index;
+                if (index == controller.items.length - 2) {
+                  onBoardingController.loadSecondAd();
+                  showSecondAd = true;
+                  showThirdAd = false;
+                  onBoardingController.adsHelper.nativeAd3?.dispose();
+                  onBoardingController.adsHelper.nativeAd3 = null;
+
+                } else if(index == controller.items.length-1){
+                  onBoardingController.loadThirdAd();
+                  showThirdAd = true;
+                  showSecondAd = false;
+                  onBoardingController.adsHelper.nativeAd2?.dispose();
+                  onBoardingController.adsHelper.nativeAd2 = null;
+
+                }else{
+                  showSecondAd = false;
+                  showThirdAd= false;
+                }
+              });
+              },
             itemCount: controller.items.length,
             controller: pageController,
             itemBuilder: (context,index){
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(controller.items[index].title.tr, style: TextStyle(
-                        fontSize: 18,
-                        fontFamily: 'Arial',
-                        fontWeight: FontWeight.w800,
-                        color: Color(0xFFE64D3D),),),
-                      Text(controller.items[index].description.tr,style: TextStyle(
-                          fontSize: 11,
-                          fontFamily: 'Arial',
-                          //fontWeight: FontWeight.w700,
-                          color: Colors.grey),),
-                      SizedBox(height: Get.height* 0.08,),
-                      Image.asset(controller.items[index].image,
-                        width: Get.width/1.3,
-                        height: MediaQuery.of(context).size.height * 0.3,),
+              return SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      //color: Colors.blue,
+                      height: Get.height*0.6,
+                      child: Padding(
+                        padding:  EdgeInsets.only(top: Get.height*0.1),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(controller.items[index].title.tr, style: TextStyle(
+                              fontSize: 18,
+                              fontFamily: 'Arial',
+                              fontWeight: FontWeight.w800,
+                              color: Color(0xFFE64D3D),),),
+                            Text(controller.items[index].description.tr,style: TextStyle(
+                                fontSize: 11,
+                                fontFamily: 'Arial',
+                                //fontWeight: FontWeight.w700,
+                                color: Colors.grey),),
+                            SizedBox(height: Get.height* 0.08,),
+                            Image.asset(controller.items[index].image,
+                              width: Get.width/1.3,
+                              height: MediaQuery.of(context).size.height * 0.3,),
 
-                ],
+                          ],
+                        ),
+                      ),
+                    ),
+                    /// ads
+                    // showSecondAd ?Obx(
+                    //       () => (onBoardingController.adsHelper.isNativeAd2Loaded.value &&
+                    //       !GlobalVariable.isAppOpenAdShowing.value &&onBoardingController.adsHelper.nativeAd2 != null)
+                    //       ? Padding(
+                    //     padding: const EdgeInsets.symmetric(
+                    //         horizontal: 3, vertical: 2),
+                    //     child: SizedBox(
+                    //       width:360,
+                    //       height: 232,
+                    //       // homeScreenController.adsHelper.bannerAd!.size.height
+                    //       //     .toDouble(),
+                    //
+                    //       child: AdWidget(
+                    //         ad: onBoardingController.adsHelper.nativeAd2!,
+                    //       ),
+                    //     ),)
+                    //       : (!GlobalVariable.isPurchasedMonthly.value &&
+                    //       !GlobalVariable.isPurchasedYearly.value &&
+                    //       !GlobalVariable.isPurchasedLifeTime.value)
+                    //       ? SizedBox()
+                    //   // Expanded(
+                    //   // flex: 1,
+                    //   // child: Shimmer.fromColors(
+                    //   //     baseColor: Colors.black,
+                    //   //     highlightColor: Colors.white,
+                    //   //     child: const NewsCardSkelton()),
+                    //   //    )
+                    //       : const SizedBox(),
+                    // ):
+                    // (showThirdAd)?Obx(
+                    //       () => (onBoardingController.adsHelper.isNativeAd3Loaded.value &&
+                    //       !GlobalVariable.isAppOpenAdShowing.value &&onBoardingController.adsHelper.nativeAd3 != null)
+                    //       ? Padding(
+                    //     padding: const EdgeInsets.symmetric(
+                    //         horizontal: 3, vertical: 2),
+                    //     child: SizedBox(
+                    //       width:360,
+                    //       height: 232,
+                    //       // homeScreenController.adsHelper.bannerAd!.size.height
+                    //       //     .toDouble(),
+                    //
+                    //       child: AdWidget(
+                    //           ad: onBoardingController.adsHelper.nativeAd3!
+                    //       ),
+                    //     ),)
+                    //       : (!GlobalVariable.isPurchasedMonthly.value &&
+                    //       !GlobalVariable.isPurchasedYearly.value &&
+                    //       !GlobalVariable.isPurchasedLifeTime.value)
+                    //       ? SizedBox()
+                    //   // Expanded(
+                    //   // flex: 1,
+                    //   // child: Shimmer.fromColors(
+                    //   //     baseColor: Colors.black,
+                    //   //     highlightColor: Colors.white,
+                    //   //     child: const NewsCardSkelton()),
+                    //   //    )
+                    //       : const SizedBox(),
+                    // )
+                    //     :Obx(
+                    //       () => (onBoardingController.adsHelper.isNativeAdLoaded.value &&
+                    //       !GlobalVariable.isAppOpenAdShowing.value &&onBoardingController.adsHelper.nativeAd != null)
+                    //       ? Padding(
+                    //     padding: const EdgeInsets.symmetric(
+                    //         horizontal: 3, vertical: 2),
+                    //     child: SizedBox(
+                    //       width:360,
+                    //       height: 232,
+                    //       // homeScreenController.adsHelper.bannerAd!.size.height
+                    //       //     .toDouble(),
+                    //
+                    //       child: AdWidget(
+                    //           ad: onBoardingController.adsHelper.nativeAd!
+                    //       ),
+                    //     ),)
+                    //       : (!GlobalVariable.isPurchasedMonthly.value &&
+                    //       !GlobalVariable.isPurchasedYearly.value &&
+                    //       !GlobalVariable.isPurchasedLifeTime.value)
+                    //       ? SizedBox()
+                    //   // Expanded(
+                    //   // flex: 1,
+                    //   // child: Shimmer.fromColors(
+                    //   //     baseColor: Colors.black,
+                    //   //     highlightColor: Colors.white,
+                    //   //     child: const NewsCardSkelton()),
+                    //   //    )
+                    //       : const SizedBox(),
+                    // ),
+
+
+                    /// ads
+                    Obx(() {
+                      if (showSecondAd) {
+                        if (
+                        onBoardingController.adsHelper.isNativeAd2Loaded.value &&
+                            onBoardingController.adsHelper.nativeAd2 != null &&
+                            !GlobalVariable.isAppOpenAdShowing.value
+                        ) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 2),
+                            child: SizedBox(
+                              width: 360,
+                              height: 232,
+                              child: AdWidget(
+                                ad: onBoardingController.adsHelper.nativeAd2!,
+                              ),
+                            ),
+                          );
+                        }
+                      }
+
+                      if (showThirdAd) {
+                        if (onBoardingController.adsHelper.isNativeAd3Loaded.value &&
+                            onBoardingController.adsHelper.nativeAd3 != null &&
+                            !GlobalVariable.isAppOpenAdShowing.value) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 2),
+                            child: SizedBox(
+                              width: 360,
+                              height: 232,
+                              child: AdWidget(
+                                ad: onBoardingController.adsHelper.nativeAd3!,
+                              ),
+                            ),
+                          );
+                        }
+                      }
+
+                      if (onBoardingController.adsHelper.isNativeAdLoaded.value &&
+                          onBoardingController.adsHelper.nativeAd != null &&
+                          !GlobalVariable.isAppOpenAdShowing.value) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 2),
+                          child: SizedBox(
+                            width: 360,
+                            height: 232,
+                            child: AdWidget(
+                              ad: onBoardingController.adsHelper.nativeAd!,
+                            ),
+                          ),
+                        );
+                      }
+
+                      // Check if the user has purchased a subscription and show an empty SizedBox if they have
+                      if (!GlobalVariable.isPurchasedMonthly.value &&
+                          !GlobalVariable.isPurchasedYearly.value &&
+                          !GlobalVariable.isPurchasedLifeTime.value) {
+                        return SizedBox(); // No ad available
+                      }
+
+                      return const SizedBox(); // User has purchased a subscription
+                    })
+
+              ],
+                ),
               );
 
             }),
@@ -390,7 +602,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
-  Widget getStarted(){
+   Widget getStarted(){
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
@@ -404,14 +616,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             pres.setBool("seenOnboarding", true);
 
             if(!mounted)return;
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
+
+            if (onBoardingController.adsHelper.interstitialAd !=
+                null) {
+              onBoardingController.adsHelper
+                  .showInterstitialAd(nextScreen: '/home');
+              print('interstitial ad load successfuly');
+            } else {
+              print('interstitial ad not loaded');
+            }
+            //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
           },
           child:  Text("Get started".tr,style: TextStyle(color: Colors.white),)),
     );
   }
-  // void _finishOnboarding() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   await prefs.setBool('seenOnboarding', true);
-  //   Get.offNamed('/dash');
-  // }
 }
+

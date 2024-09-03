@@ -59,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       request: const AdRequest(),
       nativeTemplateStyle: NativeTemplateStyle(
-        templateType: TemplateType.small,
+        templateType: TemplateType.medium,
         // mainBackgroundColor: ThemeHelper.primaryColor,
         // cornerRadius: 10.0,
         callToActionTextStyle: NativeTemplateTextStyle(
@@ -163,7 +163,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        height:Get.height*0.1,
+                        height:Get.height*0.11,
                         margin: EdgeInsets.only(top: 30, left: 15),
                         decoration: BoxDecoration(
                             shape: BoxShape.circle,
@@ -171,7 +171,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(10.0),
-                           child: Image.asset('assets/dictionary.png',fit: BoxFit.cover,),
+                           child: ClipOval(
+                               child: Image.asset('assets/dictionary.png',fit: BoxFit.cover,)),
                           // Icon(
                           //   Icons.translate,
                           //   size: 40,
@@ -179,6 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           // ),
                         ),
                       ),
+
                       Padding(
                         padding: const EdgeInsets.only(top: 30, left: 15),
                         child: Text(
@@ -202,7 +204,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     onTap: () {
                       Get.to(()=>LanguageSelectionScreen());
                     },
-                    icon: Icons.home,
+                    icon: Icons.language,
                     text: 'Select Languages'.tr),
                 drawerCard(
                     onTap: () {
@@ -532,6 +534,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: Get.height * 0.17.h,
                 margin: EdgeInsets.only(left: 11, right: 11).r,
                 child: ListView(
+                  shrinkWrap: true,
                   controller: scrollController,
                   padding: EdgeInsets.symmetric(horizontal: 10.w),
                   scrollDirection: Axis.horizontal,
@@ -605,6 +608,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
+
               SizedBox(
                 height: Get.height * 0.03,
               ),

@@ -8,6 +8,7 @@ import 'package:all_languages_voice_dictionary/View/meaning_screen/meaning.dart'
 import 'package:all_languages_voice_dictionary/View/splash_screen/splash3.dart';
 import 'package:all_languages_voice_dictionary/View/splash_screen/splash4.dart';
 import 'package:all_languages_voice_dictionary/View/splash_screen/splash_screen.dart';
+import 'package:all_languages_voice_dictionary/services/analytics_services.dart';
 import 'package:all_languages_voice_dictionary/services/notification.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -46,8 +47,6 @@ void main() async {
     return true;
   };
 
-  ///Analytics
-  FirebaseAnalytics analytics = FirebaseAnalytics.instance;
 
   // await LocalNotification.init();
   await Permission.notification.isDenied.then((value) {
@@ -88,11 +87,10 @@ class MyApp extends StatelessWidget {
         fallbackLocale: const Locale('en', 'US'),
         title: 'Flutter Demo',
 
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
-        //home: LanguageSelectionScreen(),
+        navigatorObservers:<NavigatorObserver> [
+          AnalyticsService().getAnalyticsObserver()
+        ],
+        //home: SplashScreen(),
         initialRoute: '/',
         getPages:[
           GetPage(name: '/',page: ()=>SplashScreen()),

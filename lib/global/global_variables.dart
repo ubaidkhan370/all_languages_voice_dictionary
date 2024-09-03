@@ -5,10 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:get/get.dart';
 
-Color primaryColor = Color(0xff20B1B4);
 
-// to manage left and right side
-bool isRightSideLangSelect = false;
 
 RxBool isUrdu = true.obs;
 RxBool isPashto = false.obs;
@@ -39,7 +36,7 @@ class GlobalVariable {
 
   static const bannerAdAndroid = 'ca-app-pub-3940256099942544/6300978111';
   static const bannerAdIOS = !kDebugMode
-      ? 'ca-app-pub-2874777513435684/6036202105'
+      ? 'ca-app-pub-6941637095433882/1733295014'
       : //real
   'ca-app-pub-3940256099942544/2934735716'; // testing
 

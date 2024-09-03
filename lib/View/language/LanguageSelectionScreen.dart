@@ -123,14 +123,16 @@
 //   }
 // }
 
-
-
+import 'package:all_languages_voice_dictionary/View/language/languagescreen_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shimmer/shimmer.dart';
 
+import '../../global/global_variables.dart';
 import '../../widgets/flag_widget.dart';
 
 class LanguageSelectionScreen extends StatefulWidget {
@@ -139,6 +141,8 @@ class LanguageSelectionScreen extends StatefulWidget {
 }
 
 class LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
+  LanguageScreenController languageScreenController =
+      Get.put(LanguageScreenController());
   String? _selectedLanguage;
 
   void selectLanguage(String languageCode) async {
@@ -183,87 +187,178 @@ class LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor:  Color(0xFFE64D3D),
+        backgroundColor: Color(0xFFE64D3D),
         leading: IconButton(
           onPressed: () {
             Get.back();
           },
           icon: Icon(Icons.arrow_back),
         ),
-        title: Text('Select Language', style: TextStyle(
-            fontFamily: 'Arial',
-            fontSize: 15,
-            fontWeight: FontWeight.w700,
-            color: Colors.white),),centerTitle: true,
+        title: Text(
+          'Select Language',
+          style: TextStyle(
+              fontFamily: 'Arial',
+              fontSize: 15,
+              fontWeight: FontWeight.w700,
+              color: Colors.white),
+        ),
+        centerTitle: true,
         actions: [
           ElevatedButton(
             onPressed: _selectedLanguage != null
                 ? () {
-              // Get.offNamed('/onBoardingScreen');
-              goNext();
-            }
+                    // Get.offNamed('/onBoardingScreen');
+                    goNext();
+                  }
                 : null,
             child: Text("Save"),
           ),
           SizedBox(width: 10),
         ],
       ),
-      body: GridView.builder(
-        padding: EdgeInsets.all(20),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          mainAxisSpacing: 10,
-          crossAxisSpacing: 10,
-          childAspectRatio: 2 / 2,
-        ),
-        itemCount: languages.length,
-        itemBuilder: (context, index) {
-          bool isSelected = _selectedLanguage == languages[index]['locale'];
-          return GestureDetector(
-            onTap: () async {
-              String? languageCode = languages[index]['locale'];
-              if (languageCode != null) {
-                // Update the state to reflect the selected language
-                setState(() {
-                  _selectedLanguage = languageCode;
-                });
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Expanded(
+            child: GridView.builder(
+              //shrinkWrap: true,
+              padding: EdgeInsets.all(20),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 10,
+                childAspectRatio: 2 / 2,
+              ),
+              itemCount: languages.length,
+              itemBuilder: (context, index) {
+                bool isSelected =
+                    _selectedLanguage == languages[index]['locale'];
+                return GestureDetector(
+                  onTap: () async {
+                    String? languageCode = languages[index]['locale'];
+                    if (languageCode != null) {
+                      // Update the state to reflect the selected language
+                      setState(() {
+                        _selectedLanguage = languageCode;
+                      });
 
-                // Save the selected language to SharedPreferences
-                SharedPreferences prefs = await SharedPreferences.getInstance();
-                await prefs.setString('selectedLanguage', languageCode);
-                await prefs.setBool('seenLanguageSelection', true);
+                      // Save the selected language to SharedPreferences
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                      await prefs.setString('selectedLanguage', languageCode);
+                      await prefs.setBool('seenLanguageSelection', true);
 
-                // Update the app's locale
-                Get.updateLocale(Locale(languageCode));
+                      // Update the app's locale
+                      Get.updateLocale(Locale(languageCode));
+                    }
+                  },
+                  child: Card(
+                    color: isSelected ? Colors.grey : Colors.white,
+                    shape: isSelected
+                        ? RoundedRectangleBorder(
+                            // side:
+                            // BorderSide(color: const Color(0xFF575DDC), width: 2),
+                            borderRadius: BorderRadius.circular(8),
+                          )
+                        : RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        FlagWidget(
+                          countryCode: languages[index]['country']!,
+                        ),
+                        SizedBox(height: 6),
+                        Text(
+                          languages[index]['name']!,
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+
+          Obx(
+            () {
+              bool isAdLoaded =
+                  languageScreenController.adsHelper.isNativeAdLoaded.value;
+              bool isAppOpenAdShowing = GlobalVariable.isAppOpenAdShowing.value;
+              bool isPurchased = GlobalVariable.isPurchasedMonthly.value ||
+                  GlobalVariable.isPurchasedYearly.value ||
+                  GlobalVariable.isPurchasedLifeTime.value;
+
+              if (!isAdLoaded) {
+                return Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 3, vertical: 2),
+                  child: SizedBox(
+                    width: 360,
+                    height: 232,
+                    child: Shimmer.fromColors(
+                      baseColor: Colors.grey[300]!,
+                      highlightColor: Colors.grey[100]!,
+                      child: Container(
+                        color: Colors.white, // Placeholder color
+                      ),
+                    ),
+                  ),
+                );
+              } else if (isAdLoaded && !isAppOpenAdShowing) {
+                return Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 3, vertical: 2),
+                  child: SizedBox(
+                    width: 360,
+                    height: 232,
+                    child: AdWidget(
+                        ad: languageScreenController.adsHelper.nativeAd!),
+                  ),
+                );
+              }  else {
+                return const SizedBox();
               }
             },
-            child: Card(
-              color: isSelected ?  Colors.grey : Colors.white,
-              shape: isSelected
-                  ? RoundedRectangleBorder(
-                // side:
-                // BorderSide(color: const Color(0xFF575DDC), width: 2),
-                borderRadius: BorderRadius.circular(8),
-              )
-                  : RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  FlagWidget(
-                    countryCode: languages[index]['country']!,
-                  ),
-                  SizedBox(height: 6),
-                  Text(
-                    languages[index]['name']!,
-                    style: TextStyle(fontSize: 18),
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
+          )
+
+          ///
+          // Obx(
+          //       () {
+          //     if (languageScreenController.adsHelper.isNativeAdLoaded!.value) {
+          //       return Padding(
+          //         padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 2),
+          //         child: SizedBox(
+          //           width: 360,
+          //           height: 232,
+          //           child: Shimmer.fromColors(
+          //             baseColor: Colors.grey.shade300,
+          //             highlightColor: Colors.grey.shade100,
+          //             child: Container(
+          //               color: Colors.white,
+          //             ),
+          //           ),
+          //         ),
+          //       );
+          //     } else if (languageScreenController.adsHelper.isNativeAdLoaded.value) {
+          //       return Padding(
+          //         padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 2),
+          //         child: SizedBox(
+          //           width: 360,
+          //           height: 232,
+          //           child: AdWidget(
+          //             ad: languageScreenController.adsHelper.nativeAd!,
+          //           ),
+          //         ),
+          //       );
+          //     } else {
+          //       return SizedBox();
+          //     }
+          //   },
+          // ),
+        ],
       ),
     );
   }

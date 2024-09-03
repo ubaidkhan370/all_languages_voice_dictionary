@@ -99,7 +99,7 @@ class HomeScreenController extends GetxController {
   void loadAds() {
     adsHelper.loadAppOpenAd();
     adsHelper?.loadInterstitialAd();
-    adsHelper.loadNativeAd();
+    //adsHelper.loadNativeAd();
   }
 
   void listenToAppStateChanges() {

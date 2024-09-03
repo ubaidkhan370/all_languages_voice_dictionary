@@ -24,11 +24,10 @@ class HistoryScreenController extends GetxController{
     print('Native Add loaded');
     super.onReady();
   }
-
   @override
   void onInit() {
-  //  adsHelper.loadNativeAd();
     super.onInit();
+    loadAd();
 
   }
 
@@ -37,6 +36,10 @@ class HistoryScreenController extends GetxController{
     adsHelper.nativeAd?.dispose();
     debugPrint('HistoryScreenController onClose called,Native Ad disposed');
     super.onClose();
+  }
+
+  void loadAd(){
+    adsHelper.loadBannerAd();
   }
 
 

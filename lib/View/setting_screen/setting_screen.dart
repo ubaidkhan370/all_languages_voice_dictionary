@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:shimmer/shimmer.dart';
+
+import '../../global/global_variables.dart';
 
 class SettingScreen extends StatelessWidget {
   SettingScreen({super.key});
@@ -24,11 +28,12 @@ class SettingScreen extends StatelessWidget {
           backgroundColor: const Color(0xFFE64D3D),
           iconTheme: const IconThemeData(
             color: Colors.white, // Set the color of the back button here
-          ),
+          )
         ),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 3.0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               ListTile(
                 title: Row(
@@ -51,6 +56,43 @@ class SettingScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              Obx((){
+                bool adLoaded = settingScreenController.adsHelper.isBannerAdLoaded.value &&
+                    settingScreenController.adsHelper.bannerAd != null &&
+                    !GlobalVariable.isAppOpenAdShowing.value &&
+                    !GlobalVariable.isInterstitialAdShowing.value;
+                return adLoaded ? Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.blue, // Add blue border when ad is loaded
+                      width: 1.5, // Border width
+                    ),
+                  ),
+                  child: SizedBox(
+                    width: Get.width,
+                    height: settingScreenController.adsHelper.bannerAd!.size.height
+                        .toDouble(),
+                    child: AdWidget(ad: settingScreenController.adsHelper.bannerAd!),
+                  ),
+                ):Shimmer.fromColors(
+                baseColor: Colors.grey.shade300,
+                highlightColor: Colors.grey.shade100,
+                child: Container(
+                width: Get.width,
+                height: 55, // Adjust the height to match the ad height
+                color: Colors.grey.shade300, // Background color for shimmer
+                child: Center(
+                child: Text(
+                'Loading ad...', // Optional placeholder text
+                style: TextStyle(
+                color: Colors.grey.shade700,
+                fontSize: 14,
+                ),
+                ),
+                ),
+                ),
+                );
+              })
             ],
           ),
         ),

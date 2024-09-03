@@ -60,6 +60,7 @@ dependencies:
   country_icons: ^2.0.2
   internet_connection_checker: ^2.0.0
   connectivity_plus: ^6.0.5
+  skeletonizer: ^1.4.2
 
 dev_dependencies:
   flutter_test:
@@ -109,6 +110,7 @@ flutter:
   - assets/splash3.png
   - assets/nodata.gif
   - assets/flag.jpg
+  - assets/dictionary.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
