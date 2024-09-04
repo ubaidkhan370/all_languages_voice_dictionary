@@ -188,17 +188,17 @@ class LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFFE64D3D),
-        leading: IconButton(
-          onPressed: () {
-            Get.back();
-          },
-          icon: Icon(Icons.arrow_back),
-        ),
+        // leading: IconButton(
+        //   onPressed: () {
+        //     Get.back();
+        //   },
+        //   icon: Icon(Icons.arrow_back),
+        // ),
         title: Text(
           'Select Language',
           style: TextStyle(
               fontFamily: 'Arial',
-              fontSize: 15,
+              fontSize: 16,
               fontWeight: FontWeight.w700,
               color: Colors.white),
         ),
@@ -225,9 +225,9 @@ class LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
               padding: EdgeInsets.all(20),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                mainAxisSpacing: 10,
+                mainAxisSpacing: 7,
                 crossAxisSpacing: 10,
-                childAspectRatio: 2 / 2,
+                childAspectRatio: 3 / 2,
               ),
               itemCount: languages.length,
               itemBuilder: (context, index) {
@@ -252,29 +252,32 @@ class LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
                       Get.updateLocale(Locale(languageCode));
                     }
                   },
-                  child: Card(
-                    color: isSelected ? Colors.grey : Colors.white,
-                    shape: isSelected
-                        ? RoundedRectangleBorder(
-                            // side:
-                            // BorderSide(color: const Color(0xFF575DDC), width: 2),
-                            borderRadius: BorderRadius.circular(8),
-                          )
-                        : RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
+                  child: Container(
+                    height: 140,
+                    child: Card(
+                      color: isSelected ? Colors.grey : Colors.white,
+                      shape: isSelected
+                          ? RoundedRectangleBorder(
+                              // side:
+                              // BorderSide(color: const Color(0xFF575DDC), width: 2),
+                              borderRadius: BorderRadius.circular(8),
+                            )
+                          : RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          FlagWidget(
+                            countryCode: languages[index]['country']!,
                           ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        FlagWidget(
-                          countryCode: languages[index]['country']!,
-                        ),
-                        SizedBox(height: 6),
-                        Text(
-                          languages[index]['name']!,
-                          style: TextStyle(fontSize: 18),
-                        ),
-                      ],
+                          SizedBox(height: 1),
+                          Text(
+                            languages[index]['name']!,
+                            style: TextStyle(fontSize: 10),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 );
@@ -294,10 +297,10 @@ class LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
               if (!isAdLoaded) {
                 return Padding(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 3, vertical: 2),
+                      const EdgeInsets.symmetric(horizontal: 1, vertical: 1),
                   child: SizedBox(
-                    width: 360,
-                    height: 232,
+                    width: Get.width,
+                    height: 360,
                     child: Shimmer.fromColors(
                       baseColor: Colors.grey[300]!,
                       highlightColor: Colors.grey[100]!,
@@ -310,10 +313,10 @@ class LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
               } else if (isAdLoaded && !isAppOpenAdShowing) {
                 return Padding(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 3, vertical: 2),
+                      const EdgeInsets.symmetric(horizontal: 1, vertical: 1),
                   child: SizedBox(
-                    width: 360,
-                    height: 232,
+                    width: Get.width,
+                    height: 360,
                     child: AdWidget(
                         ad: languageScreenController.adsHelper.nativeAd!),
                   ),

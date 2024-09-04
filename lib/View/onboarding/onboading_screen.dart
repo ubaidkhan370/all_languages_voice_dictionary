@@ -386,29 +386,31 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             onPageChanged: (index){
               setState((){
                 isLastPage = controller.items.length-1 == index;
-                if (index == controller.items.length - 2) {
-                  onBoardingController.loadSecondAd();
-                  showSecondAd = true;
-                  showThirdAd = false;
-                  onBoardingController.adsHelper.nativeAd3?.dispose();
-                  onBoardingController.adsHelper.nativeAd3 = null;
 
-                } else if(index == controller.items.length-1){
-                  onBoardingController.loadThirdAd();
-                  showThirdAd = true;
-                  showSecondAd = false;
-                  onBoardingController.adsHelper.nativeAd2?.dispose();
-                  onBoardingController.adsHelper.nativeAd2 = null;
-
-                }else{
-                  showSecondAd = false;
-                  showThirdAd= false;
-                }
+                //  if (index == controller.items.length - 2) {
+                //   onBoardingController.loadSecondAd();
+                //   showSecondAd = true;
+                //   showThirdAd = false;
+                //   onBoardingController.adsHelper.nativeAd3?.dispose();
+                //   onBoardingController.adsHelper.nativeAd3 = null;
+                //
+                // } else if(index == controller.items.length-1){
+                //   onBoardingController.loadThirdAd();
+                //   showThirdAd = true;
+                //   showSecondAd = false;
+                //   onBoardingController.adsHelper.nativeAd2?.dispose();
+                //   onBoardingController.adsHelper.nativeAd2 = null;
+                //
+                // }else{
+                //   showSecondAd = false;
+                //   showThirdAd= false;
+                // }
               });
               },
             itemCount: controller.items.length,
             controller: pageController,
             itemBuilder: (context,index){
+              NativeAd? ad = onBoardingController.getAd(index);
               return SingleChildScrollView(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -456,6 +458,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     //       child: AdWidget(
                     //         ad: onBoardingController.adsHelper.nativeAd2!,
                     //       ),
+                    //
                     //     ),)
                     //       : (!GlobalVariable.isPurchasedMonthly.value &&
                     //       !GlobalVariable.isPurchasedYearly.value &&
@@ -530,68 +533,95 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     // ),
 
 
+
+                  if(ad!=null)  ConstrainedBox(
+                constraints: const BoxConstraints(
+                  // minWidth: 320, // minimum recommended width
+                  // minHeight: 320, // minimum recommended height
+                  maxWidth: 360,
+                  maxHeight: 232,
+
+                ),
+                child: AdWidget(ad: ad),
+              )
+
+                // ad!=null? Padding(
+                //     padding: const EdgeInsets.symmetric(
+                //         horizontal: 3, vertical: 2),
+                //     child: SizedBox(
+                //       width:360,
+                //       height: 232,
+                //       // homeScreenController.adsHelper.bannerAd!.size.height
+                //       //     .toDouble(),
+                //
+                //       child: AdWidget(
+                //         ad: onBoardingController.adsHelper.nativeAd2!,
+                //       ),
+                //     )
+                // ):SizedBox()
+
                     /// ads
-                    Obx(() {
-                      if (showSecondAd) {
-                        if (
-                        onBoardingController.adsHelper.isNativeAd2Loaded.value &&
-                            onBoardingController.adsHelper.nativeAd2 != null &&
-                            !GlobalVariable.isAppOpenAdShowing.value
-                        ) {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 2),
-                            child: SizedBox(
-                              width: 360,
-                              height: 232,
-                              child: AdWidget(
-                                ad: onBoardingController.adsHelper.nativeAd2!,
-                              ),
-                            ),
-                          );
-                        }
-                      }
-
-                      if (showThirdAd) {
-                        if (onBoardingController.adsHelper.isNativeAd3Loaded.value &&
-                            onBoardingController.adsHelper.nativeAd3 != null &&
-                            !GlobalVariable.isAppOpenAdShowing.value) {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 2),
-                            child: SizedBox(
-                              width: 360,
-                              height: 232,
-                              child: AdWidget(
-                                ad: onBoardingController.adsHelper.nativeAd3!,
-                              ),
-                            ),
-                          );
-                        }
-                      }
-
-                      if (onBoardingController.adsHelper.isNativeAdLoaded.value &&
-                          onBoardingController.adsHelper.nativeAd != null &&
-                          !GlobalVariable.isAppOpenAdShowing.value) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 2),
-                          child: SizedBox(
-                            width: 360,
-                            height: 232,
-                            child: AdWidget(
-                              ad: onBoardingController.adsHelper.nativeAd!,
-                            ),
-                          ),
-                        );
-                      }
-
-                      // Check if the user has purchased a subscription and show an empty SizedBox if they have
-                      if (!GlobalVariable.isPurchasedMonthly.value &&
-                          !GlobalVariable.isPurchasedYearly.value &&
-                          !GlobalVariable.isPurchasedLifeTime.value) {
-                        return SizedBox(); // No ad available
-                      }
-
-                      return const SizedBox(); // User has purchased a subscription
-                    })
+                    // Obx(() {
+                    //   if (showSecondAd) {
+                    //     if (
+                    //     onBoardingController.adsHelper.isNativeAd2Loaded.value &&
+                    //         onBoardingController.adsHelper.nativeAd2 != null &&
+                    //         !GlobalVariable.isAppOpenAdShowing.value
+                    //     ) {
+                    //       return Padding(
+                    //         padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 2),
+                    //         child: SizedBox(
+                    //           width: 360,
+                    //           height: 232,
+                    //           child: AdWidget(
+                    //             ad: onBoardingController.adsHelper.nativeAd2!,
+                    //           ),
+                    //         ),
+                    //       );
+                    //     }
+                    //   }
+                    //
+                    //   if (showThirdAd) {
+                    //     if (onBoardingController.adsHelper.isNativeAd3Loaded.value &&
+                    //         onBoardingController.adsHelper.nativeAd3 != null &&
+                    //         !GlobalVariable.isAppOpenAdShowing.value) {
+                    //       return Padding(
+                    //         padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 2),
+                    //         child: SizedBox(
+                    //           width: 360,
+                    //           height: 232,
+                    //           child: AdWidget(
+                    //             ad: onBoardingController.adsHelper.nativeAd3!,
+                    //           ),
+                    //         ),
+                    //       );
+                    //     }
+                    //   }
+                    //
+                    //   if (onBoardingController.adsHelper.isNativeAdLoaded.value &&
+                    //       onBoardingController.adsHelper.nativeAd != null &&
+                    //       !GlobalVariable.isAppOpenAdShowing.value) {
+                    //     return Padding(
+                    //       padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 2),
+                    //       child: SizedBox(
+                    //         width: 360,
+                    //         height: 232,
+                    //         child: AdWidget(
+                    //           ad: onBoardingController.adsHelper.nativeAd!,
+                    //         ),
+                    //       ),
+                    //     );
+                    //   }
+                    //
+                    //   // Check if the user has purchased a subscription and show an empty SizedBox if they have
+                    //   if (!GlobalVariable.isPurchasedMonthly.value &&
+                    //       !GlobalVariable.isPurchasedYearly.value &&
+                    //       !GlobalVariable.isPurchasedLifeTime.value) {
+                    //     return SizedBox(); // No ad available
+                    //   }
+                    //
+                    //   return const SizedBox(); // User has purchased a subscription
+                    // })
 
               ],
                 ),
@@ -623,6 +653,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   .showInterstitialAd(nextScreen: '/home');
               print('interstitial ad load successfuly');
             } else {
+              onBoardingController.adsHelper
+                  .showInterstitialAd(nextScreen: '/home');
               print('interstitial ad not loaded');
             }
             //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomeScreen()));

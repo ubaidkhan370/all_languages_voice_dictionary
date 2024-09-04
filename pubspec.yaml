@@ -60,7 +60,9 @@ dependencies:
   country_icons: ^2.0.2
   internet_connection_checker: ^2.0.0
   connectivity_plus: ^6.0.5
+  url_launcher:  ^6.2.4
   skeletonizer: ^1.4.2
+  app_settings: ^5.1.1
 
 dev_dependencies:
   flutter_test:

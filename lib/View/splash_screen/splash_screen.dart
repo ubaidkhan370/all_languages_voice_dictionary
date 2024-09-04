@@ -205,10 +205,14 @@ import 'package:all_languages_voice_dictionary/View/home_screen/homescreen_contr
 import 'package:all_languages_voice_dictionary/View/splash_screen/splash2.dart';
 import 'package:all_languages_voice_dictionary/View/splash_screen/splash4.dart';
 import 'package:all_languages_voice_dictionary/View/splash_screen/splashscreen_controller.dart';
+import 'package:all_languages_voice_dictionary/ads/adshelper.dart';
 import 'package:all_languages_voice_dictionary/widgets/textbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:shimmer/shimmer.dart';
+import '../../global/global_variables.dart';
 import '../home_screen/home_screen.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -221,6 +225,48 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar:   Obx(
+            () {
+          bool isAdLoaded = splashController.adsHelper.isBannerAdLoaded.value &&
+              splashController.adsHelper.bannerAd != null &&
+              !GlobalVariable.isAppOpenAdShowing.value &&
+              !GlobalVariable.isInterstitialAdShowing.value;
+
+          return isAdLoaded
+              ? Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.blue,
+                width: 1.5, // Border width
+              ),
+            ),
+            child: SizedBox(
+              width: Get.width,
+              height: splashController.adsHelper.bannerAd!.size.height
+                  .toDouble(),
+              child: AdWidget(ad: splashController.adsHelper.bannerAd!),
+            ),
+          )
+              : Shimmer.fromColors(
+            baseColor: Colors.grey.shade300,
+            highlightColor: Colors.grey.shade100,
+            child: Container(
+              width: Get.width,
+              height: 55,
+              color: Colors.grey.shade300,
+              child: Center(
+                child: Text(
+                  'Loading ad...', // Optional placeholder text
+                  style: TextStyle(
+                    color: Colors.grey.shade700,
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      ),
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -318,6 +364,8 @@ class SplashScreen extends StatelessWidget {
                       color: Color(0xFFE64D3D),),
                 ),
           ),
+
+
           ],
         ),
       ),

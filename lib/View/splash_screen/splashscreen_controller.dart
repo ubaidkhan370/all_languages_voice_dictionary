@@ -30,17 +30,21 @@ class SplashController extends GetxController {
   //HomeScreenController homeScreenController = Get.put(HomeScreenController());
   AdsHelper adsHelper = AdsHelper();
   var loadingProgress = 0.obs;
+  RxDouble progressValue = 0.0.obs;
+  RxBool showProgressBar = true.obs;
+
   @override
   void onReady() {
     super.onReady();
     checkNotificationSetting();
     startLoading();
-    _checkLanguageSelectionStatus();
 
   }
   @override
   void onInit() {
     // TODO: implement onInit
+    adsHelper.loadAppOpenAd();
+    adsHelper.loadBannerAd();
     super.onInit();
 
   }
@@ -79,17 +83,42 @@ class SplashController extends GetxController {
     }
   }
 
-  void startLoading(){
-    Timer.periodic(Duration(milliseconds:600 ),(timer){
-      if(loadingProgress.value<100){
-        loadingProgress.value+=10;
+  // void startLoading(){
+  //   Timer.periodic(Duration(seconds:15 ),(timer){
+  //     if(loadingProgress.value<100){
+  //       loadingProgress.value+=10;
+  //
+  //     }else{
+  //       timer.cancel();
+  //       print("Progress complete, showing ad...");
+  //       adsHelper.showAppOpenAd();
+  //     }
+  //   });
+  //
+  // }
 
-      }else{
+
+  void startLoading() {
+    const totalDuration = Duration(seconds: 4); // Adjust the duration as needed
+    const updateFrequency = Duration(milliseconds: 100);
+    final totalSteps =
+        totalDuration.inMilliseconds ~/ updateFrequency.inMilliseconds;
+
+    int currentStep = 0;
+
+    Timer.periodic(updateFrequency, (Timer timer) {
+      if (currentStep >= totalSteps) {
+        progressValue.value = 100.0;
         timer.cancel();
-        print("Progress complete, showing ad...");
+        showProgressBar.value = false;
         adsHelper.showAppOpenAd();
+        _checkLanguageSelectionStatus();
+
+
+      } else {
+        progressValue.value = (currentStep / totalSteps) * 100;
+        currentStep++;
       }
     });
-
   }
 }

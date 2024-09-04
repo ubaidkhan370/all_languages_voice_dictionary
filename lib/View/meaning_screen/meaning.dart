@@ -170,7 +170,7 @@ class _MeaningState extends State<Meaning> {
                     ],
                   ),),
                 SizedBox(
-                  height: Get.height * 0.62,
+                  height: Get.height * 0.6,
                   child: Column(
                     children: [
                       Expanded(

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:all_languages_voice_dictionary/View/favourite_screen/favourite_controller.dart';
 import 'package:all_languages_voice_dictionary/ads/adshelper.dart';
 import 'package:all_languages_voice_dictionary/model/dictionary_model.dart';
+import 'package:app_settings/app_settings.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ import 'package:speech_to_text/speech_to_text.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:translator/translator.dart';
 import 'package:path/path.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../services/api_services.dart';
 import '../../translate_data/data_processor.dart';
@@ -63,34 +65,132 @@ class HomeScreenController extends GetxController {
   //
   // }
 
-  Future<void> checkConnectionAndShowDialog() async {
-    final connectivityResult = await Connectivity().checkConnectivity();
-    if (connectivityResult == ConnectivityResult.none) {
-      showNoConnectionDialog();
+
+
+
+  ///INTERNET CONNECTION DIALOG
+  ///
+  RxBool isConnected = true.obs;
+
+  Future<void> checkInternetConnection() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    print(connectivityResult.toString()); // Print for debugging
+
+    // Check if there is no connection
+    if (!connectivityResult.contains(ConnectivityResult.wifi) &&
+        !connectivityResult.contains(ConnectivityResult.mobile)) {
+      isConnected.value = false;
+      showNoInternetDialog();
+      print("NOT CONNECTED");
+    } else {
+      isConnected.value = true;
+      print("Connected to the Internet");
     }
   }
 
-  void showNoConnectionDialog() {
+  // Method to show no internet dialog
+  void showNoInternetDialog() {
     Get.dialog(
       AlertDialog(
-        title: Text("No Internet Connection"),
-        content: Text("Please enable internet to continue."),
-        actions: [
-          TextButton(
-            onPressed: () async {
-              await openAppSettings(); // Opens the app settings screen
-              Get.back(); // Close the dialog
-            },
-            child: Text("Open Settings"),
-          ),
-        ],
+        backgroundColor: Color(0xFFE64D3D),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20.0)),
+        ),
+        titlePadding: EdgeInsets.zero,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(), // empty space to push the cross button to the right
+            IconButton(
+              icon: Icon(Icons.close,color: Colors.white,),
+              onPressed: () {
+                Get.back();
+              },
+            ),
+          ],
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset(
+              'assets/no_internet.png', // Your big logo in the center
+              height: 100,
+              width: 100,
+            ),
+            SizedBox(height: 20),
+            Text(
+              "No Internet Connection",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: openWifiSettings,
+              child: Text("Wi-Fi",style: TextStyle(color: Color(0xFFE64D3D)),),
+            ),
+            SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: openMobileDataSettings,
+              child: Text("Mobile Data",style: TextStyle(color: Color(0xFFE64D3D)),),
+            ),
+          ],
+        ),
       ),
       barrierDismissible: false,
     );
   }
 
+  // Method to open Wi-Fi settings
+  void openWifiSettings() async {
+
+     AppSettings.openAppSettings(type: AppSettingsType.wifi);
+    // if (await canLaunch('wifi-settings:')) {
+    //   await AppSettings.openAppSettings(type: AppSettingsType.wifi);
+    // } else {
+    //   throw 'Could not open Wi-Fi settings.';
+    // }
+  }
+
+  // Method to open Mobile Data settings
+  void openMobileDataSettings() async {
+
+    await AppSettings.openAppSettings(type: AppSettingsType.dataRoaming);
+    // if (await canLaunch('settings:')) {
+    //   // await launch('settings:');
+    //   await AppSettings.openAppSettings(type: AppSettingsType.settings);
+    // } else {
+    //   throw 'Could not open mobile data settings.';
+    // }
+  }
+
+  //
+  // Future<void> checkConnectionAndShowDialog() async {
+  //   final connectivityResult = await Connectivity().checkConnectivity();
+  //   if (connectivityResult == ConnectivityResult.none) {
+  //     showNoConnectionDialog();
+  //   }
+  // }
+  //
+  // void showNoConnectionDialog() {
+  //   Get.dialog(
+  //     AlertDialog(
+  //       title: Text("No Internet Connection"),
+  //       content: Text("Please enable internet to continue."),
+  //       actions: [
+  //         TextButton(
+  //           onPressed: () async {
+  //             await openAppSettings(); // Opens the app settings screen
+  //             Get.back(); // Close the dialog
+  //           },
+  //           child: Text("Open Settings"),
+  //         ),
+  //       ],
+  //     ),
+  //     barrierDismissible: false,
+  //   );
+  // }
   @override
   void onReady() {
+    checkInternetConnection();
     loadAds();
     listenToAppStateChanges();
     super.onReady();
@@ -136,7 +236,7 @@ class HomeScreenController extends GetxController {
     focusNode.addListener(() {
       update();
     });
-    checkConnectionAndShowDialog();
+   // checkConnectionAndShowDialog();
     super.onInit();
   }
 

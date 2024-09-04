@@ -56,7 +56,7 @@ class Languages extends Translations {
       "History": "Geskiedenis",
       "Share": "Deel",
       "Home": "Tuis",
-      "Setting": "Instelling",
+      "Settings": "Instelling",
       "Favourites": "Gunstelinge",
       "No Favourites available": "Geen Gunstelinge beskikbaar nie",
       "No history available": "Geen Geskiedenis beskikbaar nie",
@@ -74,7 +74,9 @@ class Languages extends Translations {
       "viking": "viking",
       "Are you sure to exit from App?": "Is jy seker jy wil die app verlaat?",
       "Yes": "Ja",
-      "No": "Nee"
+      "No": "Nee",
+      "Write Something":"skryf iets",
+      "Notificatins":"kennisgewings",
     },
     "ar": {
   "Are you sure you want to delete?": "هل أنت متأكد أنك تريد الحذف؟",
@@ -114,14 +116,17 @@ class Languages extends Translations {
       "Write Something...": "اكتب شيئًا",
       "Features": "الميزات",
       "View all": "عرض الكل",
-      "Translations": "الترجمات",
+      "Translation": "الترجمات",
       "History": "التاريخ",
       "Share": "مشاركة",
       "Home": "الصفحة الرئيسية",
       "Setting": "الإعدادات",
       "Favourites": "المفضلة",
-      "No Favourites available": "لا توجد مفضلات",
-      "No history available": "لا يوجد سجل"
+      "No Favorites available": "لا توجد مفضلات",
+      "No history available": "لا يوجد سجل",
+      "Settings":"إعدادات",
+      "Notifications":"إشعارات",
+      "Write Something...":"أكتب شيئا",
     },
     "zh": {
   "Are you sure you want to delete?": "你确定要删除吗？",
@@ -1069,7 +1074,10 @@ class Languages extends Translations {
       "Setting": "ترتیب",
       "Favourites": "پسندیدہ",
       "No Favourites available": "کوئی پسندیدہ دستیاب نہیں ہے",
-      "No history available": "کوئی تاریخ دستیاب نہیں ہے"
+      "No history available": "کوئی تاریخ دستیاب نہیں ہے",
+      "Translations":"ترجمے",
+      "Notifications":"اطلاعات",
+      "Settings":"ترتیبات",
     },
     "fa":{
   "Are you sure you want to delete?": "آیا مطمئن هستید که می‌خواهید حذف کنید؟",

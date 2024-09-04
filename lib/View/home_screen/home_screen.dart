@@ -387,16 +387,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                     suffixIcon: Wrap(
                                       children: [
                                         IconButton(
-                                          onPressed: () {
-                                            if (homeScreenController
-                                                .speechToText.isNotListening) {
-                                              homeScreenController
-                                                  .startListening();
-                                              showListeningDialog(context);
-                                            } else {
-                                              homeScreenController
-                                                  .stopListening();
+                                          onPressed: () async {
+                                            await homeScreenController.checkInternetConnection();
+                                            if(!homeScreenController.isConnected.value){
+                                              homeScreenController.checkInternetConnection();
+                                            }else{
+                                              if (homeScreenController
+                                                  .speechToText.isNotListening) {
+                                                homeScreenController
+                                                    .startListening();
+                                                showListeningDialog(context);
+                                              } else {
+                                                homeScreenController
+                                                    .stopListening();
+                                              }
                                             }
+
                                           },
                                           tooltip: 'Listen'.tr,
                                           icon: Image.asset(
@@ -411,6 +417,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                               right: 10.0, top: 4),
                                           child: IconButton(
                                             onPressed: () async {
+                                              await homeScreenController.checkInternetConnection();
+
+                                              if (!homeScreenController.isConnected.value) {
+                                                homeScreenController.showNoInternetDialog();
+                                                return;
+                                              }
                                               await dropDownButtonController
                                                   .languageCode(
                                                       homeScreenController
@@ -450,8 +462,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 print(
                                                     'interstitial ad load successfuly');
                                               } else {
-                                                print(
-                                                    'interstitial ad not loaded');
+                                                print('interstitial ad not loaded');
                                               }
                                             },
                                             icon: Image.asset(
@@ -462,7 +473,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ),
                                           ),
                                         ),
-                                      ],
+
+                                  ],
                                     ),
                                   ),
                                   controller:
@@ -542,17 +554,25 @@ class _HomeScreenState extends State<HomeScreen> {
                     reusableStack1(
                         image: 'assets/translations.png',
                         title: 'Translations'.tr,
-                        onTap: () {
-                          if (homeScreenController.adsHelper.interstitialAd !=
-                              null) {
-                            // homeScreenController.adsHelper.interstitialAd
-                            //     ?.show();
-                            homeScreenController.adsHelper
-                                .showInterstitialAd(nextScreen: '/translation');
-                            print('interstitial ad load successfully');
-                          } else {
-                            print('interstitial ad not loaded');
+                        onTap: () async {
+                          await homeScreenController.checkInternetConnection();
+
+
+                          if(!homeScreenController.isConnected.value){
+                            Get.to(()=>TranslationScreen());
+                            homeScreenController.showNoInternetDialog();
+
+                          }else{
+                            if (homeScreenController.adsHelper.interstitialAd !=
+                                null) {
+                              // homeScreenController.adsHelper.interstitialAd
+                              //     ?.show();
+                              homeScreenController.adsHelper
+                                  .showInterstitialAd(nextScreen: '/translation');
+                              print('interstitial ad load successfully');
+                            }
                           }
+
                           //Get.to(() => TranslationScreen());
                         }),
                     SizedBox(
@@ -586,23 +606,30 @@ class _HomeScreenState extends State<HomeScreen> {
                             homeScreenController.adsHelper
                                 .showInterstitialAd(nextScreen: '/history');
                             print('interstitial ad load successfuly');
-                          } else {
+                          } else
                             print('interstitial ad not loaded');
                           }
-                        }),
+                        ),
                     SizedBox(
                       width: Get.width * 0.03,
                     ),
                     reusableStack1(
                       image: 'assets/share.png',
                       title: 'Share'.tr,
-                      onTap: () {
+                      onTap: () async {
+
+                        await homeScreenController.checkInternetConnection();
+
+
+                        if(!homeScreenController.isConnected.value){
+                          homeScreenController.showNoInternetDialog();
+                        }else{
                           String content = Platform.isAndroid
                               ? 'Hey check out my app at: https://play.google.com/store/apps/details?id=com.pzapps.alllanguagesdictionary'
                               : 'Hey check out my app at: https://apps.apple.com/us/developer/zia-ur-rahman/id1529429081';
                           Share.share(content);
                           print('clicked');
-
+                        }
                       },
                     ),
                   ],
