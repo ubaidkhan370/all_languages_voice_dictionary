@@ -177,9 +177,6 @@
 //
 // }
 
-
-
-
 ///Ads Helper Class
 import 'dart:developer';
 import 'dart:io';
@@ -194,7 +191,6 @@ class AdsHelper {
   RxBool isNativeAdLoaded = false.obs;
   RxBool isNativeAd2Loaded = false.obs;
   RxBool isNativeAd3Loaded = false.obs;
-
 
   BannerAd? bannerAd;
   NativeAd? nativeAd;
@@ -263,17 +259,17 @@ class AdsHelper {
       {required bool isSplash, required String nextScreen}) {
     interstitialAd?.fullScreenContentCallback =
         FullScreenContentCallback(onAdDismissedFullScreenContent: (ad) {
-          interstitialAd?.dispose();
-          interstitialAd = null;
-          GlobalVariable.showInterstitialAd = false;
-          GlobalVariable.isInterstitialAdShowing.value = false;
-          if (!isSplash) {
-            Get.toNamed(nextScreen);
-            loadInterstitialAd();
-          } else {
-            Get.offNamed(nextScreen);
-          }
-        });
+      interstitialAd?.dispose();
+      interstitialAd = null;
+      GlobalVariable.showInterstitialAd = false;
+      GlobalVariable.isInterstitialAdShowing.value = false;
+      if (!isSplash) {
+        Get.toNamed(nextScreen);
+        loadInterstitialAd();
+      } else {
+        Get.offNamed(nextScreen);
+      }
+    });
   }
 
   void loadAppOpenAd() {
@@ -307,11 +303,11 @@ class AdsHelper {
   void appOpenAdCallback() {
     appOpenAd?.fullScreenContentCallback =
         FullScreenContentCallback(onAdDismissedFullScreenContent: (ad) {
-          appOpenAd?.dispose();
-          appOpenAd = null;
-          GlobalVariable.isAppOpenAdShowing.value = false;
-          loadAppOpenAd();
-        });
+      appOpenAd?.dispose();
+      appOpenAd = null;
+      GlobalVariable.isAppOpenAdShowing.value = false;
+      loadAppOpenAd();
+    });
   }
 
   void loadNativeAd() {
@@ -333,7 +329,7 @@ class AdsHelper {
       ),
       request: const AdRequest(),
       nativeTemplateStyle: NativeTemplateStyle(
-        templateType: TemplateType.medium,
+        templateType: TemplateType.small,
         // mainBackgroundColor: ThemeHelper.primaryColor,
         // cornerRadius: 10.0,
         callToActionTextStyle: NativeTemplateTextStyle(
@@ -342,18 +338,18 @@ class AdsHelper {
             style: NativeTemplateFontStyle.bold,
             size: 13.5),
         primaryTextStyle: NativeTemplateTextStyle(
-          // textColor: ThemeHelper.s,
-          // backgroundColor: ThemeColors.bgColor.withOpacity(0.7),
+            // textColor: ThemeHelper.s,
+            // backgroundColor: ThemeColors.bgColor.withOpacity(0.7),
             style: NativeTemplateFontStyle.italic,
             size: 13.5),
         secondaryTextStyle: NativeTemplateTextStyle(
-          // textColor: ThemeColors.secondary,
-          // backgroundColor: ThemeColors.bgColor.withOpacity(0.7),
+            // textColor: ThemeColors.secondary,
+            // backgroundColor: ThemeColors.bgColor.withOpacity(0.7),
             style: NativeTemplateFontStyle.bold,
             size: 13),
         tertiaryTextStyle: NativeTemplateTextStyle(
-          // textColor: ThemeColors.secondary,
-          // backgroundColor: ThemeColors.bgColor.withOpacity(0.7),
+            // textColor: ThemeColors.secondary,
+            // backgroundColor: ThemeColors.bgColor.withOpacity(0.7),
             style: NativeTemplateFontStyle.normal,
             size: 13),
       ),
@@ -388,23 +384,24 @@ class AdsHelper {
             style: NativeTemplateFontStyle.bold,
             size: 13.5),
         primaryTextStyle: NativeTemplateTextStyle(
-          // textColor: ThemeHelper.s,
-          // backgroundColor: ThemeColors.bgColor.withOpacity(0.7),
+            // textColor: ThemeHelper.s,
+            // backgroundColor: ThemeColors.bgColor.withOpacity(0.7),
             style: NativeTemplateFontStyle.italic,
             size: 13.5),
         secondaryTextStyle: NativeTemplateTextStyle(
-          // textColor: ThemeColors.secondary,
-          // backgroundColor: ThemeColors.bgColor.withOpacity(0.7),
+            // textColor: ThemeColors.secondary,
+            // backgroundColor: ThemeColors.bgColor.withOpacity(0.7),
             style: NativeTemplateFontStyle.bold,
             size: 13),
         tertiaryTextStyle: NativeTemplateTextStyle(
-          // textColor: ThemeColors.secondary,
-          // backgroundColor: ThemeColors.bgColor.withOpacity(0.7),
+            // textColor: ThemeColors.secondary,
+            // backgroundColor: ThemeColors.bgColor.withOpacity(0.7),
             style: NativeTemplateFontStyle.normal,
             size: 13),
       ),
     ).load();
   }
+
   void loadNativeAd3() {
     NativeAd(
       adUnitId: nativeAdUnitId,
@@ -424,7 +421,7 @@ class AdsHelper {
       ),
       request: const AdRequest(),
       nativeTemplateStyle: NativeTemplateStyle(
-        templateType: TemplateType.small,
+        templateType: TemplateType.medium,
         // mainBackgroundColor: ThemeHelper.primaryColor,
         // cornerRadius: 10.0,
         callToActionTextStyle: NativeTemplateTextStyle(
@@ -433,18 +430,18 @@ class AdsHelper {
             style: NativeTemplateFontStyle.bold,
             size: 13.5),
         primaryTextStyle: NativeTemplateTextStyle(
-          // textColor: ThemeHelper.s,
-          // backgroundColor: ThemeColors.bgColor.withOpacity(0.7),
+            // textColor: ThemeHelper.s,
+            // backgroundColor: ThemeColors.bgColor.withOpacity(0.7),
             style: NativeTemplateFontStyle.italic,
             size: 13.5),
         secondaryTextStyle: NativeTemplateTextStyle(
-          // textColor: ThemeColors.secondary,
-          // backgroundColor: ThemeColors.bgColor.withOpacity(0.7),
+            // textColor: ThemeColors.secondary,
+            // backgroundColor: ThemeColors.bgColor.withOpacity(0.7),
             style: NativeTemplateFontStyle.bold,
             size: 13),
         tertiaryTextStyle: NativeTemplateTextStyle(
-          // textColor: ThemeColors.secondary,
-          // backgroundColor: ThemeColors.bgColor.withOpacity(0.7),
+            // textColor: ThemeColors.secondary,
+            // backgroundColor: ThemeColors.bgColor.withOpacity(0.7),
             style: NativeTemplateFontStyle.normal,
             size: 13),
       ),
@@ -453,8 +450,8 @@ class AdsHelper {
 
   void loadBannerAd() async {
     final AnchoredAdaptiveBannerAdSize? size =
-    await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
-        Get.width.truncate());
+        await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
+            Get.width.truncate());
 
     BannerAd(
       adUnitId: bannerAdUnitId,
@@ -485,7 +482,8 @@ class AdsHelper {
 
     // Get the size before loading the ad.
     double screenWidth = Get.size.width.truncateToDouble();
-    final size = await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(screenWidth as int);
+    final size = await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
+        screenWidth as int);
 
     if (size == null) {
       // Unable to get the size.
@@ -499,11 +497,11 @@ class AdsHelper {
     });
 
     BannerAd(
-        adUnitId: adUnitId,
-        request: adRequest,
-        size: size,
-        listener: const BannerAdListener()
-    ).load();
+            adUnitId: adUnitId,
+            request: adRequest,
+            size: size,
+            listener: const BannerAdListener())
+        .load();
   }
 
   disposeAds() {

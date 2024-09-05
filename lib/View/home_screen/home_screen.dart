@@ -68,29 +68,29 @@ class _HomeScreenState extends State<HomeScreen> {
             style: NativeTemplateFontStyle.bold,
             size: 13.5),
         primaryTextStyle: NativeTemplateTextStyle(
-          // textColor: ThemeHelper.s,
-          // backgroundColor: ThemeColors.bgColor.withOpacity(0.7),
+            // textColor: ThemeHelper.s,
+            // backgroundColor: ThemeColors.bgColor.withOpacity(0.7),
             style: NativeTemplateFontStyle.italic,
             size: 13.5),
         secondaryTextStyle: NativeTemplateTextStyle(
-          // textColor: ThemeColors.secondary,
-          // backgroundColor: ThemeColors.bgColor.withOpacity(0.7),
+            // textColor: ThemeColors.secondary,
+            // backgroundColor: ThemeColors.bgColor.withOpacity(0.7),
             style: NativeTemplateFontStyle.bold,
             size: 13),
         tertiaryTextStyle: NativeTemplateTextStyle(
-          // textColor: ThemeColors.secondary,
-          // backgroundColor: ThemeColors.bgColor.withOpacity(0.7),
+            // textColor: ThemeColors.secondary,
+            // backgroundColor: ThemeColors.bgColor.withOpacity(0.7),
             style: NativeTemplateFontStyle.normal,
             size: 13),
       ),
     ).load();
   }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     loadNativeAd();
-
   }
 
   FavouriteController favouriteController = Get.put(FavouriteController());
@@ -121,7 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
     'grape'.tr,
     'honeydew'.tr,
     'orange'.tr,
-        'queen'.tr,
+    'queen'.tr,
     'kingdom'.tr,
     'viking'.tr,
   ];
@@ -129,7 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
   RxInt _page = 0.obs;
 
   @override
-  void dispose(){
+  void dispose() {
     homeScreenController.adsHelper.disposeAds();
   }
 
@@ -163,16 +163,19 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        height:Get.height*0.11,
+                        height: Get.height * 0.11,
                         margin: EdgeInsets.only(top: 30, left: 15),
                         decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            //color: Theme.of(context).colorScheme.primary
+                          shape: BoxShape.circle,
+                          //color: Theme.of(context).colorScheme.primary
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(10.0),
-                           child: ClipOval(
-                               child: Image.asset('assets/dictionary.png',fit: BoxFit.cover,)),
+                          child: ClipOval(
+                              child: Image.asset(
+                            'assets/dictionary.png',
+                            fit: BoxFit.cover,
+                          )),
                           // Icon(
                           //   Icons.translate,
                           //   size: 40,
@@ -180,7 +183,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           // ),
                         ),
                       ),
-
                       Padding(
                         padding: const EdgeInsets.only(top: 30, left: 15),
                         child: Text(
@@ -202,7 +204,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     text: 'Home'.tr),
                 drawerCard(
                     onTap: () {
-                      Get.to(()=>LanguageSelectionScreen());
+                      Get.to(() => LanguageSelectionScreen());
                     },
                     icon: Icons.language,
                     text: 'Select Languages'.tr),
@@ -226,14 +228,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     text: 'Favourites'.tr),
                 drawerCard(
                     onTap: () {
-                      Get.to(()=>SettingScreen());
+                      Get.to(() => SettingScreen());
                     },
                     icon: Icons.settings,
                     text: 'Setting'.tr),
               ],
             )),
         appBar: AppBar(
-          title:  Text(
+          title: Text(
             'ALL LANGUAGES DICTIONARY'.tr,
             style: TextStyle(
                 fontFamily: 'Arial',
@@ -295,7 +297,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 //           .text, languageCode);
                                 // }
                               }
-                            }, Color(0xFFEFEFEF),Color(0xFFE64D3D)),
+                            }, Color(0xFFEFEFEF), Color(0xFFE64D3D)),
                           ),
                           customIconButton(
                             () {
@@ -318,15 +320,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               color: Color(0xFFEFEFEF),
                             ),
                             child: customDropDownButton(
-                              homeScreenController.dropDownValue2,
-                              (String? newValue) {
-                                if (newValue != null) {
-                                  homeScreenController.dropDownValue2.value =
-                                      newValue;
-                                }
-                              },
-                              Color(0xFFFFFFFF),Color(0xFFE64D3D)
-                            ),
+                                homeScreenController.dropDownValue2,
+                                (String? newValue) {
+                              if (newValue != null) {
+                                homeScreenController.dropDownValue2.value =
+                                    newValue;
+                              }
+                            }, Color(0xFFFFFFFF), Color(0xFFE64D3D)),
                           )
                         ],
                       ),
@@ -373,8 +373,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     textEditingController;
                                 homeScreenController.focusNode = focusNode;
                                 focusNode.addListener(() {
-                                  homeScreenController
-                                      .update();
+                                  homeScreenController.update();
                                 });
                                 return TextField(
                                   decoration: InputDecoration(
@@ -383,17 +382,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ? ''
                                         : 'Write Something...'.tr,
                                     alignLabelWithHint: true,
-                                    contentPadding: EdgeInsets.only(top: 20,left: 15,right: 15),
+                                    contentPadding: EdgeInsets.only(
+                                        top: 20, left: 15, right: 15),
                                     suffixIcon: Wrap(
                                       children: [
                                         IconButton(
                                           onPressed: () async {
-                                            await homeScreenController.checkInternetConnection();
-                                            if(!homeScreenController.isConnected.value){
-                                              homeScreenController.checkInternetConnection();
-                                            }else{
+                                            await homeScreenController
+                                                .checkInternetConnection();
+                                            if (!homeScreenController
+                                                .isConnected.value) {
+                                              homeScreenController
+                                                  .checkInternetConnection();
+                                            } else {
                                               if (homeScreenController
-                                                  .speechToText.isNotListening) {
+                                                  .speechToText
+                                                  .isNotListening) {
                                                 homeScreenController
                                                     .startListening();
                                                 showListeningDialog(context);
@@ -402,7 +406,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     .stopListening();
                                               }
                                             }
-
                                           },
                                           tooltip: 'Listen'.tr,
                                           icon: Image.asset(
@@ -417,10 +420,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                               right: 10.0, top: 4),
                                           child: IconButton(
                                             onPressed: () async {
-                                              await homeScreenController.checkInternetConnection();
+                                              await homeScreenController
+                                                  .checkInternetConnection();
 
-                                              if (!homeScreenController.isConnected.value) {
-                                                homeScreenController.showNoInternetDialog();
+                                              if (!homeScreenController
+                                                  .isConnected.value) {
+                                                homeScreenController
+                                                    .showNoInternetDialog();
                                                 return;
                                               }
                                               await dropDownButtonController
@@ -436,10 +442,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                               if (homeScreenController
                                                       .textEditingController
                                                       .text
-                                                      .isNotEmpty && historyScreenController.historyList.any((item) => item.text == homeScreenController
-                                                  .textEditingController
-                                                  .text
-                                               )) {
+                                                      .isNotEmpty &&
+                                                  historyScreenController
+                                                      .historyList
+                                                      .any((item) =>
+                                                          item.text ==
+                                                          homeScreenController
+                                                              .textEditingController
+                                                              .text)) {
                                                 historyScreenController
                                                     .addToHistory(
                                                         homeScreenController
@@ -462,7 +472,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 print(
                                                     'interstitial ad load successfuly');
                                               } else {
-                                                print('interstitial ad not loaded');
+                                                print(
+                                                    'interstitial ad not loaded');
                                               }
                                             },
                                             icon: Image.asset(
@@ -473,8 +484,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ),
                                           ),
                                         ),
-
-                                  ],
+                                      ],
                                     ),
                                   ),
                                   controller:
@@ -557,19 +567,18 @@ class _HomeScreenState extends State<HomeScreen> {
                         onTap: () async {
                           await homeScreenController.checkInternetConnection();
 
-
-                          if(!homeScreenController.isConnected.value){
-                            Get.to(()=>TranslationScreen());
+                          if (!homeScreenController.isConnected.value) {
+                            Get.to(() => TranslationScreen());
                             homeScreenController.showNoInternetDialog();
-
-                          }else{
+                          } else {
                             if (homeScreenController.adsHelper.interstitialAd !=
                                 null) {
-                              // homeScreenController.adsHelper.interstitialAd
-                              //     ?.show();
-                              homeScreenController.adsHelper
-                                  .showInterstitialAd(nextScreen: '/translation');
+                              homeScreenController.adsHelper.showInterstitialAd(
+                                  nextScreen: '/translation');
+                              // Get.to(() => TranslationScreen());
                               print('interstitial ad load successfully');
+                            } else {
+                              Get.to(() => TranslationScreen());
                             }
                           }
 
@@ -589,6 +598,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               .showInterstitialAd(nextScreen: '/favourite');
                           print('interstitial ad load successfuly');
                         } else {
+                          Get.to(() => FavouriteScreen());
                           print('interstitial ad not loaded');
                         }
                       },
@@ -608,8 +618,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             print('interstitial ad load successfuly');
                           } else
                             print('interstitial ad not loaded');
-                          }
-                        ),
+                        }),
                     SizedBox(
                       width: Get.width * 0.03,
                     ),
@@ -617,13 +626,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       image: 'assets/share.png',
                       title: 'Share'.tr,
                       onTap: () async {
-
                         await homeScreenController.checkInternetConnection();
 
-
-                        if(!homeScreenController.isConnected.value){
+                        if (!homeScreenController.isConnected.value) {
                           homeScreenController.showNoInternetDialog();
-                        }else{
+                        } else {
                           String content = Platform.isAndroid
                               ? 'Hey check out my app at: https://play.google.com/store/apps/details?id=com.pzapps.alllanguagesdictionary'
                               : 'Hey check out my app at: https://apps.apple.com/us/developer/zia-ur-rahman/id1529429081';
@@ -635,24 +642,22 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
-
               SizedBox(
-                height: Get.height * 0.03,
+                height: Get.height * 0.01,
               ),
               Obx(
                 () => (isNativeAdLoaded.value &&
-                        !GlobalVariable.isAppOpenAdShowing.value )
+                        !GlobalVariable.isAppOpenAdShowing.value)
                     ? Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 3, vertical: 2),
                         child: SizedBox(
                           width: Get.width,
-                          height: Get.height * 0.2,
+                          height: 180,
                           // homeScreenController.adsHelper.bannerAd!.size.height
                           //     .toDouble(),
 
-                          child: AdWidget(
-                              ad: nativeAd!),
+                          child: AdWidget(ad: nativeAd!),
                         ))
                     : (!GlobalVariable.isPurchasedMonthly.value &&
                             !GlobalVariable.isPurchasedYearly.value &&

@@ -47,9 +47,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            Container(
+            Expanded(
               //color: Colors.red,
-              height: Get.height * 0.75,
+              //height: Get.height * 0.75,
               child: Column(
                 children: [
                   SizedBox(
@@ -69,7 +69,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 90.0).r,
-                        child:  Text('History'.tr,
+                        child: Text('History'.tr,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 28,
@@ -154,7 +154,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                             customDialogBox(
                                                 title: 'delete'.tr,
                                                 content:
-                                                    'Are you sure you want to delete?'.tr,
+                                                    'Are you sure you want to delete?'
+                                                        .tr,
                                                 context: context,
                                                 voidCallBack: () async {
                                                   if (historyTable.id != null) {
@@ -241,47 +242,52 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 ],
               ),
             ),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
             Obx(
-                  () {
-                bool isAdLoaded = historyScreenController.adsHelper.isBannerAdLoaded.value &&
-                    historyScreenController.adsHelper.bannerAd != null &&
-                    !GlobalVariable.isAppOpenAdShowing.value &&
-                    !GlobalVariable.isInterstitialAdShowing.value;
+              () {
+                bool isAdLoaded =
+                    historyScreenController.adsHelper.isBannerAdLoaded.value &&
+                        historyScreenController.adsHelper.bannerAd != null &&
+                        !GlobalVariable.isAppOpenAdShowing.value &&
+                        !GlobalVariable.isInterstitialAdShowing.value;
 
                 return isAdLoaded
                     ? Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.blue,
-                      width: 1.5, // Border width
-                    ),
-                  ),
-                  child: SizedBox(
-                    width: Get.width,
-                    height: historyScreenController.adsHelper.bannerAd!.size.height
-                        .toDouble(),
-                    child: AdWidget(ad: historyScreenController.adsHelper.bannerAd!),
-                  ),
-                )
-                    : Shimmer.fromColors(
-                  baseColor: Colors.grey.shade300,
-                  highlightColor: Colors.grey.shade100,
-                  child: Container(
-                    width: Get.width,
-                    height: 55,
-                    color: Colors.grey.shade300,
-                    child: Center(
-                      child: Text(
-                        'Loading ad...', // Optional placeholder text
-                        style: TextStyle(
-                          color: Colors.grey.shade700,
-                          fontSize: 14,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.blue,
+                            width: 1.5, // Border width
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
-                );
+                        child: SizedBox(
+                          width: Get.width,
+                          height: historyScreenController
+                              .adsHelper.bannerAd!.size.height
+                              .toDouble(),
+                          child: AdWidget(
+                              ad: historyScreenController.adsHelper.bannerAd!),
+                        ),
+                      )
+                    : Shimmer.fromColors(
+                        baseColor: Colors.grey.shade300,
+                        highlightColor: Colors.grey.shade100,
+                        child: Container(
+                          width: Get.width,
+                          height: 55,
+                          color: Colors.grey.shade300,
+                          child: Center(
+                            child: Text(
+                              'Loading ad...', // Optional placeholder text
+                              style: TextStyle(
+                                color: Colors.grey.shade700,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
               },
             ),
           ],

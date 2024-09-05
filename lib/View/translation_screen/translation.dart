@@ -68,23 +68,23 @@ class _TranslationScreenState extends State<TranslationScreen> {
                       padding:
                           EdgeInsets.only(left: 12.0, top: Get.height * 0.03),
                       child: IconButton(
-                        onPressed: () {
-                          Get.back();
-                        },
-                        icon: Icon(
-                          Icons.arrow_back_ios,
-                          color: Colors.white,
-                          size: 30,
-                        )
-                        //     Image.asset(
-                        //   'assets/drawer.png',
-                        //   // height: Get.height * 0.014.h,
-                        //   // width: Get.width * 0.07.w,
-                        //   height: Get.height * 0.016,
-                        //   width: Get.width * 0.08,
-                        //   //fit: BoxFit.fill,
-                        // ),
-                      ),
+                          onPressed: () {
+                            Get.back();
+                          },
+                          icon: Icon(
+                            Icons.arrow_back_ios,
+                            color: Colors.white,
+                            size: 30,
+                          )
+                          //     Image.asset(
+                          //   'assets/drawer.png',
+                          //   // height: Get.height * 0.014.h,
+                          //   // width: Get.width * 0.07.w,
+                          //   height: Get.height * 0.016,
+                          //   width: Get.width * 0.08,
+                          //   //fit: BoxFit.fill,
+                          // ),
+                          ),
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(
@@ -97,7 +97,6 @@ class _TranslationScreenState extends State<TranslationScreen> {
                               fontWeight: FontWeight.w600,
                               color: Colors.white)),
                     ),
-
                     Container(
                       margin: EdgeInsets.only(top: Get.height * 0.03),
                       padding:
@@ -119,18 +118,26 @@ class _TranslationScreenState extends State<TranslationScreen> {
                                 Get.find<HomeScreenController>().dropDownValue1,
                                 (String? newValue) {
                               if (newValue != null) {
-                                Get.find<HomeScreenController>().dropDownValue1.value =
-                                    newValue;
+                                Get.find<HomeScreenController>()
+                                    .dropDownValue1
+                                    .value = newValue;
                               }
-                            }, Color(0xFFEFEFEF),Color(0xFFE64D3D)),
+                            }, Color(0xFFEFEFEF), Color(0xFFE64D3D)),
                           ),
                           customIconButton(
                             () {
-                              String temp =
-                                  Get.find<HomeScreenController>().dropDownValue1.value;
-                              Get.find<HomeScreenController>().dropDownValue1.value =
-                                  Get.find<HomeScreenController>().dropDownValue2.value;
-                              Get.find<HomeScreenController>().dropDownValue2.value = temp;
+                              String temp = Get.find<HomeScreenController>()
+                                  .dropDownValue1
+                                  .value;
+                              Get.find<HomeScreenController>()
+                                      .dropDownValue1
+                                      .value =
+                                  Get.find<HomeScreenController>()
+                                      .dropDownValue2
+                                      .value;
+                              Get.find<HomeScreenController>()
+                                  .dropDownValue2
+                                  .value = temp;
                             },
                             'assets/swap_arrows.png',
                           ),
@@ -145,23 +152,22 @@ class _TranslationScreenState extends State<TranslationScreen> {
                               color: Color(0xFFEFEFEF),
                             ),
                             child: customDropDownButton(
-                              Get.find<HomeScreenController>().dropDownValue2,
-                              (String? newValue) async {
-                                if (newValue != null) {
-                                  Get.find<HomeScreenController>().dropDownValue2.value =
-                                      newValue;
-                                  String translatedText =
-                                      await translationScreenController
-                                          .translateText(
-                                              translationScreenController
-                                                  .textEditingController.text);
-                                  Get.find<TranslationScreenController>()
-                                      .translatedText
-                                      .value = translatedText;
-                                }
-                              },
-                              Color(0xFFFFFFFF),Color(0xFFE64D3D)
-                            ),
+                                Get.find<HomeScreenController>().dropDownValue2,
+                                (String? newValue) async {
+                              if (newValue != null) {
+                                Get.find<HomeScreenController>()
+                                    .dropDownValue2
+                                    .value = newValue;
+                                String translatedText =
+                                    await translationScreenController
+                                        .translateText(
+                                            translationScreenController
+                                                .textEditingController.text);
+                                Get.find<TranslationScreenController>()
+                                    .translatedText
+                                    .value = translatedText;
+                              }
+                            }, Color(0xFFFFFFFF), Color(0xFFE64D3D)),
                           )
                         ],
                       ),
@@ -170,234 +176,263 @@ class _TranslationScreenState extends State<TranslationScreen> {
                 ),
               ),
               SingleChildScrollView(
-                child: Column(children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: Get.width * 0.05, vertical: Get.width * 0.05),
-                    child: Container(
-                      height: Get.height * 0.25,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(12)),
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 25.0).r,
-                        child: Obx(() {
-                          String currentText =
-                              translationScreenController.currentText.value;
-                          bool isFavourite = Get.find<FavouriteController>().favouritesList
-                              .contains(currentText);
-                          bool isTextEmpty = currentText.isEmpty;
-                          return Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              TextField(
-                                decoration: const InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText:
-                                  //focusNode.hasFocus ? '' :
-                                  'Write Something...',
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: Get.width * 0.05,
+                          vertical: Get.width * 0.05),
+                      child: Container(
+                        height: Get.height * 0.25,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(12)),
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 25.0).r,
+                          child: Obx(() {
+                            String currentText =
+                                translationScreenController.currentText.value;
+                            bool isFavourite = Get.find<FavouriteController>()
+                                .favouritesList
+                                .contains(currentText);
+                            bool isTextEmpty = currentText.isEmpty;
+                            return Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                TextField(
+                                  decoration: const InputDecoration(
+                                    border: InputBorder.none,
+                                    hintText:
+                                        //focusNode.hasFocus ? '' :
+                                        'Write Something...',
+                                  ),
+                                  controller:
+                                      //homeScreenController.speechToText.isListening ? '${homeScreenController.lastWords}':
+                                      //homeScreenController.textEditingController,
+                                      translationScreenController
+                                          .textEditingController,
+                                  focusNode: focusNode,
+                                  maxLines: 3,
                                 ),
-                                controller:
-                                //homeScreenController.speechToText.isListening ? '${homeScreenController.lastWords}':
-                                //homeScreenController.textEditingController,
-                                translationScreenController
-                                    .textEditingController,
-                                focusNode: focusNode,
-                                maxLines: 3,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  IconButton(
-                                    onPressed: () async {
-                                      await homeScreenController.checkInternetConnection();
-                                      if(!homeScreenController.isConnected.value){
-                                        homeScreenController.showNoInternetDialog();
-                                      }else{
-                                        if ( Get.find<TranslationScreenController>()
-                                            .speechToText.isNotListening) {
-                                          Get.find<TranslationScreenController>().startListening();
-                                          showListeningDialog(context);
-                                        } else {
-                                          Get.find<TranslationScreenController>().stopListening();
-                                        }
-                                      }
-
-                                    },
-                                    tooltip: 'Listen',
-                                    icon: Image.asset(
-                                      'assets/speaker.png',
-                                      height: Get.height * 0.035.h,
-                                      width: Get.width * 0.04.w,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-
-                                  Obx(() {
-                                    String currentText =
-                                        translationScreenController.textEditingController.text;
-                                    // bool isFavourite =
-                                    // Get.find<FavouriteController>()
-                                    //     .favouritesList
-                                    //     .contains(currentText);
-                                    final bool isFavourite =
-                                    Get.find<FavouriteController>().isFavourite(currentText);
-                                    bool isTextEmpty = currentText.isEmpty;
-                                    return IconButton(
-                                      onPressed: () {
-                                        if (currentText.isNotEmpty) {
-                                          if (isFavourite) {
-                                            Get.find<FavouriteController>()
-                                                .deleteFromFavourite(currentText);
-                                          } else {
-                                            Get.find<FavouriteController>()
-                                                .addToFavourites(currentText);
-                                          }
-                                        } else {
-                                          return;
-                                        }
-                                      },
-                                      icon: Icon(
-                                        isFavourite
-                                            ? Icons.favorite
-                                            : Icons.favorite_border,
-                                        color: isFavourite
-                                            ? Color(0xFFE64D3D)
-                                            : Color(0xFFE64D3D).withOpacity(0.8),
-                                      ),
-                                      color: isTextEmpty ? Colors.grey : null,
-                                    );
-                                  }),
-                                  Padding(
-                                    padding:
-                                    const EdgeInsets.only(right: 10.0, top: 4),
-                                    child: IconButton(
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    IconButton(
                                       onPressed: () async {
-                                        String translatedText =
-                                        await translationScreenController
-                                            .translateText( translationScreenController
-                                            .textEditingController.text);
-                                        translationScreenController
-                                            .translatedText.value = translatedText;
+                                        await homeScreenController
+                                            .checkInternetConnection();
+                                        if (!homeScreenController
+                                            .isConnected.value) {
+                                          homeScreenController
+                                              .showNoInternetDialog();
+                                        } else {
+                                          if (Get.find<
+                                                  TranslationScreenController>()
+                                              .speechToText
+                                              .isNotListening) {
+                                            Get.find<
+                                                    TranslationScreenController>()
+                                                .startListening();
+                                            showListeningDialog(context);
+                                          } else {
+                                            Get.find<
+                                                    TranslationScreenController>()
+                                                .stopListening();
+                                          }
+                                        }
                                       },
+                                      tooltip: 'Listen',
                                       icon: Image.asset(
-                                        'assets/search.png',
+                                        'assets/speaker.png',
                                         height: Get.height * 0.035.h,
-                                        width: Get.width * 0.07.w,
-                                        fit: BoxFit.fill,
+                                        width: Get.width * 0.04.w,
+                                        fit: BoxFit.cover,
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          );
-                        }),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: Get.width * 0.05, vertical: Get.width * 0.03),
-                    child: Container(
-                      height: Get.height * 0.23.h,
-                      width: Get.width,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(12)),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Obx(() {
-                            String translatedText =
-                                translationScreenController.translatedText.value;
-                            return Padding(
-                              padding: const EdgeInsets.only(top: 10, right: 10,left: 10),
-                              child: Align(
-                                  alignment: Alignment.topRight,
-                                  child: Text(translatedText)),
+                                    Obx(() {
+                                      String currentText =
+                                          translationScreenController
+                                              .textEditingController.text;
+                                      // bool isFavourite =
+                                      // Get.find<FavouriteController>()
+                                      //     .favouritesList
+                                      //     .contains(currentText);
+                                      final bool isFavourite =
+                                          Get.find<FavouriteController>()
+                                              .isFavourite(currentText);
+                                      bool isTextEmpty = currentText.isEmpty;
+                                      return IconButton(
+                                        onPressed: () {
+                                          if (currentText.isNotEmpty) {
+                                            if (isFavourite) {
+                                              Get.find<FavouriteController>()
+                                                  .deleteFromFavourite(
+                                                      currentText);
+                                            } else {
+                                              Get.find<FavouriteController>()
+                                                  .addToFavourites(currentText);
+                                            }
+                                          } else {
+                                            return;
+                                          }
+                                        },
+                                        icon: Icon(
+                                          isFavourite
+                                              ? Icons.favorite
+                                              : Icons.favorite_border,
+                                          color: isFavourite
+                                              ? Color(0xFFE64D3D)
+                                              : Color(0xFFE64D3D)
+                                                  .withOpacity(0.8),
+                                        ),
+                                        color: isTextEmpty ? Colors.grey : null,
+                                      );
+                                    }),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          right: 10.0, top: 4),
+                                      child: IconButton(
+                                        onPressed: () async {
+                                          String translatedText =
+                                              await translationScreenController
+                                                  .translateText(
+                                                      translationScreenController
+                                                          .textEditingController
+                                                          .text);
+                                          translationScreenController
+                                              .translatedText
+                                              .value = translatedText;
+                                        },
+                                        icon: Image.asset(
+                                          'assets/search.png',
+                                          height: Get.height * 0.035.h,
+                                          width: Get.width * 0.07.w,
+                                          fit: BoxFit.fill,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             );
                           }),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              IconButton(
-                                onPressed: () {
-                                  translationScreenController.speak(translationScreenController.translatedText.value, Get.find<HomeScreenController>().dropDownValue2.value);
-                                },
-                                tooltip: 'Listen',
-                                icon:Icon(Icons.speaker_phone,color:Color(0xFFE64D3D) ,),
-                                // Image.asset(
-                                //   'assets/speaker.png',
-                                //   height: Get.height * 0.035.h,
-                                //   width: Get.width * 0.04.w,
-                                //   fit: BoxFit.cover,
-                                // ),
-                              ),
-                              Obx(() {
-                                String currentText =
-                                    translationScreenController.translatedText.value;
-                                // bool isFavourite =
-                                // Get.find<FavouriteController>()
-                                //     .favouritesList
-                                //     .contains(currentText);
-                                final bool isFavourite =
-                                Get.find<FavouriteController>().isFavourite(currentText);
-                                bool isTextEmpty = currentText.isEmpty;
-                                return IconButton(
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: Get.width * 0.05,
+                          vertical: Get.width * 0.03),
+                      child: Container(
+                        height: Get.height * 0.23.h,
+                        width: Get.width,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(12)),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Obx(() {
+                              String translatedText =
+                                  translationScreenController
+                                      .translatedText.value;
+                              return Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 10, right: 10, left: 10),
+                                child: Align(
+                                    alignment: Alignment.topRight,
+                                    child: Text(translatedText)),
+                              );
+                            }),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                IconButton(
                                   onPressed: () {
-                                    if (currentText.isNotEmpty) {
-                                      if (isFavourite) {
-                                        Get.find<FavouriteController>()
-                                            .deleteFromFavourite(currentText);
-                                      } else {
-                                        Get.find<FavouriteController>()
-                                            .addToFavourites(currentText);
-                                      }
-                                    } else {
-                                      return;
-                                    }
+                                    translationScreenController.speak(
+                                        translationScreenController
+                                            .translatedText.value,
+                                        Get.find<HomeScreenController>()
+                                            .dropDownValue2
+                                            .value);
                                   },
+                                  tooltip: 'Listen',
                                   icon: Icon(
-                                    isFavourite
-                                        ? Icons.favorite
-                                        : Icons.favorite_border,
-                                    color: isFavourite
-                                        ? Color(0xFFE64D3D)
-                                        : Color(0xFFE64D3D).withOpacity(0.8),
+                                    Icons.speaker_phone,
+                                    color: Color(0xFFE64D3D),
                                   ),
-                                  color: isTextEmpty ? Colors.grey : null,
-                                );
-                              }),
-                              Padding(
-                                padding:
-                                const EdgeInsets.only(right: 10.0, top: 4),
-                                child: IconButton(
-                                  onPressed: () async {
+                                  // Image.asset(
+                                  //   'assets/speaker.png',
+                                  //   height: Get.height * 0.035.h,
+                                  //   width: Get.width * 0.04.w,
+                                  //   fit: BoxFit.cover,
+                                  // ),
+                                ),
+                                Obx(() {
+                                  String currentText =
+                                      translationScreenController
+                                          .translatedText.value;
+                                  // bool isFavourite =
+                                  // Get.find<FavouriteController>()
+                                  //     .favouritesList
+                                  //     .contains(currentText);
+                                  final bool isFavourite =
+                                      Get.find<FavouriteController>()
+                                          .isFavourite(currentText);
+                                  bool isTextEmpty = currentText.isEmpty;
+                                  return IconButton(
+                                    onPressed: () {
+                                      if (currentText.isNotEmpty) {
+                                        if (isFavourite) {
+                                          Get.find<FavouriteController>()
+                                              .deleteFromFavourite(currentText);
+                                        } else {
+                                          Get.find<FavouriteController>()
+                                              .addToFavourites(currentText);
+                                        }
+                                      } else {
+                                        return;
+                                      }
+                                    },
+                                    icon: Icon(
+                                      isFavourite
+                                          ? Icons.favorite
+                                          : Icons.favorite_border,
+                                      color: isFavourite
+                                          ? Color(0xFFE64D3D)
+                                          : Color(0xFFE64D3D).withOpacity(0.8),
+                                    ),
+                                    color: isTextEmpty ? Colors.grey : null,
+                                  );
+                                }),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: 10.0, top: 4),
+                                  child: IconButton(
+                                    onPressed: () async {
                                       String content = Platform.isAndroid
                                           ? 'Hey check out my app at: https://play.google.com/store/apps/details?id=com.pzapps.alllanguagesdictionary'
                                           : 'Hey check out my app at: https://apps.apple.com/us/developer/zia-ur-rahman/id1529429081';
                                       Share.share(content);
-
-                                  },
-                                  icon: Image.asset(
-                                    'assets/share.png',
-                                    height: Get.height * 0.035.h,
-                                    width: Get.width * 0.07.w,
-                                    fit: BoxFit.fill,
+                                    },
+                                    icon: Image.asset(
+                                      'assets/share.png',
+                                      height: Get.height * 0.035.h,
+                                      width: Get.width * 0.07.w,
+                                      fit: BoxFit.fill,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ],
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-
-                  ),
-                ],),
+                  ],
+                ),
               )
-
             ],
           ),
         ),
