@@ -417,7 +417,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   children: [
                     Container(
                       //color: Colors.blue,
-                      height: Get.height * 0.6,
+                      height: Get.height * 0.48,
                       child: Padding(
                         padding: EdgeInsets.only(top: Get.height * 0.1),
                         child: Column(
@@ -446,7 +446,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             Image.asset(
                               controller.items[index].image,
                               width: Get.width / 1.3,
-                              height: MediaQuery.of(context).size.height * 0.3,
+                              height: MediaQuery.of(context).size.height * 0.2,
                             ),
                           ],
                         ),
@@ -549,7 +549,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           // minWidth: 320, // minimum recommended width
                           // minHeight: 320, // minimum recommended height
                           maxWidth: 360,
-                          maxHeight: 232,
+                          maxHeight: 382,
                         ),
                         child: AdWidget(ad: ad),
                       )

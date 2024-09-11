@@ -99,7 +99,7 @@ class SplashController extends GetxController {
 
 
   void startLoading() {
-    const totalDuration = Duration(seconds: 4); // Adjust the duration as needed
+    const totalDuration = Duration(seconds: 5); // Adjust the duration as needed
     const updateFrequency = Duration(milliseconds: 100);
     final totalSteps =
         totalDuration.inMilliseconds ~/ updateFrequency.inMilliseconds;

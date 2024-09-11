@@ -59,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       request: const AdRequest(),
       nativeTemplateStyle: NativeTemplateStyle(
-        templateType: TemplateType.medium,
+        templateType: TemplateType.small,
         // mainBackgroundColor: ThemeHelper.primaryColor,
         // cornerRadius: 10.0,
         callToActionTextStyle: NativeTemplateTextStyle(
@@ -653,9 +653,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             horizontal: 3, vertical: 2),
                         child: SizedBox(
                           width: Get.width,
-                          height: 180,
-                          // homeScreenController.adsHelper.bannerAd!.size.height
-                          //     .toDouble(),
+                          height: 320,
 
                           child: AdWidget(ad: nativeAd!),
                         ))

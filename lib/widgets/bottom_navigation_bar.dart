@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
-// Widget bottomNavigationBar(RxInt currentIndex) {
+ // Widget bottomNavigationBar(RxInt currentIndex) {
 //   HomeScreenController homeScreenController = Get.find();
 //   return Expanded(
 //     //height: Get.height * 0.06,

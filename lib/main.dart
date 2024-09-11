@@ -41,14 +41,16 @@ void main() async {
   FlutterError.onError = (errorDetails) {
     FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
   };
-  // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
+  /// Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
   PlatformDispatcher.instance.onError = (error, stack) {
     FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
     return true;
   };
 
+  FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(true);
 
-  // await LocalNotification.init();
+
+  /// await LocalNotification.init();
   await Permission.notification.isDenied.then((value) {
     if (value) {
       Permission.notification.request();
@@ -74,7 +76,6 @@ class MyApp extends StatelessWidget {
   MyApp({super.key, required this.languageCode, });
   final String languageCode;
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations(
