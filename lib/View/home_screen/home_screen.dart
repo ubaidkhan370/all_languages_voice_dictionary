@@ -645,6 +645,7 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(
                 height: Get.height * 0.01,
               ),
+
               Obx(
                 () => (isNativeAdLoaded.value &&
                         !GlobalVariable.isAppOpenAdShowing.value)

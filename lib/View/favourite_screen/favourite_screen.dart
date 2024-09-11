@@ -170,6 +170,7 @@ class FavouriteScreen extends StatelessWidget {
                 ),
               );
             }),
+
             Obx(
                   () {
                 // Check if the ad is loaded and other conditions are met

@@ -245,6 +245,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
             SizedBox(
               height: 20,
             ),
+
             Obx(
               () {
                 bool isAdLoaded =

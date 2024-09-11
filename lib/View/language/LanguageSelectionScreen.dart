@@ -201,41 +201,6 @@ class LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
               }
             },
           )
-
-          ///
-          // Obx(
-          //       () {
-          //     if (languageScreenController.adsHelper.isNativeAdLoaded!.value) {
-          //       return Padding(
-          //         padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 2),
-          //         child: SizedBox(
-          //           width: 360,
-          //           height: 232,
-          //           child: Shimmer.fromColors(
-          //             baseColor: Colors.grey.shade300,
-          //             highlightColor: Colors.grey.shade100,
-          //             child: Container(
-          //               color: Colors.white,
-          //             ),
-          //           ),
-          //         ),
-          //       );
-          //     } else if (languageScreenController.adsHelper.isNativeAdLoaded.value) {
-          //       return Padding(
-          //         padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 2),
-          //         child: SizedBox(
-          //           width: 360,
-          //           height: 232,
-          //           child: AdWidget(
-          //             ad: languageScreenController.adsHelper.nativeAd!,
-          //           ),
-          //         ),
-          //       );
-          //     } else {
-          //       return SizedBox();
-          //     }
-          //   },
-          // ),
         ],
       ),
     );
