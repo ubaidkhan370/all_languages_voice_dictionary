@@ -333,18 +333,30 @@ class _TranslationScreenState extends State<TranslationScreen> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Obx(() {
-                              String translatedText =
-                                  translationScreenController
-                                      .translatedText.value;
-                              return Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 10, right: 10, left: 10),
-                                child: Align(
-                                    alignment: Alignment.topRight,
-                                    child: Text(translatedText)),
-                              );
-                            }),
+                            Container(
+                              height:Get.height * 0.16,
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Obx(() {
+                                      String translatedText =
+                                          translationScreenController
+                                              .translatedText.value;
+                                      return Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 10, right: 10, left: 10),
+                                        child: Align(
+                                            alignment: Alignment.topRight,
+                                            child: Text(translatedText)
+                                      ),
+                                      );
+                                    }),
+                                  ],
+                                ),
+                              ),
+                            ),
+                           // SizedBox(height: Get.height*0.11,),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -378,8 +390,8 @@ class _TranslationScreenState extends State<TranslationScreen> {
                                   //     .favouritesList
                                   //     .contains(currentText);
                                   final bool isFavourite =
-                                      Get.find<FavouriteController>()
-                                          .isFavourite(currentText);
+                                  Get.find<FavouriteController>()
+                                      .isFavourite(currentText);
                                   bool isTextEmpty = currentText.isEmpty;
                                   return IconButton(
                                     onPressed: () {

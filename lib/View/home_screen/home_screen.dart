@@ -645,7 +645,6 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(
                 height: Get.height * 0.01,
               ),
-
               Obx(
                 () => (isNativeAdLoaded.value &&
                         !GlobalVariable.isAppOpenAdShowing.value)
@@ -671,12 +670,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         //    )
                         : const SizedBox(),
               ),
+
             ],
           ),
         ),
       )),
     );
   }
+
 
   void showListeningDialog(BuildContext context) {
     OverlayState? overlayState = Overlay.of(context);
