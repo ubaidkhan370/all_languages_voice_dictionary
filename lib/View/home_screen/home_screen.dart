@@ -40,6 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
   AdsHelper adsHelper = AdsHelper();
   NativeAd? nativeAd;
   RxBool isNativeAdLoaded = false.obs;
+
   void loadNativeAd() {
     NativeAd(
       adUnitId: adsHelper.nativeAdUnitId,
@@ -342,7 +343,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(12)),
                         child: Padding(
-                          padding: EdgeInsets.only(left: 25.0).r,
+                          padding: EdgeInsets.only(left: 25.0),
                           child: Obx(() {
                             String currentText =
                                 homeScreenController.currentText.value;
@@ -410,8 +411,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                           tooltip: 'Listen'.tr,
                                           icon: Image.asset(
                                             'assets/speaker.png',
-                                            height: Get.height * 0.035.h,
-                                            width: Get.width * 0.04.w,
+                                            height: Get.height * 0.035,
+                                            width: Get.width * 0.04,
                                             fit: BoxFit.cover,
                                           ),
                                         ),
@@ -442,14 +443,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                               if (homeScreenController
                                                       .textEditingController
                                                       .text
-                                                      .isNotEmpty &&
+                                                      .isNotEmpty
+                                                 &&
                                                   historyScreenController
                                                       .historyList
                                                       .any((item) =>
                                                           item.text ==
                                                           homeScreenController
                                                               .textEditingController
-                                                              .text)) {
+                                                              .text
+                                                  )
+                                              ) {
                                                 historyScreenController
                                                     .addToHistory(
                                                         homeScreenController
@@ -463,18 +467,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       .isNotEmpty
                                                   ? Get.to(() => Meaning())
                                                   : null;
-                                              if (homeScreenController.adsHelper
-                                                      .interstitialAd !=
-                                                  null) {
-                                                homeScreenController
-                                                    .adsHelper.interstitialAd
-                                                    ?.show();
-                                                print(
-                                                    'interstitial ad load successfuly');
-                                              } else {
-                                                print(
-                                                    'interstitial ad not loaded');
-                                              }
+                                              // if (homeScreenController.adsHelper
+                                              //         .interstitialAd !=
+                                              //     null) {
+                                              //   homeScreenController
+                                              //       .adsHelper.interstitialAd
+                                              //       ?.show();
+                                              //   print(
+                                              //       'interstitial ad load successfuly');
+                                              // } else {
+                                              //   print(
+                                              //       'interstitial ad not loaded');
+                                              // }
                                             },
                                             icon: Image.asset(
                                               'assets/search.png',
@@ -484,6 +488,87 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ),
                                           ),
                                         ),
+                                        ///
+                                        // Padding(
+                                        //   padding: const EdgeInsets.only(
+                                        //       right: 10.0, top: 4),
+                                        //   child: IconButton(
+                                        //     onPressed: () async {
+                                        //       try {
+                                        //         // Check Internet Connection
+                                        //         print(
+                                        //             'Checking internet connection...');
+                                        //         await homeScreenController
+                                        //             .checkInternetConnection();
+                                        //
+                                        //         if (!homeScreenController
+                                        //             .isConnected.value) {
+                                        //           print(
+                                        //               'No internet connection. Showing dialog.');
+                                        //           homeScreenController
+                                        //               .showNoInternetDialog();
+                                        //           return;
+                                        //         }
+                                        //
+                                        //         // Set Language Code
+                                        //         print(
+                                        //             'Setting language code...');
+                                        //         final selectedLanguage =
+                                        //             homeScreenController
+                                        //                 .dropDownValue2.value;
+                                        //         await dropDownButtonController
+                                        //             .languageCode(
+                                        //                 selectedLanguage);
+                                        //         dropDownButtonController
+                                        //             .getLangCode(
+                                        //                 selectedLanguage);
+                                        //
+                                        //         // Add to History
+                                        //         final inputText =
+                                        //             homeScreenController
+                                        //                 .textEditingController
+                                        //                 .text;
+                                        //         if (inputText.isNotEmpty &&
+                                        //             historyScreenController
+                                        //                 .historyList
+                                        //                 .any((item) =>
+                                        //                     item.text ==
+                                        //                     homeScreenController
+                                        //                         .textEditingController
+                                        //                         .text)) {
+                                        //           print('Adding to history...');
+                                        //           await historyScreenController
+                                        //               .addToHistory(
+                                        //                   inputText); // Ensure this is awaited
+                                        //           print(
+                                        //               'Navigating to Meaning screen...');
+                                        //           Get.to(() => Meaning());
+                                        //         } else {
+                                        //           print(
+                                        //               'Input text is empty. No navigation.');
+                                        //         }
+                                        //
+                                        //         // Show Interstitial Ad
+                                        //         // final interstitialAd = homeScreenController.adsHelper.interstitialAd;
+                                        //         //  if (interstitialAd != null) {
+                                        //         //    print('Showing interstitial ad...');
+                                        //         //    interstitialAd.show();
+                                        //         //  } else {
+                                        //         //    print('Interstitial ad not loaded');
+                                        //         //  }
+                                        //       } catch (e) {
+                                        //         print(
+                                        //             'Error during onPressed: $e');
+                                        //       }
+                                        //     },
+                                        //     icon: Image.asset(
+                                        //       'assets/search.png',
+                                        //       height: Get.height * 0.035,
+                                        //       width: Get.width * 0.07,
+                                        //       fit: BoxFit.fill,
+                                        //     ),
+                                        //   ),
+                                        // )
                                       ],
                                     ),
                                   ),
@@ -553,12 +638,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               Container(
-                height: Get.height * 0.17.h,
-                margin: EdgeInsets.only(left: 11, right: 11).r,
+                height: Get.height * 0.17,
+                margin: EdgeInsets.only(left: 11, right: 11),
                 child: ListView(
                   shrinkWrap: true,
                   controller: scrollController,
-                  padding: EdgeInsets.symmetric(horizontal: 10.w),
+                  padding: EdgeInsets.symmetric(horizontal: 10),
                   scrollDirection: Axis.horizontal,
                   children: [
                     reusableStack1(
@@ -616,8 +701,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             homeScreenController.adsHelper
                                 .showInterstitialAd(nextScreen: '/history');
                             print('interstitial ad load successfuly');
-                          } else
+                          } else {
+                            Get.to(() => HistoryScreen());
                             print('interstitial ad not loaded');
+                          }
                         }),
                     SizedBox(
                       width: Get.width * 0.03,
@@ -654,7 +741,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: SizedBox(
                           width: Get.width,
                           height: 320,
-
                           child: AdWidget(ad: nativeAd!),
                         ))
                     : (!GlobalVariable.isPurchasedMonthly.value &&
@@ -670,14 +756,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         //    )
                         : const SizedBox(),
               ),
-
             ],
           ),
         ),
       )),
     );
   }
-
 
   void showListeningDialog(BuildContext context) {
     OverlayState? overlayState = Overlay.of(context);

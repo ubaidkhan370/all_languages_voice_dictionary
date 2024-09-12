@@ -63,12 +63,12 @@ class LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFFE64D3D),
-        // leading: IconButton(
-        //   onPressed: () {
-        //     Get.back();
-        //   },
-        //   icon: Icon(Icons.arrow_back),
-        // ),
+        leading: IconButton(
+          onPressed: () {
+            Get.back();
+          },
+          icon: Icon(Icons.arrow_back,color: Colors.white,),
+        ),
         title: Text(
           'Select Language',
           style: TextStyle(

@@ -82,23 +82,25 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     if (Get.find<HistoryScreenController>()
                         .historyList
                         .isEmpty) {
-                      return Padding(
-                        padding:
-                            EdgeInsets.symmetric(vertical: Get.height * 0.2),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Image.asset('assets/nodata.gif'),
-                            Center(
-                                child: Text(
-                              "No history available".tr,
-                              style: TextStyle(
-                                  fontFamily: 'Arial',
-                                  color: Colors.grey.shade700,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w700),
-                            )),
-                          ],
+                      return Expanded(
+                        child: Container(
+                          padding:
+                              EdgeInsets.symmetric(vertical: Get.height * 0.2),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Image.asset('assets/nodata.gif'),
+                              Center(
+                                  child: Text(
+                                "No history available".tr,
+                                style: TextStyle(
+                                    fontFamily: 'Arial',
+                                    color: Colors.grey.shade700,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w700),
+                              )),
+                            ],
+                          ),
                         ),
                       );
                     }

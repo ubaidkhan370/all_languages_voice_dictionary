@@ -334,7 +334,8 @@ class _TranslationScreenState extends State<TranslationScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
-                              height:Get.height * 0.16,
+                              margin: EdgeInsets.symmetric(horizontal: 10,),
+                              height:Get.height * 0.15,
                               child: SingleChildScrollView(
                                 child: Column(
                                   // mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -356,7 +357,6 @@ class _TranslationScreenState extends State<TranslationScreen> {
                                 ),
                               ),
                             ),
-                           // SizedBox(height: Get.height*0.11,),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [

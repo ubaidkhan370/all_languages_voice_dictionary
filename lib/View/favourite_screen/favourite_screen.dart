@@ -66,16 +66,18 @@ class FavouriteScreen extends StatelessWidget {
             ),
             Obx(() {
               if (Get.find<FavouriteController>().favouritesList.isEmpty) {
-                return Padding(
-                  padding:  EdgeInsets.symmetric(vertical: Get.height * 0.2),
-                  child: Column(
-                    crossAxisAlignment:CrossAxisAlignment.center,
-                    children: [
-                      Image.asset('assets/nodata.gif'),
-                      Center(child: Text("No Favorites available".tr,style: TextStyle(
-                          fontFamily: 'Arial', color: Colors.grey.shade700,fontSize: 16,fontWeight: FontWeight.w700
-                      ),)),
-                    ],
+                return Expanded(
+                  child: Container(
+                    padding:  EdgeInsets.symmetric(vertical: Get.height * 0.2),
+                    child: Column(
+                      crossAxisAlignment:CrossAxisAlignment.center,
+                      children: [
+                        Image.asset('assets/nodata.gif'),
+                        Center(child: Text("No Favorites available".tr,style: TextStyle(
+                            fontFamily: 'Arial', color: Colors.grey.shade700,fontSize: 16,fontWeight: FontWeight.w700
+                        ),)),
+                      ],
+                    ),
                   ),
                 );
               }else
@@ -117,8 +119,52 @@ class FavouriteScreen extends StatelessWidget {
                             }
                           },
                           child: SizedBox(
-                            height: Get.height * 0.1,
-                            child: Card(
+                            //height: Get.height * 0.12,
+                            child:
+                            // Card(
+                            //   shape: OutlineInputBorder(
+                            //     borderRadius: BorderRadius.circular(10.0),
+                            //     borderSide: BorderSide(
+                            //       color: Color(0xFFE64D3D),
+                            //       width: 0.5,
+                            //     ),
+                            //   ),
+                            //   child: Center(
+                            //     child: ListTile(
+                            //       title: Text(
+                            //         //favouriteController.favouritesList[index],
+                            //         favoriteTable.text,
+                            //         style: TextStyle(
+                            //             fontWeight: FontWeight.bold,
+                            //             fontSize: 20,
+                            //             color: Colors.grey,
+                            //             fontFamily: 'arial'),
+                            //       ),
+                            //       trailing: IconButton(
+                            //           onPressed: () {
+                            //             customDialogBox(title: 'delete'.tr
+                            //                 , content: 'Are you sure you want to delete?'.tr,
+                            //                 context: context,
+                            //                 voidCallBack: () async {
+                            //                   if(favoriteTable.id != null){
+                            //                     await favouriteController.deleteFromFavourite(favoriteTable.text);
+                            //                     Get.back();
+                            //                   }
+                            //                 },
+                            //                 voidCallBack2: (){
+                            //               Get.back();
+                            //             });
+                            //           },
+                            //           icon: Icon(
+                            //             Icons.delete,
+                            //             color: Color(0xFFE64D3D),
+                            //           )),
+                            //     ),
+                            //   ),
+                            // ),
+
+                            ///
+                            Card(
                               shape: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                                 borderSide: BorderSide(
@@ -128,37 +174,48 @@ class FavouriteScreen extends StatelessWidget {
                               ),
                               child: Center(
                                 child: ListTile(
-                                  title: Text(
-                                    //favouriteController.favouritesList[index],
-                                    favoriteTable.text,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20,
-                                        color: Colors.grey,
-                                        fontFamily: 'arial'),
+                                  title: SingleChildScrollView(
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          favoriteTable.text,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20,
+                                            color: Colors.grey,
+                                            fontFamily: 'arial',
+                                          ),
+                                          maxLines: null, // This allows the text to be as long as needed
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                   trailing: IconButton(
-                                      onPressed: () {
-                                        customDialogBox(title: 'delete'.tr
-                                            , content: 'Are you sure you want to delete?'.tr,
-                                            context: context,
-                                            voidCallBack: () async {
-                                              if(favoriteTable.id != null){
-                                                await favouriteController.deleteFromFavourite(favoriteTable.text);
-                                                Get.back();
-                                              }
-                                            },
-                                            voidCallBack2: (){
+                                    onPressed: () {
+                                      customDialogBox(
+                                        title: 'delete'.tr,
+                                        content: 'Are you sure you want to delete?'.tr,
+                                        context: context,
+                                        voidCallBack: () async {
+                                          if (favoriteTable.id != null) {
+                                            await favouriteController.deleteFromFavourite(favoriteTable.text);
+                                            Get.back();
+                                          }
+                                        },
+                                        voidCallBack2: () {
                                           Get.back();
-                                        });
-                                      },
-                                      icon: Icon(
-                                        Icons.delete,
-                                        color: Color(0xFFE64D3D),
-                                      )),
+                                        },
+                                      );
+                                    },
+                                    icon: Icon(
+                                      Icons.delete,
+                                      color: Color(0xFFE64D3D),
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
+                            )
+
                           ),
                         ),
                         SizedBox(
