@@ -62,7 +62,7 @@ Widget reusableStack1({
   required String title,
   required VoidCallback onTap,
 }) {
-  return InkWell(
+  return GestureDetector(
       onTap: onTap,
       child: Stack(
         children: [

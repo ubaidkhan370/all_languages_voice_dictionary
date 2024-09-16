@@ -654,7 +654,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
             if (onBoardingController.adsHelper.interstitialAd != null) {
               onBoardingController.adsHelper
-                  .showInterstitialAd(nextScreen: '/home');
+                  .showInterstitialAd(nextScreen: '/welcome');
               print('interstitial ad load successfuly');
             } else {
               Get.to(() => HomeScreen());

@@ -40,7 +40,7 @@ class LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
 
     if (seenLanguageSelection) {
       if (seenOnboarding) {
-        Get.offNamed('/home');
+        Get.offNamed('/welcome');
         print(seenOnboarding);
       } else {
         Get.offNamed('/onBoardingScreen');
@@ -67,7 +67,10 @@ class LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
           onPressed: () {
             Get.back();
           },
-          icon: Icon(Icons.arrow_back,color: Colors.white,),
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
         ),
         title: Text(
           'Select Language',
@@ -159,7 +162,6 @@ class LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
               },
             ),
           ),
-
           Obx(
             () {
               bool isAdLoaded =

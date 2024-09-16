@@ -22,7 +22,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 //   }
 // }
 
-
 import '../../database/db_helper.dart';
 import '../../services/notification.dart'; // Update this import to your DbHelper class
 
@@ -38,17 +37,15 @@ class SplashController extends GetxController {
     super.onReady();
     checkNotificationSetting();
     startLoading();
-
   }
+
   @override
   void onInit() {
     // TODO: implement onInit
     adsHelper.loadAppOpenAd();
     adsHelper.loadBannerAd();
     super.onInit();
-
   }
-
 
   void checkNotificationSetting() async {
     bool res = await DbHelper.dbInstance.getNotificationSetting();
@@ -60,6 +57,7 @@ class SplashController extends GetxController {
       /// If the value is true, continue with periodic notifications
       showLocalNotificationPeriodically();
     }
+
     /// If the value is false, do nothing (notifications are disabled)
   }
 
@@ -71,7 +69,7 @@ class SplashController extends GetxController {
 
     if (seenLanguageSelection) {
       if (seenOnboarding) {
-        Get.offNamed('/home');
+        Get.offNamed('/welcome');
         print(seenOnboarding);
       } else {
         Get.offNamed('/onBoardingScreen');
@@ -97,7 +95,6 @@ class SplashController extends GetxController {
   //
   // }
 
-
   void startLoading() {
     const totalDuration = Duration(seconds: 5); // Adjust the duration as needed
     const updateFrequency = Duration(milliseconds: 100);
@@ -113,8 +110,6 @@ class SplashController extends GetxController {
         showProgressBar.value = false;
         adsHelper.showAppOpenAd();
         _checkLanguageSelectionStatus();
-
-
       } else {
         progressValue.value = (currentStep / totalSteps) * 100;
         currentStep++;

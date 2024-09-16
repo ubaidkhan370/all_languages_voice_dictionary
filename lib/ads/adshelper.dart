@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -35,6 +36,71 @@ class AdsHelper {
       ? GlobalVariable.openAppAndroid
       : GlobalVariable.openAppAdIOS;
 
+  // void loadInterstitialAd() {
+  //   if (!GlobalVariable.isPurchasedMonthly.value &&
+  //       !GlobalVariable.isPurchasedYearly.value &&
+  //       !GlobalVariable.isPurchasedLifeTime.value) {
+  //     InterstitialAd.load(
+  //         adUnitId: interAdUnitId,
+  //         request: const AdRequest(),
+  //         adLoadCallback: InterstitialAdLoadCallback(
+  //           // Called when an ad is successfully received.
+  //           onAdLoaded: (ad) {
+  //             debugPrint('$ad loaded.');
+  //             print('InterstitialAd Loaded');
+  //             // Keep a reference to the ad so you can show it later.
+  //             interstitialAd = ad;
+  //           },
+  //           // Called when an ad request failed.
+  //           onAdFailedToLoad: (LoadAdError error) {
+  //             debugPrint('InterstitialAd failed to load: $error');
+  //             print('InterstitialAd Not Loaded');
+  //           },
+  //         ));
+  //   }
+  // }
+  //
+  // void showInterstitialAd({
+  //   bool isSplash = false,
+  //   required String nextScreen,
+  // }) {
+  //   if (GlobalVariable.showInterstitialAd) {
+  //     if (interstitialAd != null) {
+  //       GlobalVariable.isInterstitialAdShowing.value = true;
+  //       interstitialAdCallback(
+  //         isSplash: isSplash,
+  //         nextScreen: nextScreen,
+  //       );
+  //       interstitialAd?.show();
+  //     } else {
+  //       Get.offNamed(nextScreen);
+  //       loadInterstitialAd();
+  //     }
+  //   } else {
+  //     Get.offNamed(nextScreen);
+  //     GlobalVariable.showInterstitialAd = true;
+  //   }
+  // }
+  //
+  // void interstitialAdCallback({
+  //   required bool isSplash,
+  //   required String nextScreen,
+  // }) {
+  //   interstitialAd?.fullScreenContentCallback =
+  //       FullScreenContentCallback(onAdDismissedFullScreenContent: (ad) {
+  //     interstitialAd?.dispose();
+  //     interstitialAd = null;
+  //     GlobalVariable.showInterstitialAd = false;
+  //     GlobalVariable.isInterstitialAdShowing.value = false;
+  //     if (!isSplash) {
+  //       Get.toNamed(nextScreen);
+  //       loadInterstitialAd();
+  //     } else {
+  //       Get.offNamed(nextScreen);
+  //     }
+  //   });
+  // }
+
   void loadInterstitialAd() {
     if (!GlobalVariable.isPurchasedMonthly.value &&
         !GlobalVariable.isPurchasedYearly.value &&
@@ -59,7 +125,10 @@ class AdsHelper {
     }
   }
 
-  void showInterstitialAd({bool isSplash = false, required String nextScreen}) {
+  void showInterstitialAd({
+    bool isSplash = false,
+    required String nextScreen,
+  }) {
     if (GlobalVariable.showInterstitialAd) {
       if (interstitialAd != null) {
         GlobalVariable.isInterstitialAdShowing.value = true;
@@ -130,7 +199,7 @@ class AdsHelper {
     });
   }
 
-  void loadNativeAd() {
+  void loadNativeAd({TemplateType? templateType}) {
     NativeAd(
       adUnitId: nativeAdUnitId,
       listener: NativeAdListener(
@@ -149,7 +218,7 @@ class AdsHelper {
       ),
       request: const AdRequest(),
       nativeTemplateStyle: NativeTemplateStyle(
-        templateType: TemplateType.small,
+        templateType: templateType ?? TemplateType.medium,
         // mainBackgroundColor: ThemeHelper.primaryColor,
         // cornerRadius: 10.0,
         callToActionTextStyle: NativeTemplateTextStyle(
