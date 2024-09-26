@@ -167,9 +167,7 @@ class LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
               bool isAdLoaded =
                   languageScreenController.adsHelper.isNativeAdLoaded.value;
               bool isAppOpenAdShowing = GlobalVariable.isAppOpenAdShowing.value;
-              bool isPurchased = GlobalVariable.isPurchasedMonthly.value ||
-                  GlobalVariable.isPurchasedYearly.value ||
-                  GlobalVariable.isPurchasedLifeTime.value;
+
 
               if (!isAdLoaded) {
                 return Padding(
