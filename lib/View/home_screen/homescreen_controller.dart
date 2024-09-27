@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:all_languages_voice_dictionary/View/favourite_screen/favourite_controller.dart';
 import 'package:all_languages_voice_dictionary/ads/adshelper.dart';
+import 'package:all_languages_voice_dictionary/global/global_variables.dart';
 import 'package:all_languages_voice_dictionary/model/dictionary_model.dart';
 import 'package:app_settings/app_settings.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -149,7 +150,15 @@ class HomeScreenController extends GetxController {
     super.onReady();
   }
 
+
+
+
   void loadAds() {
+    //
+    // if(GlobalVariable.instatitalRemoteConfig.value == true){
+    //
+    // }
+
     adsHelper.loadAppOpenAd();
     // adsHelper?.loadInterstitialAd();
     //adsHelper.loadNativeAd();

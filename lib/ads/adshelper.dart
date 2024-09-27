@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 import 'dart:ui';
+import 'package:all_languages_voice_dictionary/ads/remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -102,11 +103,14 @@ class AdsHelper {
   // }
 
   void loadInterstitialAd() {
-    if (!GlobalVariable.isPurchasedMonthly.value &&
+
+    if (
+    !GlobalVariable.isPurchasedMonthly.value &&
         !GlobalVariable.isPurchasedYearly.value &&
         !GlobalVariable.isPurchasedLifeTime.value) {
       InterstitialAd.load(
           adUnitId: interAdUnitId,
+       // adUnitId: RemoteConfig.InterstitialAd,
           request: const AdRequest(),
           adLoadCallback: InterstitialAdLoadCallback(
             // Called when an ad is successfully received.
@@ -129,19 +133,26 @@ class AdsHelper {
     bool isSplash = false,
     required String nextScreen,
   }) {
-    if (GlobalVariable.showInterstitialAd) {
-      if (interstitialAd != null) {
-        GlobalVariable.isInterstitialAdShowing.value = true;
-        interstitialAdCallback(isSplash: isSplash, nextScreen: nextScreen);
-        interstitialAd?.show();
+    ///remconfig
+    if(GlobalVariable.instatitalRemoteConfig.value==true){
+      if (GlobalVariable.showInterstitialAd) {
+        if (interstitialAd != null) {
+          GlobalVariable.isInterstitialAdShowing.value = true;
+          interstitialAdCallback(isSplash: isSplash, nextScreen: nextScreen);
+          interstitialAd?.show();
+        } else {
+          Get.toNamed(nextScreen);
+          loadInterstitialAd();
+        }
       } else {
         Get.toNamed(nextScreen);
-        loadInterstitialAd();
+        GlobalVariable.showInterstitialAd = true;
       }
-    } else {
+    }else {
       Get.toNamed(nextScreen);
-      GlobalVariable.showInterstitialAd = true;
     }
+
+
   }
 
   void interstitialAdCallback(
@@ -200,8 +211,12 @@ class AdsHelper {
   }
 
   void loadNativeAd({TemplateType? templateType}) {
+    // if(RemoteConfig.hideAd){
+    //   return null;
+    // }
     NativeAd(
       adUnitId: nativeAdUnitId,
+      // adUnitId: RemoteConfig.NativeAd,
       listener: NativeAdListener(
         onAdLoaded: (ad) {
           debugPrint('$NativeAd loaded.');
@@ -246,8 +261,12 @@ class AdsHelper {
   }
 
   void loadNativeAd2() {
+    // if(RemoteConfig.hideAd){
+    //   return null;
+    // }
     NativeAd(
       adUnitId: nativeAdUnitId,
+     // adUnitId: RemoteConfig.NativeAd,
       listener: NativeAdListener(
         onAdLoaded: (ad) {
           debugPrint('$NativeAd Native2 loaded.');
@@ -292,8 +311,12 @@ class AdsHelper {
   }
 
   void loadNativeAd3() {
+    // if(RemoteConfig.hideAd){
+    //   return null;
+    // }
     NativeAd(
       adUnitId: nativeAdUnitId,
+   //   adUnitId: RemoteConfig.NativeAd,
       listener: NativeAdListener(
         onAdLoaded: (ad) {
           debugPrint('$NativeAd Native3 loaded.');

@@ -8,6 +8,7 @@ import 'package:all_languages_voice_dictionary/View/setting_screen/setting_scree
 import 'package:all_languages_voice_dictionary/View/translation_screen/translation.dart';
 import 'package:all_languages_voice_dictionary/View/meaning_screen/meaning.dart';
 import 'package:all_languages_voice_dictionary/ads/adshelper.dart';
+import 'package:all_languages_voice_dictionary/ads/remote_config.dart';
 import 'package:all_languages_voice_dictionary/controller/dropdownbutton_controller.dart';
 import 'package:all_languages_voice_dictionary/View/home_screen/homescreen_controller.dart';
 import 'package:all_languages_voice_dictionary/widgets/bottom_navigation_bar.dart';
@@ -41,49 +42,56 @@ class _HomeScreenState extends State<HomeScreen> {
   NativeAd? nativeAd;
   RxBool isNativeAdLoaded = false.obs;
   void loadNativeAd() {
-    NativeAd(
-      adUnitId: adsHelper.nativeAdUnitId,
-      listener: NativeAdListener(
-        onAdLoaded: (ad) {
-          debugPrint('$NativeAd loaded.');
-          nativeAd = null;
-          nativeAd = ad as NativeAd;
-          isNativeAdLoaded.value = true;
-          print(ad.nativeAdOptions?.mediaAspectRatio);
-        },
-        onAdFailedToLoad: (ad, error) {
-          // Dispose the ad here to free resources.
-          debugPrint('$NativeAd failed to load: $error');
-          ad.dispose();
-        },
-      ),
-      request: const AdRequest(),
-      nativeTemplateStyle: NativeTemplateStyle(
-        templateType: TemplateType.small,
-        // mainBackgroundColor: ThemeHelper.primaryColor,
-        // cornerRadius: 10.0,
-        callToActionTextStyle: NativeTemplateTextStyle(
-            textColor: Colors.white,
-            // backgroundColor: ThemeHelper.secondaryColor,
-            style: NativeTemplateFontStyle.bold,
-            size: 13.5),
-        primaryTextStyle: NativeTemplateTextStyle(
-            // textColor: ThemeHelper.s,
-            // backgroundColor: ThemeColors.bgColor.withOpacity(0.7),
-            style: NativeTemplateFontStyle.italic,
-            size: 13.5),
-        secondaryTextStyle: NativeTemplateTextStyle(
-            // textColor: ThemeColors.secondary,
-            // backgroundColor: ThemeColors.bgColor.withOpacity(0.7),
-            style: NativeTemplateFontStyle.bold,
-            size: 13),
-        tertiaryTextStyle: NativeTemplateTextStyle(
-            // textColor: ThemeColors.secondary,
-            // backgroundColor: ThemeColors.bgColor.withOpacity(0.7),
-            style: NativeTemplateFontStyle.normal,
-            size: 13),
-      ),
-    ).load();
+      if(GlobalVariable.nativeAdRemoteConfig.value==true){
+        NativeAd(
+          adUnitId: adsHelper.nativeAdUnitId,
+          // adUnitId: RemoteConfig.NativeAd,
+          listener: NativeAdListener(
+            onAdLoaded: (ad) {
+              debugPrint('$NativeAd loaded.');
+              nativeAd = null;
+              nativeAd = ad as NativeAd;
+              isNativeAdLoaded.value = true;
+              print(ad.nativeAdOptions?.mediaAspectRatio);
+            },
+            onAdFailedToLoad: (ad, error) {
+              // Dispose the ad here to free resources.
+              debugPrint('$NativeAd failed to load: $error');
+              ad.dispose();
+            },
+          ),
+          request: const AdRequest(),
+          nativeTemplateStyle: NativeTemplateStyle(
+            templateType: TemplateType.small,
+            // mainBackgroundColor: ThemeHelper.primaryColor,
+            // cornerRadius: 10.0,
+            callToActionTextStyle: NativeTemplateTextStyle(
+                textColor: Colors.white,
+                // backgroundColor: ThemeHelper.secondaryColor,
+                style: NativeTemplateFontStyle.bold,
+                size: 13.5),
+            primaryTextStyle: NativeTemplateTextStyle(
+              // textColor: ThemeHelper.s,
+              // backgroundColor: ThemeColors.bgColor.withOpacity(0.7),
+                style: NativeTemplateFontStyle.italic,
+                size: 13.5),
+            secondaryTextStyle: NativeTemplateTextStyle(
+              // textColor: ThemeColors.secondary,
+              // backgroundColor: ThemeColors.bgColor.withOpacity(0.7),
+                style: NativeTemplateFontStyle.bold,
+                size: 13),
+            tertiaryTextStyle: NativeTemplateTextStyle(
+              // textColor: ThemeColors.secondary,
+              // backgroundColor: ThemeColors.bgColor.withOpacity(0.7),
+                style: NativeTemplateFontStyle.normal,
+                size: 13),
+          ),
+        ).load();
+
+      }else{
+        return null;
+      }
+
   }
 
   @override

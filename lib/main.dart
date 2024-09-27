@@ -30,6 +30,8 @@ import 'View/home_screen/home_screen.dart';
 import 'View/onboarding/onboading_screen.dart';
 import 'View/splash_screen/splash2.dart';
 import 'View/translation_screen/translation.dart';
+import 'ads/remote_config.dart';
+import 'fireBase/remoteConfig/remoteConfigServices.dart';
 import 'firebase_options.dart';
 import 'localiztion/localiztion.dart';
 
@@ -38,6 +40,8 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  await FirebaseRemoteConfigService().initialize();
 
   ///crashlytics
   FlutterError.onError = (errorDetails) {
@@ -96,6 +100,7 @@ class MyApp extends StatelessWidget {
         ],
         //home: SplashScreen(),
         initialRoute: '/',
+
         getPages: [
           GetPage(name: '/', page: () => SplashScreen()),
           GetPage(name: '/splash2', page: () => Splash2()),

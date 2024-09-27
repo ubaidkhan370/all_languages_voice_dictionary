@@ -16,6 +16,7 @@ class SettingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+          automaticallyImplyLeading: false,
         title: Text('Setting'.tr,
             style: TextStyle(
                 fontWeight: FontWeight.bold,
@@ -24,9 +25,7 @@ class SettingScreen extends StatelessWidget {
                 fontFamily: 'arial')),
         centerTitle: true,
         backgroundColor: const Color(0xFFE64D3D),
-        iconTheme: const IconThemeData(
-          color: Colors.white,
-        ),
+
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 3.0),

@@ -32,35 +32,48 @@ class FavouriteScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       //bottomNavigationBar: bottomNavigationBar(currentIndex),
+      appBar: AppBar(
+        title: Text('Favourites'.tr,
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 28,
+                color: Colors.white,
+                fontFamily: 'arial')),
+        centerTitle: true,
+        backgroundColor: const Color(0xFFE64D3D),
+        iconTheme: const IconThemeData(
+          color: Colors.white,
+        ),
+      ),
       body: SafeArea(
         child: Column(
           children: [
-            SizedBox(
-              height: Get.height * 0.04,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                IconButton(
-                  onPressed: () {
-                    Get.back();
-                  },
-                  icon: const Icon(
-                    Icons.arrow_back_ios_new,
-                    color: Color(0xFFE64D3D),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 90.0).r,
-                  child:  Text('Favourites'.tr,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 28,
-                          color: Color(0xFFE64D3D),
-                          fontFamily: 'arial')),
-                )
-              ],
-            ),
+            // SizedBox(
+            //   height: Get.height * 0.04,
+            // ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.start,
+            //   children: [
+            //     IconButton(
+            //       onPressed: () {
+            //         Get.back();
+            //       },
+            //       icon: const Icon(
+            //         Icons.arrow_back_ios_new,
+            //         color: Color(0xFFE64D3D),
+            //       ),
+            //     ),
+            //     Padding(
+            //       padding: const EdgeInsets.only(left: 90.0).r,
+            //       child:  Text('Favourites'.tr,
+            //           style: TextStyle(
+            //               fontWeight: FontWeight.bold,
+            //               fontSize: 28,
+            //               color: Color(0xFFE64D3D),
+            //               fontFamily: 'arial')),
+            //     )
+            //   ],
+            // ),
             SizedBox(
               height: Get.height * 0.04,
             ),
@@ -228,51 +241,50 @@ class FavouriteScreen extends StatelessWidget {
               );
             }),
 
-            Obx(
-                  () {
-                bool isAdLoaded = favouriteController.adsHelper.isBannerAdLoaded.value &&
-                    favouriteController.adsHelper.bannerAd != null &&
-                    !GlobalVariable.isAppOpenAdShowing.value &&
-                    !GlobalVariable.isInterstitialAdShowing.value;
-
-                return isAdLoaded
-                    ? Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.blue, // Add blue border when ad is loaded
-                      width: 1.5, // Border width
-                    ),
-                  ),
-                  child: SizedBox(
-                    width: Get.width,
-                    height: favouriteController.adsHelper.bannerAd!.size.height
-                        .toDouble(),
-                    child: AdWidget(ad: favouriteController.adsHelper.bannerAd!),
-                  ),
-                )
-                    : Shimmer.fromColors(
-                  baseColor: Colors.grey.shade300,
-                  highlightColor: Colors.grey.shade100,
-                  child: Container(
-                    width: Get.width,
-                    height: 55, // Adjust the height to match the ad height
-                    color: Colors.grey.shade300, // Background color for shimmer
-                    child: Center(
-                      child: Text(
-                        'Loading ad...', // Optional placeholder text
-                        style: TextStyle(
-                          color: Colors.grey.shade700,
-                          fontSize: 14,
-                        ),
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
-
           ],
         ),
+      ),
+      bottomNavigationBar: Get.find<FavouriteController>().favouritesList.isEmpty?SizedBox(): Obx(
+            () {
+          bool isAdLoaded = favouriteController.adsHelper.isBannerAdLoaded.value &&
+              favouriteController.adsHelper.bannerAd != null &&
+              !GlobalVariable.isAppOpenAdShowing.value &&
+              !GlobalVariable.isInterstitialAdShowing.value;
+
+          return isAdLoaded
+              ? Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.blue, // Add blue border when ad is loaded
+                width: 1.5, // Border width
+              ),
+            ),
+            child: SizedBox(
+              width: Get.width,
+              height: favouriteController.adsHelper.bannerAd!.size.height
+                  .toDouble(),
+              child: AdWidget(ad: favouriteController.adsHelper.bannerAd!),
+            ),
+          )
+              : Shimmer.fromColors(
+            baseColor: Colors.grey.shade300,
+            highlightColor: Colors.grey.shade100,
+            child: Container(
+              width: Get.width,
+              height: 55, // Adjust the height to match the ad height
+              color: Colors.grey.shade300, // Background color for shimmer
+              child: Center(
+                child: Text(
+                  'Loading ad...', // Optional placeholder text
+                  style: TextStyle(
+                    color: Colors.grey.shade700,
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }

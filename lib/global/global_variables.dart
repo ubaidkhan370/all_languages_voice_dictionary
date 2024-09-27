@@ -17,6 +17,16 @@ final FlutterTts flutterTts = FlutterTts();
 var selectedText = "".obs;
 
 class GlobalVariable {
+
+  ///Remote Config
+  ///
+  static RxBool nativeAdRemoteConfig = false.obs;
+  static RxBool instatitalRemoteConfig = false.obs;
+  static RxBool isAdShowRemoteConfig =  false.obs;
+
+
+
+
   /// ----------------------- IAP IDs ---------------------------
   static String monthlyId = Platform.isIOS ? 'com.pz.le.monthly' : 'and';
   static String yearlyId = Platform.isIOS ? 'com.pz.le.yearly' : 'and';

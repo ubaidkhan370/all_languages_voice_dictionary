@@ -19,17 +19,22 @@ class LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
   LanguageScreenController languageScreenController =
       Get.put(LanguageScreenController());
   String? _selectedLanguage;
-
+  RxBool isSelected = true.obs;
   void selectLanguage(String languageCode) async {
     setState(() {
       _selectedLanguage = languageCode;
     });
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('selectedLanguage', languageCode);
-    await prefs.setBool('seenLanguageSelection', true);
+  }
 
-    // Update the locale
-    Get.updateLocale(Locale(languageCode));
+  Future<void> saveLanguageSelection() async {
+    if (_selectedLanguage != null) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('selectedLanguage', _selectedLanguage!);
+      await prefs.setBool('seenLanguageSelection', true);
+
+      // Update the locale after saving
+      Get.updateLocale(Locale(_selectedLanguage!));
+    }
   }
 
   void _checkLanguageSelectionStatus() async {
@@ -55,12 +60,14 @@ class LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
   void goNext() {
     //  adsHelper.showAppOpenAd();
     // Get.offNamed('/dash');
+    saveLanguageSelection();
     _checkLanguageSelectionStatus();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFE64D3D),
       appBar: AppBar(
         backgroundColor: Color(0xFFE64D3D),
         leading: IconButton(
@@ -89,7 +96,7 @@ class LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
                     goNext();
                   }
                 : null,
-            child: Text("Save"),
+            child: Text("Save",style: TextStyle(color: isSelected.value?Colors.white:Color(0xFFE64D3D)),),
           ),
           SizedBox(width: 10),
         ],
@@ -109,32 +116,21 @@ class LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
               ),
               itemCount: languages.length,
               itemBuilder: (context, index) {
-                bool isSelected =
+                isSelected.value =
                     _selectedLanguage == languages[index]['locale'];
                 return GestureDetector(
                   onTap: () async {
                     String? languageCode = languages[index]['locale'];
                     if (languageCode != null) {
-                      // Update the state to reflect the selected language
-                      setState(() {
-                        _selectedLanguage = languageCode;
-                      });
+                      selectLanguage(languageCode);
 
-                      // Save the selected language to SharedPreferences
-                      SharedPreferences prefs =
-                          await SharedPreferences.getInstance();
-                      await prefs.setString('selectedLanguage', languageCode);
-                      await prefs.setBool('seenLanguageSelection', true);
-
-                      // Update the app's locale
-                      Get.updateLocale(Locale(languageCode));
                     }
                   },
                   child: Container(
                     height: 140,
                     child: Card(
-                      color: isSelected ? Colors.grey : Colors.white,
-                      shape: isSelected
+                      color: isSelected.value ? Colors.grey : Colors.white,
+                      shape: isSelected.value
                           ? RoundedRectangleBorder(
                               // side:
                               // BorderSide(color: const Color(0xFF575DDC), width: 2),
@@ -162,6 +158,7 @@ class LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
               },
             ),
           ),
+          SizedBox(height: 5,),
           Obx(
             () {
               bool isAdLoaded =
@@ -177,10 +174,12 @@ class LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
                     width: Get.width,
                     height: 120,
                     child: Shimmer.fromColors(
+                      // baseColor: Colors.orange[300]!, // Change this to your desired orange shade
+                      // highlightColor: Colors.orange[100]!, // Change this to a lighter orange shade
                       baseColor: Colors.grey[300]!,
                       highlightColor: Colors.grey[100]!,
                       child: Container(
-                        color: Colors.white, // Placeholder color
+                        color: Colors.white // Placeholder color
                       ),
                     ),
                   ),
