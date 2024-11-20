@@ -622,7 +622,8 @@ class _HomeScreenState extends State<HomeScreen> {
             return const SizedBox();
           }
         },
-      ):  GlobalVariable.homeBannerAdRemoteConfig.value == true ?  Obx(() {
+      ):  GlobalVariable.homeBannerAdRemoteConfig.value == true ?
+          Obx(() {
             bool adLoaded =
                 homeScreenController.adsHelper.isBannerAdLoaded.value &&
                     homeScreenController.adsHelper.bannerAd != null &&
